@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71defa727d98b3c4d8c67062f9efa238, type: 3}
+  m_Name: Spawn_Field
+  m_EditorClassIdentifier: 
+  destExpChangeLevels: 050000000a000000140000001e000000
+  destExps:
+  - 1.4
+  - 1.2
+  - 1.1
+  - 1.05
+  - 1
+  spawnTimeChangeLevels: 04000000090000000f00000014000000
+  spawnTimes:
+  - 5
+  - 4.5
+  - 4
+  - 3.5
+  - 3
+  spawnTypeChangeLevels: 03000000070000000c00000011000000
+  minTypes: 0000000000000000010000000100000002000000
+  maxTypes: 0000000001000000020000000300000004000000
