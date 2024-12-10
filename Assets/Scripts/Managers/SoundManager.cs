@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class SoundManager
 {
-    AudioSource _bgmSource;
+    public AudioSource BGMSource { get; set; }
     AudioSource _sfxSource;
+
     Dictionary<string, AudioClip> _bgmClips = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> _sfxClips = new Dictionary<string, AudioClip>();
 
+    public float BGMVolum { get; set; }
+    public float SFXVolum { get; set; }
+
     public void Init()
     {
+        BGMVolum = 1.0f;
+        SFXVolum = 1.0f;
+
         GameObject soundRoot = GameObject.Find("@SoundRoot");
         if(soundRoot == null)
         {
@@ -20,17 +27,19 @@ public class SoundManager
 
         GameObject _bgmObj = new GameObject { name = "BGMObject" };
         _bgmObj.transform.parent = soundRoot.transform;
-        _bgmSource = _bgmObj.AddComponent<AudioSource>();
-        _bgmSource.loop = true;
+        BGMSource = _bgmObj.AddComponent<AudioSource>();
+        BGMSource.loop = true;
 
         GameObject _sfxObj = new GameObject { name = "SFXObject" };
         _sfxObj.transform.parent = soundRoot.transform;
         _sfxSource = _sfxObj.AddComponent<AudioSource>();
 
-        GetBGMClip("BGM");
+        GetBGMClip("BGMs/TitleBGM");
+        GetBGMClip("BGMs/FieldBGM");
+        GetBGMClip("BGMs/CaveBGM");
     }
 
-    public void PlayBGM(string name, float volum = 1.0f)
+    public void PlayBGM(string name)
     {
         string path = $"Sounds/{name}";
         AudioClip bgmClip = GetBGMClip(name);
@@ -40,12 +49,12 @@ public class SoundManager
             return;
         }
 
-        _bgmSource.volume = volum;
-        _bgmSource.clip = bgmClip;
-        _bgmSource.Play();
+        BGMSource.volume = BGMVolum;
+        BGMSource.clip = bgmClip;
+        BGMSource.Play();
     }
 
-    public void PlaySFX(string name, float volum = 1.0f)
+    public void PlaySFX(string name)
     {
         AudioClip sfxClip = GetSFXClip(name);
 
@@ -55,7 +64,7 @@ public class SoundManager
             return;
         }
 
-        _sfxSource.volume = volum;
+        _sfxSource.volume = SFXVolum;
         _sfxSource.PlayOneShot(sfxClip);
     }
 
@@ -101,8 +110,8 @@ public class SoundManager
 
     public void Clear()
     {
-        _bgmSource.Stop();
-        _bgmSource.clip = null;
+        BGMSource.Stop();
+        BGMSource.clip = null;
 
         _sfxSource.clip = null;
         _sfxClips.Clear();

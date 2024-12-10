@@ -146,6 +146,8 @@ public class Weapon_Thompson : Weapon
             fireBullet.GetComponent<Projectile_Bullet>().
                 Init(dir, attackRatio * _itemData.attacks[_attackLevel], _itemData.fens[_fenLevel]);
 
+            Managers.SoundManager.PlaySFX("weaponSounds/Thompson");
+
             yield return new WaitForSeconds(0.1f);
         }
     }

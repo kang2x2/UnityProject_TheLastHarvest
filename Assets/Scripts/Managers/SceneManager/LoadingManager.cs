@@ -68,11 +68,7 @@ public class LoadingManager
         }
 
         float accTime = 0.0f;
-        IEnumerator coFadeIn = Managers.FadeManager.FadeIn(()=>
-        {
-            Managers.SoundManager.PlayBGM("BGM", 0.3f);
-        });
-
+        IEnumerator coFadeIn = Managers.FadeManager.FadeIn(() => { GameSet_BGM(); });
         IEnumerator coFadeOut = Managers.FadeManager.FadeOut(() =>
         {
             _uiLoading.gameObject.SetActive(false);
@@ -96,5 +92,26 @@ public class LoadingManager
         }
 
         yield return true;
+    }
+
+    private void GameSet_BGM()
+    {
+        if (Managers.SceneManagerEx.CurScene.SceneType == Define.SceneType.TitleScene)
+        {
+            Managers.SoundManager.PlayBGM("BGMs/TitleBGM");
+        }
+        else if (Managers.SceneManagerEx.CurScene.SceneType == Define.SceneType.GameScene)
+        {
+            switch (Managers.GameManagerEx.MapType)
+            {
+                case Define.MapType.Field:
+                    Managers.SoundManager.PlayBGM("BGMs/FieldBGM");
+                    break;
+                case Define.MapType.Cave:
+                    Managers.SoundManager.PlayBGM("BGMs/CaveBGM");
+                    break;
+
+            }
+        }
     }
 }

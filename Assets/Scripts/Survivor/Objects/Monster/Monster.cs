@@ -151,17 +151,25 @@ public class Monster : MonoBehaviour
 
             if(collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Bullet)
             {
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/BulletHitEffect");
                 effect.transform.position = transform.position;
             }
             else if(collision.GetComponent<Projectile>().Effect == Projectile.EffectType.BigBullet)
             {
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/BigBulletHitEffect");
                 effect.transform.position = transform.position;
             }
             else if(collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Slash)
             {
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
+                effect.transform.position = transform.position;
+            }
+            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
+            {
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
                 effect.transform.position = transform.position;
             }
 

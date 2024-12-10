@@ -17,7 +17,7 @@ public class Scene_Game : Scene_Base
 
     public override IEnumerator Loading(Action<float> onProgress)
     {
-        int taskCount = 8;
+        int taskCount = 9;
         float progressRatio = 1.0f / taskCount;
         int successTaskCount = 0; 
 
@@ -50,6 +50,10 @@ public class Scene_Game : Scene_Base
         yield return null;
 
         Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/SlashHitEffect"), 100);
+        onProgress?.Invoke(progressRatio * ++successTaskCount);
+        yield return null;
+
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/BlowHitEffect"), 100);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 

@@ -42,17 +42,21 @@ public class PopUpUI_SelectMap : UI_PopUp
 
     public void ClickSelectButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.GameManagerEx.MapType = _mapDatas[_mapIndex].mapType;
         Managers.UIManager.ShowPopUpUI("PopUpUI_SelectCharacter");
     }
 
     public void ClickReturnButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ClosePopUpUI("PopUpUI_SelectMap");
     }
 
     public void ClickNextButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+
         _mapIndex += 1;
         if (_mapIndex >= _mapDatas.Length)
         {
@@ -62,6 +66,8 @@ public class PopUpUI_SelectMap : UI_PopUp
 
     public void ClickPrevButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+
         _mapIndex -= 1;
         if (_mapIndex < 0)
         {

@@ -21,8 +21,8 @@ public class SceneUI_Title : UI_Scene
 
     public void ClickStartButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ShowPopUpUI("PopUpUI_SelectMap");
-        // Managers.SceneManagerEx.ChangeScene(Define.SceneType.GameScene);
     }
 }
 

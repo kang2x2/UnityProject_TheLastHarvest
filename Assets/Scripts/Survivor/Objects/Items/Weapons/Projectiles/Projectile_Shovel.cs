@@ -7,6 +7,6 @@ public class Projectile_Shovel : Projectile
     public void Init(float attack)
     {
         Attack = attack;
-        Effect = EffectType.Slash;
+        Effect = EffectType.Blow;
     }
 }

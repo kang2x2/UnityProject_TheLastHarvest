@@ -43,6 +43,7 @@ public class PopUpUI_SelectCharacter : UI_PopUp
 
     public void ClickSelectButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ShowPopUpUI_Check("PopUpUI_Check", "게임을 시작할까요?", () =>
         {
             Managers.GameManagerEx.PlayerData = _characterDatas[_characterIndex];
@@ -52,11 +53,14 @@ public class PopUpUI_SelectCharacter : UI_PopUp
 
     public void ClickReturnButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ClosePopUpUI("PopUpUI_SelectCharacter");
     }
 
     public void ClickNextButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+
         _characterIndex += 1;
         if (_characterIndex >= _characterDatas.Length)
         {
@@ -66,6 +70,8 @@ public class PopUpUI_SelectCharacter : UI_PopUp
 
     public void ClickPrevButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+
         _characterIndex -= 1;
         if (_characterIndex < 0)
         {

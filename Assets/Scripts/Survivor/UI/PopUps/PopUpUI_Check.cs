@@ -37,12 +37,14 @@ public class PopUpUI_Check : UI_PopUp
 
     public void ClickYes(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
         Managers.GameManagerEx.Continue();
         _action.Invoke(); 
     }
 
     public void ClickNo(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ClosePopUpUI("PopUpUI_Check");
     }
 }

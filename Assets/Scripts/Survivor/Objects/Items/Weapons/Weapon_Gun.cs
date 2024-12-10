@@ -136,5 +136,7 @@ public class Weapon_Gun : Weapon
         float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
         fireBullet.GetComponent<Projectile_Bullet>().
             Init(dir, _itemData.attacks[_attackLevel] * attackRatio, _itemData.fens[_fenLevel]);
+
+        Managers.SoundManager.PlaySFX("weaponSounds/Rifle");
     }
 }

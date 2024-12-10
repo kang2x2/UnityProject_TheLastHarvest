@@ -16,7 +16,7 @@ public class Weapon_Scythe : Weapon
         gameObject.SetActive(true);
 
         _accTime = 0.0f;
-        _shootTime = 2.0f;
+        _shootTime = 5.0f;
 
         _offset = new Vector2(0.1f, -0.2f);
     }
@@ -59,12 +59,31 @@ public class Weapon_Scythe : Weapon
                 scythe.transform.localScale = new Vector3(_itemData.sizes[_sizeLevel], _itemData.sizes[_sizeLevel], _itemData.sizes[_sizeLevel]);
 
                 float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-                scythe.GetComponent<Projectile_Scythe>().Init(2.5f, 
-                    _itemData.speeds[_speedLevel], _itemData.attacks[_attackLevel] * attackRatio);
+                scythe.GetComponent<Projectile_Scythe>().Init(_itemData.attacks[_attackLevel] * attackRatio);
 
                 _accTime = 0.0f;
                 IsSpawn = false;
             }
         }
+    }
+
+    private void LateUpdate()
+    {
+        Transform player = Managers.GameManagerEx.Player.transform;
+
+        if (player != null)
+        {
+            if (player.GetComponent<SpriteRenderer>().flipX == true)
+            {
+                transform.rotation = Quaternion.Euler(0.0f, 0.0f, 30.0f);
+                transform.position = new Vector2(player.position.x - 0.1f, player.position.y - 0.2f);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0.0f, 180.0f, 30.0f);
+                transform.position = new Vector2(player.position.x + 0.1f, player.position.y - 0.2f);
+            }
+        }
+
     }
 }

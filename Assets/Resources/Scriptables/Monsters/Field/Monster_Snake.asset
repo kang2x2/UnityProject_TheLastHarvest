@@ -18,4 +18,4 @@ MonoBehaviour:
   hp: 15
   maxHp: 15
   attack: 6
-  speed: 0.9
+  speed: 0.65

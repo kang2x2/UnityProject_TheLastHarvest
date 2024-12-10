@@ -136,6 +136,8 @@ public class Weapon_Shotgun : Weapon
 
         float initAngle = transform.eulerAngles.z;
 
+        Managers.SoundManager.PlaySFX("weaponSounds/ReLoad");
+
         while (true)
         {
             accAngle = Mathf.Lerp(accAngle, rotValue, 2.0f * Time.deltaTime);
@@ -181,7 +183,7 @@ public class Weapon_Shotgun : Weapon
             }
         }
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
 
         SetDir(nearTarget); // 0.25초 대기 후, 총구를 타겟에 일치시키기 위함.
 
@@ -206,6 +208,7 @@ public class Weapon_Shotgun : Weapon
             fireBullet.GetComponent<Projectile_BigBullet>().Init(dir, attackRatio * _itemData.attacks[_attackLevel]);
         }
 
+        Managers.SoundManager.PlaySFX("weaponSounds/ShotGun");
         StartCoroutine(ReturnPos());
     }
 }

@@ -9,6 +9,7 @@ public class Projectile : Survivor_Item
         Slash,
         Bullet,
         BigBullet,
+        Blow,
         End
     }
 

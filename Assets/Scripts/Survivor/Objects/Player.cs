@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Field
-    public float MoveSpeed { get; set; } = 3.0f;
+    public float MoveSpeed { get; set; } = 1.5f;
     public float AttackRatio { get; set; } = 1.0f;
     public float GetExpRatio { get; set; } = 1.0f;
     public int SelectBoxCount { get; set; }

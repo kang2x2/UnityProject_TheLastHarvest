@@ -4,41 +4,34 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
-    private void OnTriggerExit2D(Collider2D collision)
+    float _rePositionOffSet;
+
+    private void Start()
     {
-        if(collision.CompareTag("PlayerArea") == false)
-        {
-            return;
-        }
-        
-        if(Managers.Instance != null)
-        {
-            GameObject player = Managers.GameManagerEx.Player;
+        _rePositionOffSet = 20.0f;
+    }
 
-            if(Camera.main != null)
+    private void LateUpdate()
+    {
+        if (Managers.GameManagerEx.Player != null)
+        {
+            Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
+
+            float diffX = playerPos.x - transform.position.x;
+            float diffY = playerPos.y - transform.position.y;
+
+            if(Mathf.Abs(diffX) > _rePositionOffSet)
             {
-                // Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                // Vector2 playerDir = mousePos - new Vector2(player.transform.position.x, player.transform.position.y);
-
-                Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
-
-                float diffX = playerPos.x - transform.position.x;
-                float diffY = playerPos.y - transform.position.y;
-
                 float dirX = diffX > 0 ? 1 : -1;
-                float dirY = diffY > 0 ? 1 : -1;
-
                 diffX = Mathf.Abs(diffX);
-                diffY = Mathf.Abs(diffY);
+                transform.Translate(Vector3.right * dirX * (_rePositionOffSet * 2.0f));
+            }
 
-                if (diffX > diffY)
-                {
-                    transform.Translate(Vector3.right * dirX * 32);
-                }
-                else if(diffY > diffX)
-                {
-                    transform.Translate(Vector3.up * dirY * 32);
-                }
+            if (Mathf.Abs(diffY) > _rePositionOffSet)
+            {
+                float dirY = diffY > 0 ? 1 : -1;
+                diffY = Mathf.Abs(diffY);
+                transform.Translate(Vector3.up * dirY * (_rePositionOffSet * 2.0f));
             }
         }
     }

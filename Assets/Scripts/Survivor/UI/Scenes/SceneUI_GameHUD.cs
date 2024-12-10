@@ -83,6 +83,7 @@ public class SceneUI_GameHUD : UI_Scene
 
     public void ClickPauseButton(PointerEventData data)
     {
+        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ShowPopUpUI("PopUpUI_Pause");
         Managers.GameManagerEx.Pause();
     }

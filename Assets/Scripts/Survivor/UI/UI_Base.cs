@@ -10,6 +10,8 @@ public class UI_Base : MonoBehaviour
 
     public virtual void Init() { }
 
+    public virtual void Show() { }
+
     protected void UI_Bind<T>(Type type) where T : UnityEngine.Object
     {
         string[] names = Enum.GetNames(type);
@@ -35,6 +37,10 @@ public class UI_Base : MonoBehaviour
             case Define.UIEvent.Click:
                 uiEvent.OnClickHandler -= action;
                 uiEvent.OnClickHandler += action;
+                break;
+            case Define.UIEvent.Drag:
+                uiEvent.OnDragHandler -= action;
+                uiEvent.OnDragHandler += action;
                 break;
         }
     }

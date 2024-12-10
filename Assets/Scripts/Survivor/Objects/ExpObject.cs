@@ -62,6 +62,7 @@ public class ExpObject : MonoBehaviour
 
         if (collision.gameObject.name == "Player")
         {
+            Managers.SoundManager.PlaySFX("ExpGet");
             Managers.GameManagerEx.GetExp(collision.GetComponent<Player>().GetExpRatio * _expValue);
             Managers.ResourceManager.Destroy(gameObject);
         }

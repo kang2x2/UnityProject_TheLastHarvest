@@ -23,7 +23,7 @@ public class SceneManagerEx
     public void ActiveGame()
     {
         IEnumerator coFadeIn = Managers.FadeManager.FadeIn(() => {
-            Managers.SoundManager.PlayBGM("BGM", 0.3f);
+            Managers.SoundManager.PlayBGM("BGMs/TitleBGM");
         }, 2.0f);
 
         Managers.CoroutineManager.MyStartCoroutine(coFadeIn);
