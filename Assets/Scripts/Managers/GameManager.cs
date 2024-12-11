@@ -17,13 +17,15 @@ public class GameManager
     public float DestExp { get; private set; } = 5.0f;
 
     public bool IsBossBattle { get; private set; } = false;
+    public bool IsClear { get; private set; }
 
     // Data
     public Data_Spawn SpawnData { get; private set; }
     public Data_Character PlayerData { get; set; }
 
-    // Player And Map
+    // Player And Map, Boss
     public GameObject Player { get; private set; }
+    public BossMonster Boss { get; private set; }
     public Define.MapType MapType { get; set; }
 
     public void Init()
@@ -52,20 +54,20 @@ public class GameManager
             return;
         }
 
-        //if(ProgressTime >= 3.0f && IsBossBattle == false)
-        //{
-        //    // 카메라 고정
-        //    if (CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera != null)
-        //    {
-        //        CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.Follow = null;
-        //    }
-        //
-        //    // 보스 생성
-        //    Managers.ResourceManager.Instantiate("Objects/Boss_Rino");
-        //
-        //    IsBossBattle = true;
-        //}
-        //else
+        if(ProgressTime >= 3.0f && IsBossBattle == false)
+        {
+            // 카메라 고정
+            // if (CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera != null)
+            // {
+            //     CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.Follow = null;
+            // }
+        
+            // 보스 생성
+            Boss = Managers.ResourceManager.Instantiate("Objects/Boss_Rino").GetComponent<BossMonster>();
+            IsBossBattle = true;
+        }
+
+        if(IsClear == false)
         {
             ProgressTime += Time.deltaTime;
         }
@@ -104,8 +106,28 @@ public class GameManager
 
             DestExp *= SpawnData.destExps[ExpLevel];
 
-            Managers.UIManager.ShowPopUpUI("PopUpUI_LevelUp");
+            if(IsClear == false)
+            {
+                Managers.UIManager.ShowPopUpUI("PopUpUI_LevelUp");
+            }
         }
+
+        if(IsBossBattle == true && Boss != null)
+        {
+            if(Boss.IsLive == false && IsClear == false)
+            {
+                IsClear = true;
+                Managers.CoroutineManager.StartCoroutine(Survived());
+            }
+        }
+    }
+
+    IEnumerator Survived()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        // Survived UI Show
+        Managers.UIManager.ShowPopUpUI("PopUpUI_Clear");
     }
 
     public void GetExp(float expValue)

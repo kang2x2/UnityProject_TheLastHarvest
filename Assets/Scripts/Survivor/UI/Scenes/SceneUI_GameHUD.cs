@@ -10,6 +10,7 @@ public class SceneUI_GameHUD : UI_Scene
     {
         ExpBar,
         PlayerHpBar,
+        BossHpBar,
     }
 
     enum Images
@@ -29,8 +30,6 @@ public class SceneUI_GameHUD : UI_Scene
         TimerText,
     }
 
-    RectTransform _rect;
-
     private void Awake()
     {
         UI_Bind<Slider>(typeof(Sliders));
@@ -39,8 +38,6 @@ public class SceneUI_GameHUD : UI_Scene
         UI_Bind<Text>(typeof(Texts));
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.PauseButton).gameObject, ClickPauseButton);
-
-        _rect = GetComponent<RectTransform>();
 
         if(Managers.GameManagerEx.MapType == Define.MapType.Cave)
         {
@@ -52,6 +49,8 @@ public class SceneUI_GameHUD : UI_Scene
             UI_Get<Text>((int)Texts.KillText).color = Color.black;
             UI_Get<Text>((int)Texts.LevelText).color = Color.black;
         }
+
+        UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.SetActive(false);
     }
 
     private void Update()
@@ -70,7 +69,10 @@ public class SceneUI_GameHUD : UI_Scene
         }
 
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
-        UI_Get<Slider>((int)Sliders.PlayerHpBar).value = player.Hp / player.MaxHp;
+        if(float.IsNaN(player.Hp / player.MaxHp) == false)
+        {
+            UI_Get<Slider>((int)Sliders.PlayerHpBar).value = player.Hp / player.MaxHp;
+        }
 
         UI_Get<Slider>((int)Sliders.ExpBar).value = (float)Managers.GameManagerEx.CurExp / Managers.GameManagerEx.DestExp;
         UI_Get<Text>((int)Texts.KillText).text = string.Format("{0:F0}", Managers.GameManagerEx.Kill);
@@ -79,6 +81,15 @@ public class SceneUI_GameHUD : UI_Scene
         int min = Mathf.FloorToInt(Managers.GameManagerEx.ProgressTime / 60);
         int sec = Mathf.FloorToInt(Managers.GameManagerEx.ProgressTime % 60);
         UI_Get<Text>((int)Texts.TimerText).text = string.Format("{0:D2}:{1:D2}", min, sec);
+
+        if(Managers.GameManagerEx.IsBossBattle == true)
+        {
+            if(UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.activeSelf == false)
+            {
+                UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.SetActive(true);
+            }
+            UI_Get<Slider>((int)Sliders.BossHpBar).value = Managers.GameManagerEx.Boss.Hp / Managers.GameManagerEx.Boss.MaxHp;
+        }
     }
 
     public void ClickPauseButton(PointerEventData data)

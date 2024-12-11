@@ -7,7 +7,6 @@ public class Monster : MonoBehaviour
 {
     float hp;
     float maxHp;
-    float attack;
     float speed;
 
     GameObject _target = null;
@@ -25,7 +24,8 @@ public class Monster : MonoBehaviour
     
     [SerializeField]
     Data_Monster[] datas;
-    public Data_Monster MonsterData { get; private set; } 
+
+    public float Attack { get; private set; }
 
     void OnEnable()
     {
@@ -55,14 +55,12 @@ public class Monster : MonoBehaviour
         MonsterSetting(datas[index], Managers.GameManagerEx.GameLevel);
 
         _hpBar = Managers.ResourceManager.Instantiate("UI/Worlds/WorldUI_HpBar").GetComponent<WorldUI_HpBar>();
-        _hpBar.Init(transform, new Vector3(0.0f, 0.75f, 0.0f), maxHp);
+        _hpBar.Init(transform, maxHp);
         _hpBar.gameObject.SetActive(false);
     }
 
     void MonsterSetting(Data_Monster data, int gameLevel)
     {
-        MonsterData = data;
-
         _anim = GetComponent<Animator>();
         _anim.runtimeAnimatorController = data.Animator;
 
@@ -70,13 +68,13 @@ public class Monster : MonoBehaviour
         {
             maxHp = data.maxHp + (gameLevel * 1.1f);
             hp = maxHp;
-            attack = data.attack + (gameLevel * 1.1f);
+            Attack = data.attack + (gameLevel * 1.1f);
         }
         else
         {
             maxHp = data.maxHp + (gameLevel * 1.2f);
             hp = maxHp;
-            attack = data.attack + (gameLevel * 1.2f);
+            Attack = data.attack + (gameLevel * 1.2f);
         }
 
         speed = data.speed;
@@ -126,6 +124,18 @@ public class Monster : MonoBehaviour
         if (Managers.Instance != null && _isLive == true)
         {
             _sprite.flipX = transform.position.x > _target.transform.position.x;
+        }
+
+        if(Managers.GameManagerEx.IsClear == true)
+        {
+            Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
+            Managers.ResourceManager.Destroy(_hpBar.gameObject);
+
+            _isLive = false;
+            _collider.enabled = false;
+            _rigid.simulated = false;
+            _sprite.sortingOrder = 1;
+            _anim.SetBool("Dead", true);
         }
     }
 
@@ -181,17 +191,16 @@ public class Monster : MonoBehaviour
             }
             else
             {
+                Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
+                Managers.GameManagerEx.Kill += 1;
+                Managers.ResourceManager.Destroy(_hpBar.gameObject);
+
                 _isLive = false;
                 _collider.enabled = false;
                 _rigid.simulated = false;
                 _sprite.sortingOrder = 1;
                 _anim.SetBool("Dead", true);
-
-                Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
-                Managers.GameManagerEx.Kill += 1;
-                Managers.ResourceManager.Destroy(_hpBar.gameObject);
             }
-
         }
     }
 
@@ -199,14 +208,17 @@ public class Monster : MonoBehaviour
     {
         if(collision.CompareTag("PlayerArea") && _isLive == true)
         {
-            float randomAngle = Random.Range(0.0f, 360.0f);
-            float randomRadian = randomAngle * Mathf.Deg2Rad;
+            if(Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
+            {
+                float randomAngle = Random.Range(0.0f, 360.0f);
+                float randomRadian = randomAngle * Mathf.Deg2Rad;
 
-            Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
-            float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSet / 2))).x;
-            float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
+                Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
+                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSet / 2))).x;
+                float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
 
-            transform.position = new Vector2(monsterPosX, monsterPosY);
+                transform.position = new Vector2(monsterPosX, monsterPosY);
+            }
         }
     }
 

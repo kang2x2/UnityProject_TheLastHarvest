@@ -5,27 +5,37 @@ using UnityEngine.UI;
 
 public class WorldUI_HpBar : UI_Base
 {
-    float _maxVal;
-    float _curVal;
-
-    float _accTime = 0.0f;
-    float _disableTime = 2.0f;
-
     RectTransform _rect;
     Slider _slider;
     Transform _owner;
+
+    float _maxVal;
+    float _curVal;
+
+    float _accTime;
+    float _disableTime;
+
     Vector3 _offset;
 
-    public void Init(Transform owner, Vector3 offset, float maxVal)
+    public void Init(Transform owner, float maxVal)
     {
         _rect = GetComponent<RectTransform>();
         _slider = GetComponentInChildren<Slider>();
 
+        if(owner == null)
+        {
+            Debug.Log("WorldHpBar Error. Owner Is Null.");
+        }
+
         _owner = owner;
         transform.SetParent(_owner);
 
-        _offset = offset;
+        _accTime = 0.0f;
+        _disableTime = 2.0f;
+        _offset = new Vector3(0.0f, 0.75f, 0.0f);
+
         _maxVal = maxVal;
+        ValueInit(_maxVal);
     }
 
     public void ValueInit(float curVal)

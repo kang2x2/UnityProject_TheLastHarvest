@@ -28,12 +28,9 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if(Managers.GameManagerEx.IsPause == true || Managers.GameManagerEx.IsBossBattle == true)
-        {
-            return;
-        }
-
-        if(Managers.SceneManagerEx.IsLoading == true)
+        if(Managers.GameManagerEx.IsPause == true ||
+           Managers.GameManagerEx.IsClear == true ||
+           Managers.SceneManagerEx.IsLoading == true)
         {
             return;
         }

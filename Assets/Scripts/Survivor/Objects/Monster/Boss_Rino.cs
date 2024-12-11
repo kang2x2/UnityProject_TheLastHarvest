@@ -2,85 +2,125 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss_Rino : MonoBehaviour
+public class Boss_Rino : BossMonster
 {
-    Animator _anim;
-    SpriteRenderer _sprite;
-    Rigidbody2D _rigid;
-    Collider2D _collider;
-
-    StateManager_Rino _stateManager;
-    void Start()
+    public override void Init()
     {
-        _anim = GetComponent<Animator>();
+        _target = Managers.GameManagerEx.Player;
+        IsLive = true;
+
         _sprite = GetComponent<SpriteRenderer>();
         _rigid = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 
-        StartCoroutine(Opening());
+        MonsterSetting(data, Managers.GameManagerEx.GameLevel);
     }
 
-    IEnumerator Opening()
+    void FixedUpdate()
     {
-        Vector2 destPos = Camera.main.transform.position;
-        transform.position = new Vector3(destPos.x, destPos.y + 10);
-
-        _anim.Play("Rino_Run");
-        _anim.speed = 2.5f;
-
-        while (true)
+        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
         {
-            transform.position = Vector2.MoveTowards(transform.position, destPos, 5.0f * Time.deltaTime);
-            float dist = Vector2.Distance(transform.position, destPos);
+            return;
+        }
 
-            if (dist <= 1.0f)
+        if (Managers.Instance != null)
+        {
+            if (IsLive == false || _anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             {
-                _anim.Play("Rino_Break");
-                _anim.speed = 1.0f;
-                break;
+                return;
             }
 
-            yield return null;
+            Vector2 dir = _target.GetComponent<Rigidbody2D>().position - _rigid.position;
+            Vector2 destPos = dir.normalized * speed * Time.fixedDeltaTime;
+            _rigid.MovePosition(_rigid.position + destPos);
+            _rigid.velocity = Vector2.zero;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
+        {
+            _anim.speed = 0.0f;
+            if (Managers.SceneManagerEx.IsLoading == true)
+            {
+                _rigid.velocity = Vector2.zero;
+            }
+            return;
+        }
+        else
+        {
+            _anim.speed = 1.0f;
         }
 
-        while(true)
+        if (Managers.Instance != null && IsLive == true)
         {
-            transform.position = Vector2.MoveTowards(transform.position, destPos, 1.0f * Time.deltaTime);
-            float dist = Vector2.Distance(transform.position, destPos);
+            _sprite.flipX = transform.position.x < _target.transform.position.x;
+        }
+    }
 
-            if (dist <= 0.02f)
+    #region Collision
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerProjectile"))
+        {
+            Hp -= collision.transform.GetComponent<Projectile>().Attack;
+
+            if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Bullet)
             {
-                _stateManager = new StateManager_Rino();
-                _stateManager.Init(this);
-                _stateManager.ChangeState((int)StateManager_Rino.RinoState.Idle);
-                break;
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BulletHitEffect");
+                effect.transform.position = transform.position;
+            }
+            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.BigBullet)
+            {
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BigBulletHitEffect");
+                effect.transform.position = transform.position;
+            }
+            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Slash)
+            {
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
+                effect.transform.position = transform.position;
+            }
+            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
+            {
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
+                effect.transform.position = transform.position;
             }
 
-            yield return null;
+            if (Hp > 0)
+            {
+                _anim.SetTrigger("Hit");
+            }
+            else
+            {
+                IsLive = false;
+                _collider.enabled = false;
+                _rigid.simulated = false;
+                _sprite.sortingOrder = 1;
+                _anim.SetBool("Dead", true);
+            }
         }
+    }
 
-        yield return true;
-    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerArea") && IsLive == true)
+        {
+            if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
+            {
+                float randomAngle = Random.Range(0.0f, 360.0f);
+                float randomRadian = randomAngle * Mathf.Deg2Rad;
 
-    private void FixedUpdate()
-    {
-        if (_stateManager != null)
-        {
-            _stateManager.FixedUpdate();
+                Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
+                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSet / 2))).x;
+                float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
+
+                transform.position = new Vector2(monsterPosX, monsterPosY);
+            }
         }
     }
-    void Update()
-    {
-        if (_stateManager != null)
-        {
-            _stateManager.Update();
-        }
-    }
-    private void LateUpdate()
-    {
-        if (_stateManager != null)
-        {
-            _stateManager.LateUpdate();
-        }
-    }
+    #endregion
 }

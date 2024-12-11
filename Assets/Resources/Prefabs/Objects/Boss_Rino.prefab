@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5385637736431954161}
   - component: {fileID: 1722957214019345684}
   - component: {fileID: 1581508273431160915}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boss_Rino
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &1722957214019345684
 Animator:
   serializedVersion: 5
@@ -170,7 +170,7 @@ Animator:
   m_GameObject: {fileID: 7775056546013276565}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ce7fc84f2ca57a84db38779a40519e62, type: 2}
+  m_Controller: {fileID: 22100000, guid: 65b24fab653c137489b64c30b05c9e03, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -193,3 +193,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d95c572228eed742bbb00b62a8ccce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: bef1944b616cea9498de589361572bd3, type: 2}
