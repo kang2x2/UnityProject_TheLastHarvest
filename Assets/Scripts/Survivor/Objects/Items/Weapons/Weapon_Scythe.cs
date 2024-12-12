@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Weapon_Scythe : Weapon
 {
-    float _shootTime;
     float _accTime;
-
-    Vector2 _offset;
 
     public bool IsSpawn { get; set; } = true;
 
@@ -16,20 +13,17 @@ public class Weapon_Scythe : Weapon
         gameObject.SetActive(true);
 
         _accTime = 0.0f;
-        _shootTime = 5.0f;
-
-        _offset = new Vector2(0.1f, -0.2f);
     }
 
     public override void LevelUp(Define.AbilityType type)
     {
         switch (type)
         {
-            case Define.AbilityType.Size:
-                _sizeLevel += 1;
+            case Define.AbilityType.Amount:
+                _amountLevel += 1;
                 break;
-            case Define.AbilityType.Speed:
-                _speedLevel += 1;
+            case Define.AbilityType.CoolTime:
+                _coolTimeLevel += 1;
                 break;
             case Define.AbilityType.Attack:
                 _attackLevel += 1;
@@ -47,22 +41,24 @@ public class Weapon_Scythe : Weapon
         if (IsSpawn == true)
         {
             _accTime += Time.deltaTime;
-            if (_accTime >= _shootTime)
+            if (_accTime >= _itemData.coolTimes[_coolTimeLevel])
             {
                 GameObject scythe = null;
                 scythe = Managers.ResourceManager.Instantiate("Objects/Projectile_Scythe");
 
-                scythe.transform.parent = transform;
+                // scythe.transform.parent = transform;
 
-                scythe.transform.localPosition = Vector3.zero;
-                scythe.transform.localRotation = Quaternion.identity;
-                scythe.transform.localScale = new Vector3(_itemData.sizes[_sizeLevel], _itemData.sizes[_sizeLevel], _itemData.sizes[_sizeLevel]);
+                scythe.transform.position = transform.position;
+                scythe.transform.rotation = Quaternion.identity;
 
                 float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-                scythe.GetComponent<Projectile_Scythe>().Init(_itemData.attacks[_attackLevel] * attackRatio);
+                scythe.GetComponent<Projectile_Scythe>().Init(
+                    _itemData.attacks[_attackLevel] * attackRatio,
+                    _itemData.amounts[_amountLevel], this);
 
                 _accTime = 0.0f;
                 IsSpawn = false;
+                GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }
@@ -84,6 +80,5 @@ public class Weapon_Scythe : Weapon
                 transform.position = new Vector2(player.position.x + 0.1f, player.position.y - 0.2f);
             }
         }
-
     }
 }

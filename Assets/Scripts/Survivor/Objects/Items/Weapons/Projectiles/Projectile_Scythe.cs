@@ -5,26 +5,28 @@ using UnityEngine;
 
 public class Projectile_Scythe : Projectile
 {
-    float _offsetY;
-    float _atkOffset;
-    float _speed;
-    float _angle;
-
-    bool _isFlip;
-
     Collider2D _collider;
+    TrailRenderer _trail;
+    Weapon_Scythe _parent;
 
-    public void Init(float attack)
+    Vector2 _offset;
+    Vector2 _attackScale;
+
+    public void Init(float attack, int attackCount, Weapon_Scythe parent)
     {
         _collider = GetComponent<Collider2D>();
+        _trail = GetComponent<TrailRenderer>();
         _collider.enabled = false;
+        _trail.enabled = false;
 
         Attack = attack;
+        AttackCount = attackCount;
         Effect = EffectType.Slash;
 
-        _offsetY = 1.75f;
-        _speed = 10.0f;
-        _isFlip = false;
+        _offset = new Vector2(-0.5f, 2.0f);
+        _attackScale = new Vector3(2.0f, 2.0f, 2.0f);
+
+        _parent = parent;
 
         StartCoroutine(AttackReady(() => {
             StartCoroutine(WeaponAttack(() => {
@@ -33,26 +35,37 @@ public class Projectile_Scythe : Projectile
         }));
     }
 
-    private void Update()
-    {
-        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
-        {
-            return;
-        }
-    }
-
     IEnumerator AttackReady(Action action)
     {
-        float moveSpeed = 3.0f;
         Transform player = Managers.GameManagerEx.Player.transform;
 
+        float accTime = 0.0f;
+        float moveTime = 0.5f;
         while (true)
         {
-            Vector3 destPos = new Vector3(player.position.x, player.position.y + _offsetY, player.position.z);
-            transform.position = Vector3.MoveTowards(transform.position, destPos, moveSpeed * Time.deltaTime);
-            transform.Rotate(Vector3.back * 2160.0f * Time.deltaTime);
+            float distX = Mathf.Abs(player.position.x - transform.position.x);
 
-            if (Vector2.Distance(transform.position, destPos) >= 0.02f)
+            if (player.GetComponent<SpriteRenderer>().flipX == true)
+            {
+                _offset.x = 0.5f;
+                transform.position = new Vector2(player.position.x + distX, transform.position.y);
+                transform.rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+            }
+            else
+            {
+                _offset.x = -0.5f;
+                transform.position = new Vector2(player.position.x - distX, transform.position.y);
+                transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+            }
+
+            float t = accTime / moveTime;
+            Vector2 destPos = new Vector2(player.position.x + _offset.x, player.position.y + _offset.y);
+            transform.position = Vector2.Lerp(transform.position, destPos, t);
+            transform.localScale = Vector2.Lerp(new Vector2(0.5f, 0.5f), _attackScale, t);
+
+            accTime += Time.deltaTime;
+
+            if (accTime < moveTime)
             {
                 yield return null;
             }
@@ -62,48 +75,81 @@ public class Projectile_Scythe : Projectile
             }
         }
 
-        _isFlip = true;
-        yield return new WaitForSeconds(0.1f);
+        accTime = 0.0f;
+        float destAngle = 60.0f;
+        float curAngle = 0.0f;
+        float rotTime = 0.5f;
+        while (true)
+        {
+            transform.SetParent(_parent.transform);
+            float t = accTime / rotTime;
+            curAngle = Mathf.Lerp(curAngle, destAngle, t);
+            transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y, curAngle);
+
+            accTime += Time.deltaTime;
+            if (accTime < rotTime)
+            {
+                yield return null;
+            }
+            else
+            {
+                transform.SetParent(null);
+                break;
+            }
+        }
 
         action?.Invoke();
     }
 
     IEnumerator WeaponAttack(Action action)
     {
+        Transform player = Managers.GameManagerEx.Player.transform;
         _collider.enabled = true;
+        _trail.enabled = true;
 
-        // 초기 회전 각도 계산, 시작 각도는 -90도이지만 언제 바뀔 지 모르기에 수식으로.
-        Vector3 dirToPlayer = Managers.GameManagerEx.Player.transform.position - transform.position;
-        float initialAngle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
+        // 초기 시작 위치 계산.
+        Vector2 dirToPlayer = player.position - transform.position;
+        float curPosValue = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
 
-        _angle = initialAngle;
-        float destX = 0.0f;
-        float destY = 0.0f;
+        float destPosValue = 90.0f;
 
-        bool _isRight = transform.eulerAngles.y > 0 ? true : false;
-        _isFlip = false;
+        // 각도 
+        float curAngle = transform.eulerAngles.z;
+        float destAngle = -180.0f;
+
+        // 경과 시간
+        float accTime = 0.0f;
+        float attackTime = 0.15f;
+
+        // 실시간 위치
+        float curPosX;
+        float curPosY;
+
+        bool isRight = player.position.x > transform.position.x ? true : false;
 
         while (true)
         {
-            Vector3 center = Managers.GameManagerEx.Player.transform.position;
+            float t = accTime / attackTime;
+            curPosValue = Mathf.Lerp(curPosValue, destPosValue, t);
+            curAngle = Mathf.Lerp(curAngle, destAngle, t);
 
-            _angle += _speed / 4;
-            
-            if (_isRight == true) // Right
+            if (isRight == true) // Right
             {
-                destX = center.x - (_offsetY * Mathf.Cos(_angle * (Mathf.PI / 180.0f)));
-                destY = center.y - (_offsetY * Mathf.Sin(_angle * (Mathf.PI / 180.0f)));
+                curPosX = player.position.x + (_offset.y * Mathf.Cos(curPosValue * (Mathf.PI / 180.0f)));
+                curPosY = player.position.y - (_offset.y * Mathf.Sin(curPosValue * (Mathf.PI / 180.0f)));
             }
             else // Left
             {
-                destX = center.x + (_offsetY * Mathf.Cos(_angle * (Mathf.PI / 180.0f)));
-                destY = center.y - (_offsetY * Mathf.Sin(_angle * (Mathf.PI / 180.0f)));
+                curPosX = player.position.x - (_offset.y * Mathf.Cos(curPosValue * (Mathf.PI / 180.0f)));
+                curPosY = player.position.y - (_offset.y * Mathf.Sin(curPosValue * (Mathf.PI / 180.0f)));
             }
 
-            transform.position = new Vector2(destX, destY);
-            // transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + _angle);
+            transform.position = new Vector2(curPosX, curPosY);
+            transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y, curAngle);
 
-            if (_angle < 90.0f)
+            accTime += Time.deltaTime;
+
+            if (curPosValue < destPosValue)
             {
                 yield return null;
             }
@@ -114,6 +160,7 @@ public class Projectile_Scythe : Projectile
         }
 
         _collider.enabled = false;
+        _trail.emitting = false;
         action?.Invoke();
     }
 
@@ -121,39 +168,30 @@ public class Projectile_Scythe : Projectile
     {
         yield return new WaitForSeconds(0.1f);
 
-        float moveSpeed = 3.0f;
         Transform player = Managers.GameManagerEx.Player.transform;
+
+        float accTime = 0.0f;
+        float moveTime = 0.5f;
 
         while (true)
         {
+            float t = accTime / moveTime;
             transform.Rotate(Vector3.back * 2160.0f * Time.deltaTime);
-            transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector2.Lerp(transform.position, player.position, t);
+            transform.localScale = Vector2.Lerp(_attackScale, Vector2.zero, t);
 
-            if (Vector2.Distance(transform.position, player.position) >= 0.02f)
+            accTime += Time.deltaTime;
+            if (accTime < moveTime)
             {
                 yield return null;
             }
             else
             {
-                transform.parent.GetComponent<Weapon_Scythe>().IsSpawn = true;
+                _trail.enabled = false;
+                _parent.IsSpawn = true;
+                _parent.GetComponent<SpriteRenderer>().enabled = true;
                 Managers.ResourceManager.Destroy(gameObject);
                 break;
-            }
-        }
-    }
-
-    private void LateUpdate()
-    {
-        Transform player = Managers.GameManagerEx.Player.transform;
-        if(player != null && _isFlip == true)
-        {
-            if (player.GetComponent<SpriteRenderer>().flipX == true)
-            {
-                transform.rotation = Quaternion.Euler(0.0f, 180.0f, 45.0f);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0.0f, 0.0f, 45.0f);
             }
         }
     }

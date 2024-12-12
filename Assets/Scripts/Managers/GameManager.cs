@@ -54,7 +54,7 @@ public class GameManager
             return;
         }
 
-        if(ProgressTime >= 3.0f && IsBossBattle == false)
+        if(ProgressTime >= 300000.0f && IsBossBattle == false)
         {
             // 카메라 고정
             // if (CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera != null)

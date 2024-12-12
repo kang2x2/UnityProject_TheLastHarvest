@@ -15,6 +15,7 @@ public class Projectile_Trident : Projectile
     {
         _rigid = GetComponent<Rigidbody2D>();
         Attack = attack;
+        AttackCount = 1;
         Effect = EffectType.Slash;
 
         _bounce = bounce;

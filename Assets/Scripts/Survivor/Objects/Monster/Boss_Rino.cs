@@ -59,10 +59,10 @@ public class Boss_Rino : BossMonster
         }
     }
 
-    #region Collision
-    private void OnTriggerEnter2D(Collider2D collision)
+    IEnumerator HitEvent(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerProjectile"))
+        Projectile projectile = collision.transform.GetComponent<Projectile>();
+        for (int i = 0; i < projectile.AttackCount; ++i)
         {
             Hp -= collision.transform.GetComponent<Projectile>().Attack;
 
@@ -93,6 +93,7 @@ public class Boss_Rino : BossMonster
             if (Hp > 0)
             {
                 _anim.SetTrigger("Hit");
+
             }
             else
             {
@@ -101,7 +102,19 @@ public class Boss_Rino : BossMonster
                 _rigid.simulated = false;
                 _sprite.sortingOrder = 1;
                 _anim.SetBool("Dead", true);
+                break;
             }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    #region Collision
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerProjectile"))
+        {
+            StartCoroutine(HitEvent(collision));
         }
     }
 

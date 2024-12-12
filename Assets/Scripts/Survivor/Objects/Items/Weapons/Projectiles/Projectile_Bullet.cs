@@ -23,6 +23,7 @@ public class Projectile_Bullet : Projectile
         _trail = GetComponent<TrailRenderer>();
 
         Attack = attack;
+        AttackCount = 1;
         Effect = EffectType.Bullet;
 
         _dir = dir;

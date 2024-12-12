@@ -23,6 +23,7 @@ public class Projectile_BigBullet : Projectile
         _collider = GetComponent<Collider2D>();
 
         Attack = attack;
+        AttackCount = 1;
         Effect = EffectType.BigBullet;
 
         _dist = 3.5f;
