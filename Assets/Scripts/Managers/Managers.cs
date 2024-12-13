@@ -8,6 +8,7 @@ public class Managers : MonoBehaviour
     public static Managers Instance { get { return s_instance; } }
 
     // Field
+    private static AchievementManager s_AchieveManager = new AchievementManager();
     private static GameManager s_gameManager = new GameManager();
     private static PoolManager s_poolManager = new PoolManager();
     private static SceneManagerEx s_sceneManager = new SceneManagerEx();
@@ -17,6 +18,7 @@ public class Managers : MonoBehaviour
     private static UIManager s_uiManager = new UIManager();
     private CoroutineManager m_coroutineManager;
     // Propertiy
+    public static AchievementManager AchieveManager { get { Init(); return s_AchieveManager; } }
     public static GameManager GameManagerEx { get { Init(); return s_gameManager; } }
     public static PoolManager PoolManager { get { Init(); return s_poolManager; } }
     public static SceneManagerEx SceneManagerEx { get { Init(); return s_sceneManager; } }
@@ -54,6 +56,7 @@ public class Managers : MonoBehaviour
             s_instance.m_coroutineManager = coroutineObj.AddComponent<CoroutineManager>();
 
             // Init()
+            s_AchieveManager.Init();
             s_poolManager.Init();
             s_fadeManager.Init();
             s_sceneManager.Init();

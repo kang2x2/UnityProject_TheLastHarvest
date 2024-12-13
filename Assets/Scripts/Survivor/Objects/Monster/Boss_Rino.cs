@@ -86,7 +86,8 @@ public class Boss_Rino : BossMonster
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
             {
                 Managers.SoundManager.PlaySFX("Battles/BlowHit");
-                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
+                // GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
                 effect.transform.position = transform.position;
             }
 
@@ -98,7 +99,7 @@ public class Boss_Rino : BossMonster
             else
             {
                 IsLive = false;
-                _collider.enabled = false;
+                _collider.isTrigger = true;
                 _rigid.simulated = false;
                 _sprite.sortingOrder = 1;
                 _anim.SetBool("Dead", true);

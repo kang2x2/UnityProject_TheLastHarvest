@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class UI_PopUp : UI_Base
 {
-
+    public bool IsShow { get; protected set; } 
 }

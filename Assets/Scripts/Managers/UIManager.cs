@@ -9,6 +9,7 @@ public class UIManager
 
     Dictionary<string, UI_PopUp> _popUps = new Dictionary<string, UI_PopUp>();
 
+    public UI_PopUp CurPopUp { get; private set; }
     public void ShowPopUpUI_Check(string name, string text, Action action)
     {
         ShowPopUpUI(name);
@@ -23,9 +24,9 @@ public class UIManager
         popUpCheck.ValueInit(text, action);
     }
 
-    public void ShowPopUpUI(string name)
+    public void ShowPopUpUI(string name, object param = null)
     {
-        UI_PopUp popUp = null;
+        UI_PopUp popUp;
 
         if(_popUps.TryGetValue(name, out popUp) == false)
         {
@@ -42,7 +43,9 @@ public class UIManager
 
         popUp.gameObject.SetActive(true);
         popUp.GetComponent<Canvas>().sortingOrder = _curOrder++;
-        popUp.Show();
+        popUp.Show(param);
+
+        CurPopUp = popUp;
     }
 
     public void ClosePopUpUI(string name)

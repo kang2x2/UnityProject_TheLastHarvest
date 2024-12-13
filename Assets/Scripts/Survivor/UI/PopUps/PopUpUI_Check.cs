@@ -31,8 +31,7 @@ public class PopUpUI_Check : UI_PopUp
     public void ValueInit(string text, Action action)
     {
         UI_Get<Text>((int)Texts.CheckText).text= text;
-        _action -= action;
-        _action += action;
+        _action = action;
     }
 
     public void ClickYes(PointerEventData data)

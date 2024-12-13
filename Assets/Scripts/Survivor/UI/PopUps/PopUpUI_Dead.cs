@@ -29,9 +29,11 @@ public class PopUpUI_Dead : UI_PopUp
 
     public void ReturnTitle(PointerEventData data)
     {
-        Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
-        Managers.GameManagerEx.Continue();
-        Managers.SceneManagerEx.ChangeScene(Define.SceneType.TitleScene);
+        StartCoroutine(Managers.AchieveManager.UnLockCharacter(() => {
+            Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+            Managers.GameManagerEx.Continue();
+            Managers.SceneManagerEx.ChangeScene(Define.SceneType.TitleScene);
+        }));
     }
 
     private void LateUpdate()

@@ -97,7 +97,7 @@ public class PopUpUI_LevelUp : UI_PopUp
         LiveButtonCount = _itemButtons.Count;
     }
 
-    public override void Show()
+    public override void Show(object param = null)
     {
         Managers.GameManagerEx.Pause();
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();

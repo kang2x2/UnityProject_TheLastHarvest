@@ -175,7 +175,8 @@ public class Monster : MonoBehaviour
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
             {
                 Managers.SoundManager.PlaySFX("Battles/BlowHit");
-                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
+                GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
+                // GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
                 effect.transform.position = transform.position;
             }
 

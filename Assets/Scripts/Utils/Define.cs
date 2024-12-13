@@ -84,4 +84,11 @@ public class Define
 
         End
     }
+
+    public enum JsonDataType
+    {
+        Character,
+        Ability,
+        End
+    }
 }

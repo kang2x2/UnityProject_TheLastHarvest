@@ -41,6 +41,11 @@ public class PopUpUI_SelectCharacter : UI_PopUp
         UI_BindEvent(UI_Get<Button>((int)Buttons.PrevButton).gameObject, ClickPrevButton);
     }
 
+    public override void Show(object param = null)
+    {
+        _characterIndex = 0;
+    }
+
     public void ClickSelectButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
@@ -84,7 +89,19 @@ public class PopUpUI_SelectCharacter : UI_PopUp
         Animator anim = UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Animator>();
         anim.runtimeAnimatorController = _characterDatas[_characterIndex].selectAnimator;
 
-        UI_Get<Text>((int)Texts.NameText).text = _characterDatas[_characterIndex].name;
-        UI_Get<Text>((int)Texts.DescText).text = _characterDatas[_characterIndex].desc;
+        if (Managers.AchieveManager.Character.unLocks[_characterIndex] == false)
+        {
+            anim.StartPlayback();
+            UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Image>().color = Color.black;
+            UI_Get<Text>((int)Texts.NameText).text = "???";
+            UI_Get<Text>((int)Texts.DescText).text = _characterDatas[_characterIndex].unLockDesc;
+        }
+        else
+        {
+            anim.StopPlayback();
+            UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Image>().color = Color.white;
+            UI_Get<Text>((int)Texts.NameText).text = _characterDatas[_characterIndex].name;
+            UI_Get<Text>((int)Texts.DescText).text = _characterDatas[_characterIndex].abilityDesc;
+        }
     }
 }

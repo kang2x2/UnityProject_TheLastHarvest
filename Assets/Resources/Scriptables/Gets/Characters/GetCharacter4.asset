@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19067f78c28a8424e9aa32ea45effb37, type: 3}
+  m_Name: GetCharacter4
+  m_EditorClassIdentifier: 
+  name: "\uBC30\uD14C\uB791 \uB18D\uBD80(\uC5EC)"
+  desc: "\uB9CE\uC774 \uBBFC\uCCA9\uD558\uBA70 \uC880 \uB354 \uD798\uC774 \uAC15\uD569\uB2C8\uB2E4.
+    \uB610\uD55C \uACBD\uD5D8\uCE58\uB97C \uD68D\uB4DD\uD558\uB294 \uB2A5\uB825\uC774
+    \uB6F0\uC5B4\uB0A9\uB2C8\uB2E4."
+  image: {fileID: 938132271, guid: 57a1443e67528144aa07582927559650, type: 3}

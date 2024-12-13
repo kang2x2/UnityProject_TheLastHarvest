@@ -10,8 +10,11 @@ public class Data_Character : ScriptableObject
     public Define.CharacterType type;
     public RuntimeAnimatorController selectAnimator;
 
+    [Header("# string Info")]
     [TextArea]
-    public string desc;
+    public string abilityDesc;
+    [TextArea]
+    public string unLockDesc;
 
     [Header("# Game Info")]
     public RuntimeAnimatorController gameAnimator;

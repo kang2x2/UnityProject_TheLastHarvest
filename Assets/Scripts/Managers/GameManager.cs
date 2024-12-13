@@ -45,6 +45,8 @@ public class GameManager
         }
 
         Player.GetComponent<Player>().CharacterSetting(PlayerData);
+        IsBossBattle = false;
+        IsClear = false;
     }
 
     public void Update()
@@ -54,7 +56,7 @@ public class GameManager
             return;
         }
 
-        if(ProgressTime >= 300000.0f && IsBossBattle == false)
+        if(ProgressTime >= 3.0f && IsBossBattle == false)
         {
             // 카메라 고정
             // if (CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera != null)
@@ -63,7 +65,16 @@ public class GameManager
             // }
         
             // 보스 생성
-            Boss = Managers.ResourceManager.Instantiate("Objects/Boss_Rino").GetComponent<BossMonster>();
+            switch(MapType)
+            {
+                case Define.MapType.Field:
+                    Boss = Managers.ResourceManager.Instantiate("Objects/Boss_Rino").GetComponent<BossMonster>();
+                    break;
+                case Define.MapType.Cave:
+                    Boss = Managers.ResourceManager.Instantiate("Objects/Boss_Skull").GetComponent<BossMonster>();
+                    break;
+
+            }
             IsBossBattle = true;
         }
 

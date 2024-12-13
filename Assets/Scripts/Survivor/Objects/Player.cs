@@ -111,6 +111,7 @@ public class Player : MonoBehaviour
 
     IEnumerator Dead()
     {
+        _sprite.color = Color.white;
         Weapon[] weapons = transform.GetComponentsInChildren<Weapon>();
         foreach(Weapon weapon in weapons)
         {

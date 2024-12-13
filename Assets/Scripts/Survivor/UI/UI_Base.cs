@@ -10,7 +10,7 @@ public class UI_Base : MonoBehaviour
 
     public virtual void Init() { }
 
-    public virtual void Show() { }
+    public virtual void Show(object param = null) { }
 
     protected void UI_Bind<T>(Type type) where T : UnityEngine.Object
     {

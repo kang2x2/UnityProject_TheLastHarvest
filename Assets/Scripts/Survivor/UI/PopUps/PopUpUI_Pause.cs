@@ -42,7 +42,7 @@ public class UIPopUp_Pause : UI_PopUp
         UI_BindEvent(UI_Get<Slider>((int)Sliders.SFXVolum).gameObject, VolumSet_SFX, Define.UIEvent.Drag);
     }
 
-    public override void Show()
+    public override void Show(object param = null)
     {
         UI_Get<Slider>((int)Sliders.BGMVolum).value = Managers.SoundManager.BGMVolum;
         UI_Get<Slider>((int)Sliders.SFXVolum).value = Managers.SoundManager.SFXVolum;
