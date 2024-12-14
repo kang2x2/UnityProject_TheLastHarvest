@@ -10,9 +10,9 @@ public class JsonDataCharacter
     public bool[] unLocks;
 }
 
-public class AchievementManager
+public class CharacterData
 {
-    public JsonDataCharacter Character { get; set; } = new JsonDataCharacter();
+    public JsonDataCharacter Data { get; set; } = new JsonDataCharacter();
 
     string folderPath;
     public void Init()
@@ -26,17 +26,11 @@ public class AchievementManager
         JsonDataLoad();
     }
 
-    public void JsonDataOverwrite(Define.JsonDataType type)
+    public void CharacterDataOverwrite()
     {
         string json;
-
-        switch (type)
-        {
-            case Define.JsonDataType.Character:
-                json = JsonUtility.ToJson(Character);
-                File.WriteAllText(folderPath + "Character.json", json);
-                break;
-        }
+        json = JsonUtility.ToJson(Data, true);
+        File.WriteAllText(folderPath + "Character.json", json);
     }
 
     private void JsonDataLoad()
@@ -44,14 +38,14 @@ public class AchievementManager
         string filePath = folderPath + "Character.json";
         if (File.Exists(filePath) == false)
         {
-            Character.unLocks = new bool[] { true, false, false, false };
-            string json = JsonUtility.ToJson(Character);
+            Data.unLocks = new bool[] { true, false, false, false };
+            string json = JsonUtility.ToJson(Data, true);
             File.WriteAllText(filePath, json);
         }
         else
         {
             string json = File.ReadAllText(filePath);
-            Character = JsonUtility.FromJson<JsonDataCharacter>(json);
+            Data = JsonUtility.FromJson<JsonDataCharacter>(json);
         }
     }
 
@@ -61,13 +55,13 @@ public class AchievementManager
 
         void PopUpSet(int index)
         {
-            Character.unLocks[index] = true;
+            Data.unLocks[index] = true;
             Managers.UIManager.ShowPopUpUI("PopUpUI_Get", index);
             popUp = Managers.UIManager.CurPopUp;
         }
 
-        if (Managers.GameManagerEx.ProgressTime >= 300.0f &&
-            Character.unLocks[(int)Define.CharacterType.Character2] == false)
+        if (Managers.GameManagerEx.ProgressTime >= 3.0f &&
+            Data.unLocks[(int)Define.CharacterType.Character2] == false)
         {
             PopUpSet((int)Define.CharacterType.Character2);
             while (true)
@@ -81,7 +75,7 @@ public class AchievementManager
         }
         if (Managers.GameManagerEx.MapType == Define.MapType.Field &&
             Managers.GameManagerEx.IsClear == true &&
-            Character.unLocks[(int)Define.CharacterType.Character3] == false)
+            Data.unLocks[(int)Define.CharacterType.Character3] == false)
         {
             PopUpSet((int)Define.CharacterType.Character3);
             while (true)
@@ -95,7 +89,7 @@ public class AchievementManager
         }
         if (Managers.GameManagerEx.MapType == Define.MapType.Cave &&
             Managers.GameManagerEx.IsClear == true &&
-            Character.unLocks[(int)Define.CharacterType.Character4] == false)
+            Data.unLocks[(int)Define.CharacterType.Character4] == false)
         {
             PopUpSet((int)Define.CharacterType.Character4);
             while (true)
@@ -108,7 +102,7 @@ public class AchievementManager
             }
         }
 
-        JsonDataOverwrite(Define.JsonDataType.Character);
+        CharacterDataOverwrite();
 
         action?.Invoke();
         yield return null;
@@ -118,11 +112,11 @@ public class AchievementManager
     {
         string filePath = folderPath + "Character.json";
 
-        Character.unLocks = new bool[] { true, false, false, false };
-        string json = JsonUtility.ToJson(Character);
+        Data.unLocks = new bool[] { true, false, false, false };
+        string json = JsonUtility.ToJson(Data, true);
         File.WriteAllText(filePath, json);
 
         json = File.ReadAllText(filePath);
-        Character = JsonUtility.FromJson<JsonDataCharacter>(json);
+        Data = JsonUtility.FromJson<JsonDataCharacter>(json);
     }
 }

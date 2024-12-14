@@ -66,6 +66,15 @@ public class Define
         End
     }
 
+    public enum UserUpgradType
+    {
+        Attack,
+        Exp,
+        MoveSpeed,
+        MaxHP,
+        End
+    }
+
     public enum MonsterType
     {
         // Field
@@ -85,10 +94,4 @@ public class Define
         End
     }
 
-    public enum JsonDataType
-    {
-        Character,
-        Ability,
-        End
-    }
 }

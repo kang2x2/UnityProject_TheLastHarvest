@@ -46,6 +46,9 @@ public class UIPopUp_Pause : UI_PopUp
     {
         UI_Get<Slider>((int)Sliders.BGMVolum).value = Managers.SoundManager.BGMVolum;
         UI_Get<Slider>((int)Sliders.SFXVolum).value = Managers.SoundManager.SFXVolum;
+
+        UI_Get<Text>((int)Texts.BGMRatioText).text = Mathf.RoundToInt(Managers.SoundManager.BGMVolum * 100) + "%";
+        UI_Get<Text>((int)Texts.SFXRatioText).text = Mathf.RoundToInt(Managers.SoundManager.SFXVolum * 100) + "%";
     }
 
     public void ShowCheckUI(PointerEventData data)
@@ -59,6 +62,10 @@ public class UIPopUp_Pause : UI_PopUp
 
     public void ClosePauseUI(PointerEventData data)
     {
+        Managers.DataManager.Sound.SoundDataOverwrite(
+            UI_Get<Slider>((int)Sliders.BGMVolum).value,
+            UI_Get<Slider>((int)Sliders.SFXVolum).value);
+
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ClosePopUpUI("PopUpUI_Pause");
         Managers.GameManagerEx.Continue();

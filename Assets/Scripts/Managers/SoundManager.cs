@@ -15,8 +15,8 @@ public class SoundManager
 
     public void Init()
     {
-        BGMVolum = 1.0f;
-        SFXVolum = 1.0f;
+        BGMVolum = Managers.DataManager.Sound.Data.bgmVolum;
+        SFXVolum = Managers.DataManager.Sound.Data.sfxVolum;
 
         GameObject soundRoot = GameObject.Find("@SoundRoot");
         if(soundRoot == null)

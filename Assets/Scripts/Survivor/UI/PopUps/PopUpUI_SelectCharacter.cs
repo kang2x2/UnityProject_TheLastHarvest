@@ -89,7 +89,7 @@ public class PopUpUI_SelectCharacter : UI_PopUp
         Animator anim = UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Animator>();
         anim.runtimeAnimatorController = _characterDatas[_characterIndex].selectAnimator;
 
-        if (Managers.AchieveManager.Character.unLocks[_characterIndex] == false)
+        if (Managers.DataManager.Character.Data.unLocks[_characterIndex] == false)
         {
             anim.StartPlayback();
             UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Image>().color = Color.black;
