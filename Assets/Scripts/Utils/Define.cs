@@ -11,6 +11,13 @@ public class Define
         End
     }
 
+    public enum GameOverType
+    {
+        Clear,
+        Dead,
+        End
+    }
+
     public enum MapType
     {
         Field,
@@ -48,6 +55,8 @@ public class Define
         PowerCore,
         BoxUpgrade,
         ExpBoost,
+        MaxHp,
+        Recovery,
         HealthPack,
 
         End
@@ -72,6 +81,7 @@ public class Define
         Exp,
         MoveSpeed,
         MaxHP,
+        Recovery,
         End
     }
 

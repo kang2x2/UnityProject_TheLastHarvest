@@ -19,6 +19,12 @@ public class PopUpUI_Store : UI_PopUp
     enum Texts
     {
         UserGoldText,
+
+        AttackStatText,
+        SpeedStatText,
+        MaxHpStatText,
+        RecoveryStatText,
+        ExpStatText,
     }
 
     public override void Init()
@@ -46,5 +52,20 @@ public class PopUpUI_Store : UI_PopUp
     private void LateUpdate()
     {
         UI_Get<Text>((int)Texts.UserGoldText).text = Managers.DataManager.User.Data.gold.ToString();
+
+        int toInt = (int)(Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Attack] * 100.0f);
+        UI_Get<Text>((int)Texts.AttackStatText).text = toInt.ToString() + "%";
+
+        toInt = (int)(Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MoveSpeed] * 100.0f);
+        UI_Get<Text>((int)Texts.SpeedStatText).text = toInt.ToString() + "%";
+
+        toInt = (int)Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MaxHP];
+        UI_Get<Text>((int)Texts.MaxHpStatText).text = toInt.ToString() + "%";
+
+        toInt = (int)(Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Exp] * 100.0f);
+        UI_Get<Text>((int)Texts.ExpStatText).text = toInt.ToString() + "%";
+
+        float bonus = Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Recovery];
+        UI_Get<Text>((int)Texts.RecoveryStatText).text = bonus.ToString() + "%";
     }
 }

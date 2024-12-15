@@ -28,6 +28,13 @@ public class SceneUI_GameHUD : UI_Scene
         LevelText,
         KillText,
         TimerText,
+
+        AttackStatText,
+        SpeedStatText,
+        HpStatText,
+        RecoveryStatText,
+        ExpStatText,
+        MargnetStatText,
     }
 
     private void Awake()
@@ -90,6 +97,15 @@ public class SceneUI_GameHUD : UI_Scene
             }
             UI_Get<Slider>((int)Sliders.BossHpBar).value = Managers.GameManagerEx.Boss.Hp / Managers.GameManagerEx.Boss.MaxHp;
         }
+
+        #region UserStat
+        UI_Get<Text>((int)Texts.AttackStatText).text = string.Format("{0:N1}", player.AttackRatio);
+        UI_Get<Text>((int)Texts.SpeedStatText).text = string.Format("{0:N1}", player.MoveSpeed);
+        UI_Get<Text>((int)Texts.HpStatText).text = string.Format("{0:N1}", player.MaxHp);
+        UI_Get<Text>((int)Texts.RecoveryStatText).text = string.Format("{0:N1}", player.RecoveryRatio);
+        UI_Get<Text>((int)Texts.ExpStatText).text = string.Format("{0:N1}", player.GetExpRatio);
+        UI_Get<Text>((int)Texts.MargnetStatText).text = string.Format("{0:N1}", player.Margent.GetComponent<CircleCollider2D>().radius);
+        #endregion
     }
 
     public void ClickPauseButton(PointerEventData data)

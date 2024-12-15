@@ -6,7 +6,7 @@ public class Passive_Shoose : Survivor_Item
 {
     Player _player;
     float _defaultMoveSpeed;
-    private void Start()
+    public override void Init()
     {
         _player = transform.parent.GetComponent<Player>();
         _defaultMoveSpeed = _player.MoveSpeed;

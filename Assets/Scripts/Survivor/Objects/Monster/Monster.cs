@@ -39,6 +39,7 @@ public class Monster : MonoBehaviour
         if (_collider != null)
         {
             _collider.enabled = true;
+            _collider.isTrigger = false;
         }
         if(_rigid != null)
         {
@@ -107,19 +108,23 @@ public class Monster : MonoBehaviour
 
     void LateUpdate()
     {
-        if(Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
+        if(Managers.GameManagerEx.IsPause == true)
         {
             _anim.speed = 0.0f;
-            if(Managers.SceneManagerEx.IsLoading == true)
+            if(Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == false)
             {
                 _rigid.velocity = Vector2.zero;
             }
             return;
         }
-        else
+
+        if(Managers.SceneManagerEx.IsLoading == true)
         {
-            _anim.speed = 1.0f;
+            _anim.speed = 0.0f;
+            _rigid.velocity = Vector2.zero;
         }
+
+        _anim.speed = 1.0f;
 
         if (Managers.Instance != null && _isLive == true)
         {

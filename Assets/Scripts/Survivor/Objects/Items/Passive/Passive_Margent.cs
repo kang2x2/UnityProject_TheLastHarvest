@@ -5,7 +5,7 @@ using UnityEngine;
 public class Passive_Margent : Survivor_Item
 {
     CircleCollider2D _collider;
-    private void Start()
+    public override void Init()
     {
         _collider = GetComponent<CircleCollider2D>();
 

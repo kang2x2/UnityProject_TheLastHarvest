@@ -6,7 +6,7 @@ public class Passive_ExpBoost : Survivor_Item
 {
     Player _player;
     float _defaultExpRatio;
-    private void Start()
+    public override void Init()
     {
         _player = transform.parent.GetComponent<Player>();
         _defaultExpRatio = _player.GetExpRatio;

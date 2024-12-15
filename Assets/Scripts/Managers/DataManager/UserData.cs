@@ -39,12 +39,13 @@ public class UserData
         string filePath = folderPath + "User.json";
         if (File.Exists(filePath) == false)
         {
-            Data.gold = 40;
+            Data.gold = 423;
             Data.bonus = new float[(int)Define.UserUpgradType.End];
             Data.bonus[(int)Define.UserUpgradType.Attack] = 0.0f;
             Data.bonus[(int)Define.UserUpgradType.MoveSpeed] = 0.0f;
             Data.bonus[(int)Define.UserUpgradType.Exp] = 0.0f;
             Data.bonus[(int)Define.UserUpgradType.MaxHP] = 0.0f;
+            Data.bonus[(int)Define.UserUpgradType.Recovery] = 0.0f;
 
             string json = JsonUtility.ToJson(Data, true);
             File.WriteAllText(filePath, json);
@@ -60,12 +61,13 @@ public class UserData
     {
         string filePath = folderPath + "User.json";
 
-        Data.gold = 40;
+        Data.gold = 423;
         Data.bonus = new float[(int)Define.UserUpgradType.End];
         Data.bonus[(int)Define.UserUpgradType.Attack] = 0.0f;
         Data.bonus[(int)Define.UserUpgradType.MoveSpeed] = 0.0f;
         Data.bonus[(int)Define.UserUpgradType.Exp] = 0.0f;
         Data.bonus[(int)Define.UserUpgradType.MaxHP] = 0.0f;
+        Data.bonus[(int)Define.UserUpgradType.Recovery] = 0.0f;
 
         string json = JsonUtility.ToJson(Data, true);
         File.WriteAllText(filePath, json);

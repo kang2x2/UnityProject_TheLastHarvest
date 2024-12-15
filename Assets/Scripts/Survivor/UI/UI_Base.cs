@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -57,6 +58,17 @@ public class UI_Base : MonoBehaviour
         return objects[index] as T;
     }
 
+    protected T[] UI_GetAll<T>() where T : UnityEngine.Object
+    {
+        UnityEngine.Object[] objects;
+
+        if (_uiChilds.TryGetValue(typeof(T), out objects) == false)
+        {
+            return null;
+        }
+
+        return objects.Cast<T>().ToArray();
+    }
     // name 탐색을 위해 T는 Object 타입이어야 함
     private UnityEngine.Object UI_FindChild<T>(string name) where T : UnityEngine.Object
     {

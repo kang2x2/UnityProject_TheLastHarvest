@@ -90,19 +90,23 @@ public class StoreData
         Data.passiveItems = new PassiveItem[(int)Define.UserUpgradType.End];
 
         Data.passiveItems[(int)Define.UserUpgradType.Attack] =
-            new PassiveItem("Sprites/CustomUI", "CustomUI_8", "공격력이 2% 증가합니다.",
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_6", "공격력이 2% 증가합니다.",
             (int)Define.UserUpgradType.Attack, 0, 0.02f, 10);
 
         Data.passiveItems[(int)Define.UserUpgradType.MoveSpeed] =
-            new PassiveItem("Sprites/CustomUI", "CustomUI_9", "이동 속도가 5% 증가합니다.",
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_12", "이동 속도가 5% 증가합니다.",
             (int)Define.UserUpgradType.MoveSpeed, 0, 0.05f, 10);
 
         Data.passiveItems[(int)Define.UserUpgradType.Exp] =
-            new PassiveItem("Sprites/CustomUI", "CustomUI_0", "경험치 획득량이 5% 증가합니다.",
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_0", "경험치 획득량이 5% 증가합니다.",
             (int)Define.UserUpgradType.Exp, 0, 0.05f, 10);
 
         Data.passiveItems[(int)Define.UserUpgradType.MaxHP] =
-            new PassiveItem("Sprites/CustomUI", "CustomUI_10", "최대 체력이 5 증가합니다.",
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_1", "최대 체력이 5 증가합니다.",
             (int)Define.UserUpgradType.MaxHP, 0, 5.0f, 10);
+
+        Data.passiveItems[(int)Define.UserUpgradType.Recovery] =
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_7", "초당 회복량이 0.2% 증가합니다.",
+            (int)Define.UserUpgradType.Recovery, 0, 0.2f, 10);
     }
 }

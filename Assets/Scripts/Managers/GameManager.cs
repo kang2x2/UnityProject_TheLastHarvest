@@ -56,7 +56,7 @@ public class GameManager
             return;
         }
 
-        if(ProgressTime >= 3.0f && IsBossBattle == false)
+        if(ProgressTime >= 600.0f && IsBossBattle == false)
         {
             // 카메라 고정
             // if (CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera != null)
@@ -138,7 +138,7 @@ public class GameManager
         yield return new WaitForSeconds(2.0f);
 
         // Survived UI Show
-        Managers.UIManager.ShowPopUpUI("PopUpUI_Clear");
+        Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver", Define.GameOverType.Clear);
     }
 
     public void GetExp(float expValue)

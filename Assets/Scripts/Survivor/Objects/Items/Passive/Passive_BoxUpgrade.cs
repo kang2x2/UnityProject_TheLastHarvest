@@ -5,7 +5,7 @@ using UnityEngine;
 public class Passive_BoxUpgrade : Survivor_Item
 {
     Player _player;
-    private void Start()
+    public override void Init()
     {
         _player = transform.parent.GetComponent<Player>();
     }

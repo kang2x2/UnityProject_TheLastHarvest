@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
     public float MoveSpeed { get; set; } = 1.5f;
     public float AttackRatio { get; set; } = 1.0f;
     public float GetExpRatio { get; set; } = 1.0f;
+    public float RecoveryRatio { get; set; } = 0.0f;
     public int SelectBoxCount { get; set; }
     public float Hp { get; set; }
     public float MaxHp { get; set; }
+    public Transform Margent { get; private set; }
     public bool[] HasItem { get; set; } = new bool[(int)Define.ItemType.End];
 
     public bool IsLive { get; private set; }
@@ -24,6 +26,8 @@ public class Player : MonoBehaviour
     Animator _anim;
 
     ParticleSystem _hitEffect;
+
+    float _recoveryAccTime;
 
     void Start()
     {
@@ -39,9 +43,10 @@ public class Player : MonoBehaviour
         HasItem[(int)Define.ItemType.PowerCore] = true;
 
         SelectBoxCount = 3;
-        MaxHp = 20.0f;
+        MaxHp = 1.0f;
         Hp = MaxHp;
         IsLive = true;
+        _recoveryAccTime = 0.0f;
 
         _hitEffect = transform.Find("PlayerHitEffect").GetComponent<ParticleSystem>();
         _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
@@ -52,9 +57,21 @@ public class Player : MonoBehaviour
         _anim = GetComponent<Animator>();
         _anim.runtimeAnimatorController = data.gameAnimator;
 
-        MoveSpeed += data.speedBonus;
-        AttackRatio += data.attackBonus;
-        GetExpRatio += data.expBonus;
+        MoveSpeed = 1.5f + data.speedBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MoveSpeed];
+        AttackRatio = 1.0f + data.attackBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Attack];
+        MaxHp = 20.0f + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MaxHP];
+        Hp = MaxHp;
+        RecoveryRatio = 0.0f + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Recovery];
+        GetExpRatio = 1.0f + data.expBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Exp];
+        Margent = transform.Find("Passive_Margnet");
+
+        foreach(Transform passive in GetComponentsInChildren<Transform>())
+        {
+            if(passive.name.Contains("Passive"))
+            {
+                passive.GetComponent<Survivor_Item>().Init();
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -107,6 +124,16 @@ public class Player : MonoBehaviour
         {
             _sprite.flipX = false;
         }
+
+        if(Hp < MaxHp)
+        {
+            _recoveryAccTime += Time.deltaTime;
+            if(_recoveryAccTime >= 1.0f)
+            {
+                Hp += RecoveryRatio;
+                _recoveryAccTime = 0.0f;
+            }
+        }    
     }
 
     IEnumerator Dead()
@@ -129,8 +156,8 @@ public class Player : MonoBehaviour
             accTime += Time.deltaTime;
             if(accTime > pauseTime)
             {
-                Managers.UIManager.ShowPopUpUI("PopUpUI_Dead");
-                Managers.GameManagerEx.Pause();
+                Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver", Define.GameOverType.Dead);
+                Managers.GameManagerEx.IsPause = true;
                 break;
             }
             yield return null;
