@@ -5,15 +5,17 @@ using UnityEngine;
 public class Passive_Recovery : Survivor_Item
 {
     Player _player;
-    float _defaultAttackRatio;
+    float defaultValue;
     public override void Init()
     {
+        base.Init();
         _player = transform.parent.GetComponent<Player>();
-        _defaultAttackRatio = _player.RecoveryRatio;
+        defaultValue = _player.RecoveryRatio;
+        _player.RecoveryRatio = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
     public override void LevelUp(Define.AbilityType type)
     {
-        _floatUtilLevel += 1;
-        _player.RecoveryRatio = _defaultAttackRatio + 0.2f;
+        base.LevelUp(type);
+        _player.RecoveryRatio = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
 }

@@ -29,6 +29,11 @@ public class UI_ItemButton : UI_Base
         End
     }
 
+    enum Buttons
+    {
+        GetButton,
+    }
+
     public Data_Item _itemData;
     public Data_Item ItemData { get { return _itemData; } set { _itemData = value; } }
 
@@ -43,6 +48,7 @@ public class UI_ItemButton : UI_Base
     {
         UI_Bind<Image>(typeof(Images));
         UI_Bind<Text>(typeof(Texts));
+        UI_Bind<Button>(typeof(Buttons));
 
         UI_Get<Image>((int)Images.ItemImage).sprite = _itemData.icon;
 
@@ -50,7 +56,7 @@ public class UI_ItemButton : UI_Base
         UI_Get<Text>((int)Texts.ItemDescText).text = _itemData.itemDesc;
         UI_Get<Text>((int)Texts.AbilityDescText).text = _itemData.abilityDesc;
 
-        UI_BindEvent(gameObject, OnClick);
+        UI_BindEvent(UI_Get<Button>((int)Buttons.GetButton).gameObject, ClickGetButton);
     }
 
     private void LateUpdate()
@@ -66,7 +72,7 @@ public class UI_ItemButton : UI_Base
         }
     }
 
-    public void OnClick(PointerEventData data)
+    public void ClickGetButton(PointerEventData data)
     {
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
         if (_itemData.abilityType == Define.AbilityType.Init)
@@ -83,8 +89,12 @@ public class UI_ItemButton : UI_Base
             if (_level >= _itemData.maxLevel)
             {
                 IsLive = false;
-                GetComponent<Button>().interactable = false;
+                UI_Get<Button>((int)Buttons.GetButton).interactable = false;
             }
         }
+
+        Managers.SoundManager.PlaySFX("UISounds/CardSelect");
+        Managers.UIManager.ClosePopUpUI("PopUpUI_LevelUp");
+        Managers.GameManagerEx.Continue();
     }
 }

@@ -14,20 +14,13 @@ public class Weapon_Trident : Weapon
 
     public override void Init()
     {
+        base.Init();
         gameObject.SetActive(true);
     }
 
     public override void LevelUp(Define.AbilityType type)
     {
-        switch (type)
-        {
-            case Define.AbilityType.Attack:
-                _attackLevel += 1;
-                break;
-            case Define.AbilityType.IntUtil:
-                _intUtilLevel += 1;
-                break;
-        }
+        base.LevelUp(type);
     }
 
     void FixedUpdate()
@@ -104,7 +97,7 @@ public class Weapon_Trident : Weapon
         trident.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
         float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-        trident.GetComponent<Projectile_Trident>().Init(_itemData.intUtils[_intUtilLevel],
-            attackRatio * _itemData.attacks[_attackLevel], dir, transform);
+        trident.GetComponent<Projectile_Trident>().Init((int)_stats[(int)Define.AbilityType.IntUtil],
+            attackRatio * (float)_stats[(int)Define.AbilityType.Attack], _itemData.stat.knockbackPower, dir, transform);
     }
 }

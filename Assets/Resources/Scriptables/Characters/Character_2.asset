@@ -15,11 +15,10 @@ MonoBehaviour:
   name: "\uB18D\uBD80(\uC5EC)"
   type: 1
   selectAnimator: {fileID: 22100000, guid: f05bc0a1e0f007944a9461955a0041e8, type: 2}
-  isLock: 1
-  abilityDesc: "\uC774\uB3D9 \uC18D\uB3C4 25% \uC99D\uAC00\n\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9
+  abilityDesc: "\uC774\uB3D9 \uC18D\uB3C4 10% \uC99D\uAC00\n\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9
     10% \uC99D\uAC00"
   unLockDesc: "5\uBD84 \uC774\uC0C1 \uC0DD\uC874\uD558\uAE30"
   gameAnimator: {fileID: 22100000, guid: 78c3b1ad8e78cb24eaaa0a5cab9a2faa, type: 2}
-  speedBonus: 0.25
+  speedBonus: 0.1
   attackBonus: 0
   expBonus: 0.1

@@ -6,25 +6,48 @@ using UnityEngine.EventSystems;
 
 public class PopUpUI_LevelUp : UI_PopUp
 {
-    enum Images
+    enum Scrollbars
     {
-        BackGroundImage,
-        SelectAreaImage
+        ScrollbarVertical,
+    }
+    enum GameObjects
+    {
+        Content,
+    }
+    enum Buttons
+    {
+        ReRollItemButton,
+        ReRollGoldButton,
+    }
+    enum Texts
+    {
+        HasReRollText,
+        HasGoldText,
+        NeedGoldText,
     }
 
     public Data_Item[] _itemDatas;
+    public int LiveButtonCount { get; set; } = 0;
 
     List<UI_ItemButton> _initItemButtons = new List<UI_ItemButton>();
     List<UI_ItemButton> _itemButtons = new List<UI_ItemButton>();
 
-    public int LiveButtonCount { get; set; } = 0;
+    int _reRollPrice;
 
     // 플레이어의 아이템 슬롯을 참조하기 위함
     Survivor_Item[] _items = new Survivor_Item[(int)Define.ItemType.End];
 
     public override void Init()
     {
-        UI_Bind<Image>(typeof(Images));
+        UI_Bind<Scrollbar>(typeof(Scrollbars));
+        UI_Bind<GameObject>(typeof(GameObjects));
+        UI_Bind<Button>(typeof(Buttons));
+        UI_Bind<Text>(typeof(Texts));
+
+        UI_BindEvent(UI_Get<Button>((int)Buttons.ReRollItemButton).gameObject, ClickReRollButton_Item);
+        UI_BindEvent(UI_Get<Button>((int)Buttons.ReRollGoldButton).gameObject, ClickReRollButton_Gold);
+
+        _reRollPrice = 2;
 
         Transform player = Managers.GameManagerEx.Player.transform;
 
@@ -37,14 +60,16 @@ public class PopUpUI_LevelUp : UI_PopUp
         _items[(int)Define.ItemType.Shoose] = player.Find("Passive_Shoose").GetComponent<Passive_Shoose>();
         _items[(int)Define.ItemType.Margent] = player.Find("Passive_Margnet").GetComponent<Passive_Margent>();
         _items[(int)Define.ItemType.PowerCore] = player.Find("Passive_PowerCore").GetComponent<Passive_PowerCore>();
-        _items[(int)Define.ItemType.BoxUpgrade] = player.Find("Passive_BoxUpgrade").GetComponent<Passive_BoxUpgrade>();
         _items[(int)Define.ItemType.ExpBoost] = player.Find("Passive_ExpBoost").GetComponent<Passive_ExpBoost>();
+        _items[(int)Define.ItemType.MaxHp] = player.Find("Passive_MaxHp").GetComponent<Passive_MaxHp>();
+        _items[(int)Define.ItemType.Recovery] = player.Find("Passive_Recovery").GetComponent<Passive_Recovery>();
 
         for (int i = 0; i<_itemDatas.Length; ++i)
         {
+            //UI_ItemButton btn = Managers.ResourceManager.Instantiate
+            //    ("UI/PopUps/UI_ItemCard", UI_Get<Image>((int)Images.SelectAreaImage).transform).GetComponent<UI_ItemButton>();
             UI_ItemButton btn = Managers.ResourceManager.Instantiate
-                ("UI/PopUps/UI_ItemCard", UI_Get<Image>((int)Images.SelectAreaImage).transform).GetComponent<UI_ItemButton>();
-
+                  ("UI/PopUps/UI_ItemCard", UI_Get<GameObject>((int)GameObjects.Content).transform).GetComponent<UI_ItemButton>();
             switch (_itemDatas[i].itemType)
             {
                 case Define.ItemType.Gun:
@@ -74,17 +99,19 @@ public class PopUpUI_LevelUp : UI_PopUp
                 case Define.ItemType.PowerCore:
                     btn.Item = _items[(int)Define.ItemType.PowerCore];
                     break;
-                case Define.ItemType.BoxUpgrade:
-                    btn.Item = _items[(int)Define.ItemType.BoxUpgrade];
-                    break;
                 case Define.ItemType.ExpBoost:
                     btn.Item = _items[(int)Define.ItemType.ExpBoost];
+                    break;
+                case Define.ItemType.MaxHp:
+                    btn.Item = _items[(int)Define.ItemType.MaxHp];
+                    break;
+                case Define.ItemType.Recovery:
+                    btn.Item = _items[(int)Define.ItemType.Recovery];
                     break;
             }
 
             btn.ItemData = _itemDatas[i];
             btn.Init();
-            UI_BindEvent(btn.gameObject, Close);
 
             if (btn.ItemData.abilityType == Define.AbilityType.Init)
             {
@@ -99,15 +126,27 @@ public class PopUpUI_LevelUp : UI_PopUp
 
     public override void Show(object param = null)
     {
+        Managers.SoundManager.PlaySFX("UISounds/LevelUp");
         Managers.GameManagerEx.Pause();
-        Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
+
+        GetRandomItems();
+    }
+    void GetRandomItems()
+    {
+        UI_Get<Scrollbar>((int)Scrollbars.ScrollbarVertical).value = 1;
+
+        Vector2 downPos = new Vector2(0.0f, -1000.0f);
+        UI_Get<GameObject>((int)GameObjects.Content).GetComponent<RectTransform>().localPosition = downPos;
 
         LiveButtonCount = 0;
+
+        Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
+
 
         foreach (UI_ItemButton button in _itemButtons)
         {
             button.gameObject.SetActive(false);
-            if(button.IsLive == true)
+            if (button.IsLive == true)
             {
                 LiveButtonCount += 1;
             }
@@ -116,11 +155,11 @@ public class PopUpUI_LevelUp : UI_PopUp
         HashSet<UI_ItemButton> selectButtons = new HashSet<UI_ItemButton>();
 
         // 슬롯 카운트보다 남아있는 아이템이 더 적으면 바로 삽입.
-        if (LiveButtonCount <= player.SelectBoxCount)
+        if (LiveButtonCount <= player.SelectItemCount)
         {
-            foreach(UI_ItemButton button in _itemButtons)
+            foreach (UI_ItemButton button in _itemButtons)
             {
-                if(button.IsLive == true)
+                if (button.IsLive == true)
                 {
                     selectButtons.Add(button);
                 }
@@ -131,7 +170,7 @@ public class PopUpUI_LevelUp : UI_PopUp
             // 1. 중복되지 않는 랜덤 인덱스들 뽑기
             while (true)
             {
-                for (int i = 0; i < player.SelectBoxCount; ++i)
+                for (int i = 0; i < player.SelectItemCount; ++i)
                 {
                     int ranIndex = Random.Range(0, _itemButtons.Count);
                     UI_ItemButton button = _itemButtons[ranIndex];
@@ -161,7 +200,7 @@ public class PopUpUI_LevelUp : UI_PopUp
                 }
 
                 // 뽑은 개수가 slotCount가 아니라면
-                if (selectButtons.Count < player.SelectBoxCount)
+                if (selectButtons.Count < player.SelectItemCount)
                 {
                     selectButtons.Clear();
                 }
@@ -179,9 +218,63 @@ public class PopUpUI_LevelUp : UI_PopUp
         }
     }
 
-    public void Close(PointerEventData data)
+    public void ClickReRollButton_Item(PointerEventData data)
     {
-        Managers.UIManager.ClosePopUpUI("PopUpUI_LevelUp");
-        Managers.GameManagerEx.Continue();
+        Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
+
+        if (player.ReRollCount > 0)
+        {
+            Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+
+            player.ReRollCount -= 1;
+            GetRandomItems();
+        }
+    }
+
+    public void ClickReRollButton_Gold(PointerEventData data)
+    {
+        int gold = Managers.DataManager.User.Data.gold;
+        if(gold >= _reRollPrice)
+        {
+            Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+
+            Managers.DataManager.User.Data.gold -= _reRollPrice;
+            Managers.DataManager.User.UserDataOverwrite();
+            _reRollPrice *= 2;
+            GetRandomItems();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
+        UI_Get<Text>((int)Texts.HasReRollText).text = player.ReRollCount.ToString();
+
+        if (player.ReRollCount <= 0)
+        {
+            UI_Get<Button>((int)Buttons.ReRollItemButton).interactable = false;
+            UI_Get<Button>((int)Buttons.ReRollItemButton).image.color = Color.gray;
+        }
+        else
+        {
+            UI_Get<Button>((int)Buttons.ReRollItemButton).interactable = true;
+            UI_Get<Button>((int)Buttons.ReRollItemButton).image.color = Color.white;
+        }
+
+
+        int gold = Managers.DataManager.User.Data.gold;
+        UI_Get<Text>((int)Texts.HasGoldText).text = gold.ToString();
+        UI_Get<Text>((int)Texts.NeedGoldText).text = _reRollPrice.ToString();
+
+        if(gold < _reRollPrice)
+        {
+            UI_Get<Button>((int)Buttons.ReRollGoldButton).interactable = false;
+            UI_Get<Button>((int)Buttons.ReRollGoldButton).image.color = Color.gray;
+        }
+        else
+        {
+            UI_Get<Button>((int)Buttons.ReRollGoldButton).interactable = true;
+            UI_Get<Button>((int)Buttons.ReRollGoldButton).image.color = Color.white;
+        }
     }
 }

@@ -18,6 +18,7 @@ MonoBehaviour:
   itemDesc: "\uB0AB\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   abilityDesc: 
   icon: {fileID: -344242777, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  stat: {fileID: 11400000, guid: 287e0c4fb0e37f04e8f1dec2f43ca674, type: 2}
   maxLevel: 5
   speeds:
   - 75
@@ -43,4 +44,5 @@ MonoBehaviour:
   - 2.5
   - 3
   - 3.5
-  utils: []
+  floatUtils: []
+  intUtils: 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData" )]
 public class Data_Item : ScriptableObject
@@ -17,16 +19,8 @@ public class Data_Item : ScriptableObject
     [Header("# Image Info")]
     public Sprite icon;
 
-    [Header("# Weapon Info")]
+    [Header("# Stat Info")]
     public int maxLevel;
-    public float[] speeds;
-    public float[] coolTimes;
-    public float[] fens;
-    public int[] amounts;
-    public float[] attacks;
-    public float[] sizes;
+    public Data_ItemStatInfo stat;
 
-    [Header("# Util Info")]
-    public float[] floatUtils; // 패시브 아이템 및 각 무기마다의 고유 능력
-    public int[] intUtils; // 패시브 아이템 및 각 무기마다의 고유 능력
 }

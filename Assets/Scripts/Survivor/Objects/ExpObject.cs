@@ -8,13 +8,17 @@ public class ExpObject : MonoBehaviour
 
     public Sprite[] sprites;
     SpriteRenderer _sprite;
+    Collider2D _collider;
     bool _isSucked;
     float _speed;
     float _expValue;
 
-    void Start()
+    public void Init()
     {
         _sprite = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<Collider2D>();
+        _collider.enabled = false;
+
         int ranIndex = Random.Range(0, 100);
         
         if(ranIndex <= 5)
@@ -35,6 +39,8 @@ public class ExpObject : MonoBehaviour
 
         _isSucked = false;
         _speed = 0.0f;
+
+        _collider.enabled = true;
     }
 
     private void Update()

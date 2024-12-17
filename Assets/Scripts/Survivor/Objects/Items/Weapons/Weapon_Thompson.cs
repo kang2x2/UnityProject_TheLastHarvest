@@ -8,34 +8,26 @@ public class Weapon_Thompson : Weapon
 
     float _accTime;
     float _fireTime;
-    Transform _nearTarget = null;
+    Transform _nearTarget;
     RaycastHit2D[] _targets;
 
     Vector2 _offset;
+    bool _isFire;
 
     public override void Init()
     {
+        base.Init();
         gameObject.SetActive(true);
 
         _accTime = 0.0f;
         _fireTime = 3.5f;
+        _isFire = false;
         _offset = new Vector2(0.75f, 0.75f);
     }
 
     public override void LevelUp(Define.AbilityType type)
     {
-        switch (type)
-        {
-            case Define.AbilityType.Amount:
-                _amountLevel += 1;
-                break;
-            case Define.AbilityType.Fen:
-                _fenLevel += 1;
-                break;
-            case Define.AbilityType.Attack:
-                _attackLevel += 1;
-                break;
-        }
+        base.LevelUp(type);
     }
 
     void FixedUpdate()
@@ -114,17 +106,17 @@ public class Weapon_Thompson : Weapon
         }
 
         _accTime += Time.deltaTime;
-        if (_nearTarget != null && _accTime > _fireTime)
+        if (_nearTarget != null && _isFire == false && _accTime > _fireTime)
         {
+            _isFire = true;
             IEnumerator coFire = Fire();
             StartCoroutine(coFire);
-            _accTime = 0.0f;
         }
     }
 
     IEnumerator Fire()
     {
-        for(int i = 0; i < _itemData.amounts[_amountLevel]; ++i)
+        for(int i = 0; i < (int)_stats[(int)Define.AbilityType.Amount]; ++i)
         {
             if(_nearTarget == null)
             {
@@ -144,11 +136,14 @@ public class Weapon_Thompson : Weapon
 
             float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
             fireBullet.GetComponent<Projectile_Bullet>().
-                Init(dir, attackRatio * _itemData.attacks[_attackLevel], _itemData.fens[_fenLevel]);
+                Init(dir, attackRatio * (float)_stats[(int)Define.AbilityType.Attack],
+                (float)_stats[(int)Define.AbilityType.Fen], _itemData.stat.knockbackPower);
 
             Managers.SoundManager.PlaySFX("weaponSounds/Thompson");
 
             yield return new WaitForSeconds(0.1f);
         }
+        _isFire = false;
+        _accTime = 0.0f;
     }
 }

@@ -5,15 +5,17 @@ using UnityEngine;
 public class Passive_PowerCore : Survivor_Item
 {
     Player _player;
-    float _defaultAttackRatio;
+    float defaultValue;
     public override void Init()
     {
+        base.Init();
         _player = transform.parent.GetComponent<Player>();
-        _defaultAttackRatio = _player.AttackRatio;
+        defaultValue = _player.AttackRatio;
+        _player.AttackRatio = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
     public override void LevelUp(Define.AbilityType type)
     {
-        _floatUtilLevel += 1;
-        _player.AttackRatio = _defaultAttackRatio * _itemData.floatUtils[_floatUtilLevel];
+        base.LevelUp(type);
+        _player.AttackRatio = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
 }

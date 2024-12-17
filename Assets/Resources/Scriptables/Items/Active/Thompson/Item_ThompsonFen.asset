@@ -19,7 +19,8 @@ MonoBehaviour:
     \uB09C\uC0AC\uD558\uB294 \uAE30\uAD00\uCD1D\uC785\uB2C8\uB2E4."
   abilityDesc: "\uAD00\uD1B5\uB825 \uC99D\uAC00"
   icon: {fileID: 563336626, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
-  maxLevel: 5
+  stat: {fileID: 11400000, guid: d331e7dbcefd73e4a9bbc31fcf79cdae, type: 2}
+  maxLevel: 4
   speeds: []
   coolTimes: []
   fens:
@@ -28,7 +29,6 @@ MonoBehaviour:
   - 3
   - 4
   - 5
-  - 6
   amounts: 0300000005000000070000000a0000000f00000014000000
   attacks:
   - 1.5

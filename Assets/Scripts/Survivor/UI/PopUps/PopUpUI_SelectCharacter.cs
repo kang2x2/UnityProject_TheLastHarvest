@@ -48,12 +48,15 @@ public class PopUpUI_SelectCharacter : UI_PopUp
 
     public void ClickSelectButton(PointerEventData data)
     {
-        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ShowPopUpUI_Check("PopUpUI_Check", "게임을 시작할까요?", () =>
+        if(Managers.DataManager.Character.Data.unLocks[_characterIndex] == true)
         {
-            Managers.GameManagerEx.PlayerData = _characterDatas[_characterIndex];
-            Managers.SceneManagerEx.ChangeScene(Define.SceneType.GameScene);
-        });
+            Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+            Managers.UIManager.ShowPopUpUI_Check("PopUpUI_Check", "게임을 시작할까요?", () =>
+            {
+                Managers.GameManagerEx.PlayerData = _characterDatas[_characterIndex];
+                Managers.SceneManagerEx.ChangeScene(Define.SceneType.GameScene);
+            });
+        }
     }
 
     public void ClickReturnButton(PointerEventData data)
@@ -95,6 +98,7 @@ public class PopUpUI_SelectCharacter : UI_PopUp
             UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Image>().color = Color.black;
             UI_Get<Text>((int)Texts.NameText).text = "???";
             UI_Get<Text>((int)Texts.DescText).text = _characterDatas[_characterIndex].unLockDesc;
+            UI_Get<Button>((int)Buttons.SelectButton).image.color = Color.gray;
         }
         else
         {
@@ -102,6 +106,7 @@ public class PopUpUI_SelectCharacter : UI_PopUp
             UI_Get<GameObject>((int)GameObjects.Character).GetComponent<Image>().color = Color.white;
             UI_Get<Text>((int)Texts.NameText).text = _characterDatas[_characterIndex].name;
             UI_Get<Text>((int)Texts.DescText).text = _characterDatas[_characterIndex].abilityDesc;
+            UI_Get<Button>((int)Buttons.SelectButton).image.color = Color.green;
         }
     }
 }

@@ -22,6 +22,12 @@ public class PoolManager
         pool.Init(original, amount);
         pool.Root.parent = _root;
 
+        if(_pools.ContainsKey(original.name) == true)
+        {
+            Debug.Log("이미 추가한 풀 " + original.name);
+            return;
+        }
+
         _pools.Add(original.name, pool);
     }
 

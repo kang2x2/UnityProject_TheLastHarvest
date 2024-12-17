@@ -12,25 +12,15 @@ public class Weapon_Gun : Weapon
 
     Vector2 _offset;
 
-    private void Start()
+    public override void Init()
     {
+        base.Init();
         _offset = new Vector2(0.3f, -0.15f);
     }
 
     public override void LevelUp(Define.AbilityType type)
     {
-        switch (type)
-        {
-            case Define.AbilityType.CoolTime:
-                _coolTimeLevel += 1;
-                break;
-            case Define.AbilityType.Fen:
-                _fenLevel += 1;
-                break;
-            case Define.AbilityType.Attack:
-                _attackLevel += 1;
-                break;
-        }
+        base.LevelUp(type);
     }
 
     // 몬스터 탐색은 Physics를 사용하기에 FixedUpdate에서
@@ -115,7 +105,7 @@ public class Weapon_Gun : Weapon
         _accTime += Time.deltaTime;
         if(_nearTarget != null)
         {
-            if (_accTime > _itemData.coolTimes[_coolTimeLevel])
+            if (_accTime > (float)_stats[(int)Define.AbilityType.CoolTime])
             {
                 Fire();
                 _accTime = 0.0f;
@@ -135,7 +125,8 @@ public class Weapon_Gun : Weapon
 
         float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
         fireBullet.GetComponent<Projectile_Bullet>().
-            Init(dir, _itemData.attacks[_attackLevel] * attackRatio, _itemData.fens[_fenLevel]);
+            Init(dir, (float)_stats[(int)Define.AbilityType.Attack] * attackRatio,
+            (float)_stats[(int)Define.AbilityType.Fen], _itemData.stat.knockbackPower);
 
         Managers.SoundManager.PlaySFX("weaponSounds/Rifle");
     }

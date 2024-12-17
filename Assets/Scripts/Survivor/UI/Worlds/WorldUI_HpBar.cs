@@ -42,6 +42,7 @@ public class WorldUI_HpBar : UI_Base
     {
         _accTime = 0.0f;
         _curVal = curVal;
+        _rect.position = _owner.position + _offset;
     }
 
     private void FixedUpdate()

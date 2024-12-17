@@ -17,8 +17,9 @@ MonoBehaviour:
   name: "\uCD5C\uB300 \uCCB4\uB825 \uC99D\uAC00"
   itemDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uCD5C\uB300 \uCCB4\uB825\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   abilityDesc: "\uCD5C\uB300 \uCCB4\uB825 5 \uC99D\uAC00"
-  icon: {fileID: -640643966, guid: f964d891e59348147b7eff3c391dc7fc, type: 3}
-  maxLevel: 6
+  icon: {fileID: -1174831968, guid: f964d891e59348147b7eff3c391dc7fc, type: 3}
+  stat: {fileID: 11400000, guid: 44a9695375effe446ad2e9b01831936a, type: 2}
+  maxLevel: 5
   speeds: []
   coolTimes: []
   fens: []

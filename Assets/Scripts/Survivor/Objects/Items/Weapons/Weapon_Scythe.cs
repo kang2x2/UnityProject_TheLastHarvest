@@ -10,6 +10,7 @@ public class Weapon_Scythe : Weapon
 
     public override void Init()
     {
+        base.Init();
         gameObject.SetActive(true);
 
         _accTime = 0.0f;
@@ -17,18 +18,7 @@ public class Weapon_Scythe : Weapon
 
     public override void LevelUp(Define.AbilityType type)
     {
-        switch (type)
-        {
-            case Define.AbilityType.Amount:
-                _amountLevel += 1;
-                break;
-            case Define.AbilityType.CoolTime:
-                _coolTimeLevel += 1;
-                break;
-            case Define.AbilityType.Attack:
-                _attackLevel += 1;
-                break;
-        }
+        base.LevelUp(type);
     }
 
     void Update()
@@ -41,7 +31,7 @@ public class Weapon_Scythe : Weapon
         if (IsSpawn == true)
         {
             _accTime += Time.deltaTime;
-            if (_accTime >= _itemData.coolTimes[_coolTimeLevel])
+            if (_accTime >= (float)_stats[(int)Define.AbilityType.CoolTime])
             {
                 GameObject scythe = null;
                 scythe = Managers.ResourceManager.Instantiate("Objects/Projectile_Scythe");
@@ -53,8 +43,8 @@ public class Weapon_Scythe : Weapon
 
                 float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
                 scythe.GetComponent<Projectile_Scythe>().Init(
-                    _itemData.attacks[_attackLevel] * attackRatio,
-                    _itemData.amounts[_amountLevel], this);
+                    (float)_stats[(int)Define.AbilityType.Attack] * attackRatio,
+                    (int)_stats[(int)Define.AbilityType.Amount], _itemData.stat.knockbackPower, this);
 
                 _accTime = 0.0f;
                 IsSpawn = false;

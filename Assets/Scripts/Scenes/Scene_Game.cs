@@ -19,17 +19,17 @@ public class Scene_Game : Scene_Base
     {
         int taskCount = 9;
         float progressRatio = 1.0f / taskCount;
-        int successTaskCount = 0; 
+        int successTaskCount = 0;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 100);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 200);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 50);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 200);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/ExpObject"), 50);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/ExpObject"), 100);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
@@ -68,13 +68,5 @@ public class Scene_Game : Scene_Base
             }
         }
         yield return true;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            Managers.SceneManagerEx.ChangeScene(Define.SceneType.TitleScene);
-        }
     }
 }

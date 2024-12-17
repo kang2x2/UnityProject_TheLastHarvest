@@ -25,6 +25,7 @@ public class PopUpUI_Store : UI_PopUp
         MaxHpStatText,
         RecoveryStatText,
         ExpStatText,
+        SelectStatText,
     }
 
     public override void Init()
@@ -53,19 +54,22 @@ public class PopUpUI_Store : UI_PopUp
     {
         UI_Get<Text>((int)Texts.UserGoldText).text = Managers.DataManager.User.Data.gold.ToString();
 
-        int toInt = (int)(Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Attack] * 100.0f);
-        UI_Get<Text>((int)Texts.AttackStatText).text = toInt.ToString() + "%";
+        int iStat = Managers.DataManager.User.GetUserStat_Int(Define.UserStatType.Attack);
+        UI_Get<Text>((int)Texts.AttackStatText).text = iStat.ToString() + "%";
 
-        toInt = (int)(Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MoveSpeed] * 100.0f);
-        UI_Get<Text>((int)Texts.SpeedStatText).text = toInt.ToString() + "%";
+        iStat = Managers.DataManager.User.GetUserStat_Int(Define.UserStatType.MoveSpeed);
+        UI_Get<Text>((int)Texts.SpeedStatText).text = iStat.ToString() + "%";
 
-        toInt = (int)Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MaxHP];
-        UI_Get<Text>((int)Texts.MaxHpStatText).text = toInt.ToString() + "%";
+        iStat = Managers.DataManager.User.GetUserStat_Int(Define.UserStatType.MaxHP, 0);
+        UI_Get<Text>((int)Texts.MaxHpStatText).text = iStat.ToString() + "%";
 
-        toInt = (int)(Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Exp] * 100.0f);
-        UI_Get<Text>((int)Texts.ExpStatText).text = toInt.ToString() + "%";
+        iStat = Managers.DataManager.User.GetUserStat_Int(Define.UserStatType.Exp);
+        UI_Get<Text>((int)Texts.ExpStatText).text = iStat.ToString() + "%";
 
-        float bonus = Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Recovery];
-        UI_Get<Text>((int)Texts.RecoveryStatText).text = bonus.ToString() + "%";
+        iStat = Managers.DataManager.User.Data.selectCount;
+        UI_Get<Text>((int)Texts.SelectStatText).text = iStat.ToString();
+
+        float fStat = Managers.DataManager.User.GetUserStat_Float(Define.UserStatType.Recovery, 1);
+        UI_Get<Text>((int)Texts.RecoveryStatText).text = fStat.ToString() + "%";
     }
 }

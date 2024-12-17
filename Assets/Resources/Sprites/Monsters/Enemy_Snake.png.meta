@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Run 0
+      name: Enemy_Snake_0
       rect:
         serializedVersion: 2
         x: 0
@@ -144,20 +144,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76fd388d35769fc4b8fde3288a90420d
-      internalID: 2067000143
+      spriteID: af7c046103346e84a91bf7324af844aa
+      internalID: -1168172892
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run 1
+      name: Enemy_Snake_1
       rect:
         serializedVersion: 2
         x: 20
@@ -165,20 +165,20 @@ TextureImporter:
         width: 16
         height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cad610cc2f9a1a14ab517f8204bc225a
-      internalID: -1813896292
+      spriteID: 3c9c75063f20ba94f98e64024b26bfb6
+      internalID: 1509587307
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run 2
+      name: Enemy_Snake_2
       rect:
         serializedVersion: 2
         x: 40
@@ -186,20 +186,20 @@ TextureImporter:
         width: 16
         height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b030eeba0ea32b429dd23ba7fa7f158
-      internalID: -730583139
+      spriteID: a58ec91a1ff45f44abce3571c21476d8
+      internalID: 604828341
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run 3
+      name: Enemy_Snake_3
       rect:
         serializedVersion: 2
         x: 60
@@ -207,20 +207,20 @@ TextureImporter:
         width: 16
         height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fab4d86c2740954bb1ff27634328e87
-      internalID: -2116912944
+      spriteID: 7c315a40a0a486942b7f6aaa341675c9
+      internalID: -1897398432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit
+      name: Enemy_Snake_4
       rect:
         serializedVersion: 2
         x: 0
@@ -228,20 +228,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae7e61b16f265eb46b5282ebccb75b50
-      internalID: -893985594
+      spriteID: 42eddac3fc4b0114797e9efedfd9478d
+      internalID: 2095401301
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead
+      name: Enemy_Snake_5
       rect:
         serializedVersion: 2
         x: 20
@@ -249,14 +249,14 @@ TextureImporter:
         width: 38
         height: 7
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dbcb7b1b4ccd2440a5a4d6e03c45515
-      internalID: 246044720
+      spriteID: da0d09bedcd6c4342af1bcdda23caf19
+      internalID: 2105017140
       vertices: []
       indices: 
       edges: []
@@ -272,12 +272,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dead: 246044720
-      Hit: -893985594
-      Run 0: 2067000143
-      Run 1: -1813896292
-      Run 2: -730583139
-      Run 3: -2116912944
+      Enemy_Snake_0: -1168172892
+      Enemy_Snake_1: 1509587307
+      Enemy_Snake_2: 604828341
+      Enemy_Snake_3: -1897398432
+      Enemy_Snake_4: 2095401301
+      Enemy_Snake_5: 2105017140
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

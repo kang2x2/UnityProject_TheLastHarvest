@@ -75,13 +75,14 @@ public class Define
         End
     }
 
-    public enum UserUpgradType
+    public enum UserStatType
     {
         Attack,
         Exp,
         MoveSpeed,
         MaxHP,
         Recovery,
+        SelectCount,
         End
     }
 

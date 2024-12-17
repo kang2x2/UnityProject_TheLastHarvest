@@ -16,8 +16,9 @@ MonoBehaviour:
   abilityType: 7
   name: "\uC2E0\uC18D \uC7A5\uD654"
   itemDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uC774\uB3D9 \uC18D\uB3C4\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  abilityDesc: "\uC774\uB3D9 \uC18D\uB3C4 10% \uC99D\uAC00"
+  abilityDesc: "\uC774\uB3D9 \uC18D\uB3C4 20% \uC99D\uAC00"
   icon: {fileID: 752185527, guid: 6a9a61088c831c34582cf19b328d7350, type: 3}
+  stat: {fileID: 11400000, guid: 7749d7f710a286c4696996acf619b26c, type: 2}
   maxLevel: 5
   speeds: []
   coolTimes: []

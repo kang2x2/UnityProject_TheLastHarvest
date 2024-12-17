@@ -15,26 +15,9 @@ MonoBehaviour:
   itemType: 2
   abilityType: 1
   name: "\uB0AB"
-  itemDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uC8FC\uBCC0\uC744 \uD55C \uBC14\uD034
-    \uD68C\uC804\uD558\uBA70 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  itemDesc: "\uD50C\uB808\uC774\uC5B4\uAC00 \uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C
+    \uD06C\uAC8C \uD718\uB450\uB985\uB2C8\uB2E4."
   abilityDesc: "\uACF5\uACA9 \uB51C\uB808\uC774 \uAC10\uC18C"
   icon: {fileID: -344242777, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   maxLevel: 3
-  speeds: []
-  coolTimes:
-  - 6
-  - 5
-  - 4
-  - 3
-  fens: []
-  amounts: 010000000200000003000000040000000500000006000000
-  attacks:
-  - 2
-  - 3.5
-  - 5
-  - 6.5
-  - 8
-  - 10
-  sizes: []
-  floatUtils: []
-  intUtils: 
+  stat: {fileID: 11400000, guid: 287e0c4fb0e37f04e8f1dec2f43ca674, type: 2}

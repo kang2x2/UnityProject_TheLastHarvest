@@ -87,26 +87,30 @@ public class StoreData
 
     private void ItemDataInit()
     {
-        Data.passiveItems = new PassiveItem[(int)Define.UserUpgradType.End];
+        Data.passiveItems = new PassiveItem[(int)Define.UserStatType.End];
 
-        Data.passiveItems[(int)Define.UserUpgradType.Attack] =
+        Data.passiveItems[(int)Define.UserStatType.Attack] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_6", "공격력이 2% 증가합니다.",
-            (int)Define.UserUpgradType.Attack, 0, 0.02f, 10);
+            (int)Define.UserStatType.Attack, 0, 0.02f, 10);
 
-        Data.passiveItems[(int)Define.UserUpgradType.MoveSpeed] =
+        Data.passiveItems[(int)Define.UserStatType.MoveSpeed] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_12", "이동 속도가 5% 증가합니다.",
-            (int)Define.UserUpgradType.MoveSpeed, 0, 0.05f, 10);
+            (int)Define.UserStatType.MoveSpeed, 0, 0.05f, 10);
 
-        Data.passiveItems[(int)Define.UserUpgradType.Exp] =
+        Data.passiveItems[(int)Define.UserStatType.Exp] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_0", "경험치 획득량이 5% 증가합니다.",
-            (int)Define.UserUpgradType.Exp, 0, 0.05f, 10);
+            (int)Define.UserStatType.Exp, 0, 0.05f, 10);
 
-        Data.passiveItems[(int)Define.UserUpgradType.MaxHP] =
+        Data.passiveItems[(int)Define.UserStatType.MaxHP] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_1", "최대 체력이 5 증가합니다.",
-            (int)Define.UserUpgradType.MaxHP, 0, 5.0f, 10);
+            (int)Define.UserStatType.MaxHP, 0, 5.0f, 10);
 
-        Data.passiveItems[(int)Define.UserUpgradType.Recovery] =
+        Data.passiveItems[(int)Define.UserStatType.Recovery] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_7", "초당 회복량이 0.2% 증가합니다.",
-            (int)Define.UserUpgradType.Recovery, 0, 0.2f, 10);
+            (int)Define.UserStatType.Recovery, 0, 0.2f, 10);
+
+        Data.passiveItems[(int)Define.UserStatType.SelectCount] =
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_11", "Level Up 시 선택 가능한 아이템 카드가 1개 추가됩니다.",
+            (int)Define.UserStatType.SelectCount, 0, 1.0f, 50);
     }
 }

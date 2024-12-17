@@ -11,7 +11,6 @@ public class Monster : MonoBehaviour
 
     GameObject _target = null;
     float _rePositionOffSet = 10.0f;
-    float _knockBackPower = 3.0f;
 
     bool _isLive = true;
 
@@ -34,7 +33,7 @@ public class Monster : MonoBehaviour
 
         if(_sprite != null)
         {
-            _sprite.sortingOrder = 2;
+            _sprite.sortingOrder = 4;
         }
         if (_collider != null)
         {
@@ -53,11 +52,17 @@ public class Monster : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 
+        _sprite.sortingOrder = 4;
+
         MonsterSetting(datas[index], Managers.GameManagerEx.GameLevel);
 
         _hpBar = Managers.ResourceManager.Instantiate("UI/Worlds/WorldUI_HpBar").GetComponent<WorldUI_HpBar>();
         _hpBar.Init(transform, _maxHp);
         _hpBar.gameObject.SetActive(false);
+        if (_hpBar == null)
+        {
+            Debug.Log("HpBar Instantiate Fail");
+        }
     }
 
     void MonsterSetting(Data_Monster data, int gameLevel)
@@ -133,7 +138,7 @@ public class Monster : MonoBehaviour
 
         if(Managers.GameManagerEx.IsClear == true)
         {
-            Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
+            // Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
             Managers.ResourceManager.Destroy(_hpBar.gameObject);
 
             _isLive = false;
@@ -152,23 +157,22 @@ public class Monster : MonoBehaviour
 
     IEnumerator HitEvent(Collider2D collision)
     {
-        Vector3 knockBackDir = transform.position - _target.transform.position;
-        _rigid.AddForce(knockBackDir.normalized * _knockBackPower, ForceMode2D.Impulse);
-
         Projectile projectile = collision.transform.GetComponent<Projectile>();
         for (int i = 0; i < projectile.AttackCount; ++i)
         {
+            _rigid.velocity = Vector2.zero;
+            Vector3 knockBackDir = transform.position - _target.transform.position;
+            _rigid.AddForce(knockBackDir.normalized * projectile.KnockBackPower, ForceMode2D.Impulse);
+
             _hp -= collision.transform.GetComponent<Projectile>().Attack;
 
             if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Bullet)
             {
-                Managers.SoundManager.PlaySFX("Battles/BlowHit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/BulletHitEffect");
                 effect.transform.position = transform.position;
             }
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.BigBullet)
             {
-                Managers.SoundManager.PlaySFX("Battles/BlowHit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/BigBulletHitEffect");
                 effect.transform.position = transform.position;
             }
@@ -179,7 +183,6 @@ public class Monster : MonoBehaviour
             }
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
             {
-                Managers.SoundManager.PlaySFX("Battles/BlowHit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
                 // GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
                 effect.transform.position = transform.position;
@@ -187,13 +190,19 @@ public class Monster : MonoBehaviour
 
             if (_hp > 0)
             {
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
                 _anim.SetTrigger("Hit");
                 _hpBar.gameObject.SetActive(true);
                 _hpBar.ValueInit(_hp);
             }
             else
             {
-                Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
+                Managers.SoundManager.PlaySFX("Battles/Dead");
+
+                GameObject exp = Managers.ResourceManager.Instantiate("Objects/ExpObject");
+                exp.GetComponent<ExpObject>().Init();
+                exp.transform.position = transform.position;
+
                 Managers.GameManagerEx.Kill += 1;
                 Managers.ResourceManager.Destroy(_hpBar.gameObject);
 

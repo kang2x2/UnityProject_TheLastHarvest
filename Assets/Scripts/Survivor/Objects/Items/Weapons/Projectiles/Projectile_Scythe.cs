@@ -12,7 +12,7 @@ public class Projectile_Scythe : Projectile
     Vector2 _offset;
     Vector2 _attackScale;
 
-    public void Init(float attack, int attackCount, Weapon_Scythe parent)
+    public void Init(float attack, int attackCount, float knockBackPower, Weapon_Scythe parent)
     {
         _collider = GetComponent<Collider2D>();
         _trail = GetComponent<TrailRenderer>();
@@ -20,6 +20,7 @@ public class Projectile_Scythe : Projectile
         _trail.enabled = false;
 
         Attack = attack;
+        KnockBackPower = knockBackPower;
         AttackCount = attackCount;
         Effect = EffectType.Slash;
 
@@ -103,6 +104,8 @@ public class Projectile_Scythe : Projectile
 
     IEnumerator WeaponAttack(Action action)
     {
+        Managers.SoundManager.PlaySFX("weaponSounds/Sythe");
+
         Transform player = Managers.GameManagerEx.Player.transform;
         _collider.enabled = true;
         _trail.enabled = true;

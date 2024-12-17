@@ -76,13 +76,23 @@ public class UI_StoreItem : UI_Base
         int price = Managers.DataManager.Store.Data.passiveItems[_itemIndex].price;
         if (Managers.DataManager.User.Data.gold >= price)
         {
+            Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
             Managers.DataManager.Store.Data.passiveItems[_itemIndex].level += 1;
-            Managers.DataManager.Store.Data.passiveItems[_itemIndex].price += 10;
-            Managers.DataManager.Store.StoreDataOverwrite();
-            
-            float bonus = Managers.DataManager.Store.Data.passiveItems[_itemIndex].addValue;
-            Managers.DataManager.User.Data.bonus[Managers.DataManager.Store.Data.passiveItems[_itemIndex].upgradIndex] += bonus;
 
+            if (_itemIndex != (int)Define.UserStatType.SelectCount)
+            {
+                Managers.DataManager.Store.Data.passiveItems[_itemIndex].price += 10;
+
+                float bonus = Managers.DataManager.Store.Data.passiveItems[_itemIndex].addValue;
+                Managers.DataManager.User.Data.bonus[Managers.DataManager.Store.Data.passiveItems[_itemIndex].upgradIndex] += bonus;
+            }
+            else
+            {
+                Managers.DataManager.Store.Data.passiveItems[_itemIndex].price *= 4;
+                Managers.DataManager.User.Data.selectCount += 1;
+            }
+
+            Managers.DataManager.Store.StoreDataOverwrite();
             Managers.DataManager.User.Data.gold -= price;
             Managers.DataManager.User.UserDataOverwrite();
         }

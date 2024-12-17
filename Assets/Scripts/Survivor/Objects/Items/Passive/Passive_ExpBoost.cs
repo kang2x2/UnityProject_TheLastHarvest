@@ -5,15 +5,17 @@ using UnityEngine;
 public class Passive_ExpBoost : Survivor_Item
 {
     Player _player;
-    float _defaultExpRatio;
+    float defaultValue;
     public override void Init()
     {
+        base.Init();
         _player = transform.parent.GetComponent<Player>();
-        _defaultExpRatio = _player.GetExpRatio;
+        defaultValue = _player.GetExpRatio;
+        _player.GetExpRatio = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
     public override void LevelUp(Define.AbilityType type)
     {
-        _floatUtilLevel += 1;
-        _player.GetExpRatio = _defaultExpRatio * _itemData.floatUtils[_floatUtilLevel];
+        base.LevelUp(type);
+        _player.GetExpRatio = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
 }

@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Field
-    public float MoveSpeed { get; set; } = 1.5f;
-    public float AttackRatio { get; set; } = 1.0f;
-    public float GetExpRatio { get; set; } = 1.0f;
-    public float RecoveryRatio { get; set; } = 0.0f;
-    public int SelectBoxCount { get; set; }
+    public float MoveSpeed { get; set; }
+    public float AttackRatio { get; set; }
+    public float GetExpRatio { get; set; }
+    public float RecoveryRatio { get; set; }
+    public int SelectItemCount { get; set; }
+    public int ReRollCount { get; set; }
     public float Hp { get; set; }
     public float MaxHp { get; set; }
     public Transform Margent { get; private set; }
@@ -27,8 +28,6 @@ public class Player : MonoBehaviour
 
     ParticleSystem _hitEffect;
 
-    float _recoveryAccTime;
-
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
@@ -39,14 +38,11 @@ public class Player : MonoBehaviour
         HasItem[(int)Define.ItemType.Shoose] = true;
         HasItem[(int)Define.ItemType.Margent] = true;
         HasItem[(int)Define.ItemType.ExpBoost] = true;
-        HasItem[(int)Define.ItemType.BoxUpgrade] = true;
         HasItem[(int)Define.ItemType.PowerCore] = true;
+        HasItem[(int)Define.ItemType.MaxHp] = true;
+        HasItem[(int)Define.ItemType.Recovery] = true;
 
-        SelectBoxCount = 3;
-        MaxHp = 1.0f;
-        Hp = MaxHp;
         IsLive = true;
-        _recoveryAccTime = 0.0f;
 
         _hitEffect = transform.Find("PlayerHitEffect").GetComponent<ParticleSystem>();
         _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
@@ -57,21 +53,24 @@ public class Player : MonoBehaviour
         _anim = GetComponent<Animator>();
         _anim.runtimeAnimatorController = data.gameAnimator;
 
-        MoveSpeed = 1.5f + data.speedBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MoveSpeed];
-        AttackRatio = 1.0f + data.attackBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Attack];
-        MaxHp = 20.0f + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.MaxHP];
-        Hp = MaxHp;
-        RecoveryRatio = 0.0f + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Recovery];
-        GetExpRatio = 1.0f + data.expBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserUpgradType.Exp];
+        MoveSpeed = data.speedBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.MoveSpeed];
+        AttackRatio = data.attackBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.Attack];
+        MaxHp = Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.MaxHP];
+        RecoveryRatio = Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.Recovery];
+        GetExpRatio = data.expBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.Exp];
         Margent = transform.Find("Passive_Margnet");
+        SelectItemCount = Managers.DataManager.User.Data.selectCount;
+        ReRollCount = 3;
 
-        foreach(Transform passive in GetComponentsInChildren<Transform>())
+        foreach (Transform initItem in GetComponentsInChildren<Transform>())
         {
-            if(passive.name.Contains("Passive"))
+            if(initItem.GetComponent<Survivor_Item>() != null)
             {
-                passive.GetComponent<Survivor_Item>().Init();
+                initItem.GetComponent<Survivor_Item>().Init();
             }
         }
+
+        Hp = MaxHp;
     }
 
     private void FixedUpdate()
@@ -114,7 +113,11 @@ public class Player : MonoBehaviour
         {
             _anim.speed = 1.0f;
         }
-        
+
+        if (Input.GetMouseButton(1))
+        {
+            Managers.GameManagerEx.GetExp(100);
+        }
 
         if (_curDir.normalized.x < 0)
         {
@@ -125,13 +128,12 @@ public class Player : MonoBehaviour
             _sprite.flipX = false;
         }
 
-        if(Hp < MaxHp)
+        if (IsLive == true && Hp < MaxHp && RecoveryRatio > 0.0f)
         {
-            _recoveryAccTime += Time.deltaTime;
-            if(_recoveryAccTime >= 1.0f)
+            Hp += RecoveryRatio * Time.deltaTime;
+            if (Hp > MaxHp)
             {
-                Hp += RecoveryRatio;
-                _recoveryAccTime = 0.0f;
+                Hp = MaxHp;
             }
         }    
     }
@@ -150,6 +152,8 @@ public class Player : MonoBehaviour
         
         while(true)
         {
+            _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
             _rigid.velocity = Vector2.zero;
             _rigid.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
 
@@ -187,12 +191,13 @@ public class Player : MonoBehaviour
             {
                 if(IsLive == true)
                 {
-                    _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-
                     IsLive = false;
                     _rigid.velocity = Vector2.zero;
                     _sprite.sortingOrder = 5;
                     _anim.SetBool("Dead", true);
+                    Hp = 0.0f;
+
+                    _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
                     StartCoroutine(Dead());
                 }

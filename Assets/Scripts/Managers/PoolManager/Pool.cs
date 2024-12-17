@@ -46,7 +46,8 @@ public class Pool
         }
         else
         {
-            obj = Create();
+            Push(Create());
+            obj = _poolQ.Dequeue();
         }
 
         obj.SetActive(true);

@@ -6,6 +6,7 @@ public class Weapon_Shovel : Weapon
 {
     public override void Init()
     {
+        base.Init();
         Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Projectile_Shovel"), 8);
 
         // 이전에 사용한 Json을 사용해 data를 불러오는 방식.
@@ -18,18 +19,7 @@ public class Weapon_Shovel : Weapon
 
     public override void LevelUp(Define.AbilityType type)
     {
-        switch(type)
-        {
-            case Define.AbilityType.Speed:
-                _speedLevel += 1;
-                break;
-            case Define.AbilityType.Amount:
-                _amountLevel += 1;
-                break;
-            case Define.AbilityType.Attack:
-                _attackLevel += 1;
-                break;
-        }
+        base.LevelUp(type);
 
         Weapon_Setting();
     }
@@ -40,12 +30,12 @@ public class Weapon_Shovel : Weapon
         {
             return;
         }
-        transform.Rotate(Vector3.back * _itemData.speeds[_speedLevel] * Time.deltaTime);
+        transform.Rotate(Vector3.back * (float)_stats[(int)Define.AbilityType.Speed] * Time.deltaTime);
     }
 
     void Weapon_Setting()
     {
-        for(int i = 0; i < _itemData.amounts[_amountLevel]; ++i)
+        for(int i = 0; i < (int)_stats[(int)Define.AbilityType.Amount]; ++i)
         {
             GameObject shovel = null;
             // 불필요한 생성 or Pop을 방지하기 위함
@@ -65,12 +55,14 @@ public class Weapon_Shovel : Weapon
             shovel.transform.localPosition = Vector3.zero;
             shovel.transform.localRotation = Quaternion.identity;
 
-            Vector3 rot = Vector3.forward * 360 * i / (_amountLevel + 1); // _amountLevel은 최초 0이라 + 1
+            Vector3 rot = Vector3.forward * 360 * i / (int)_stats[(int)Define.AbilityType.Amount]; // _amountLevel은 최초 0이라 + 1
             shovel.transform.Rotate(rot);
             shovel.transform.Translate(shovel.transform.up * 1.25f, Space.World);
 
             float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-            shovel.GetComponent<Projectile_Shovel>().Init(attackRatio * _itemData.attacks[_attackLevel]);
+            shovel.GetComponent<Projectile_Shovel>().Init(
+                attackRatio * (float)_stats[(int)Define.AbilityType.Attack],
+                _itemData.stat.knockbackPower);
         }
     }
 }

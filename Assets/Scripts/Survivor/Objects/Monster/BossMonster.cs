@@ -34,8 +34,7 @@ public class BossMonster : MonoBehaviour
         _anim.runtimeAnimatorController = data.Animator;
 
         MaxHp = data.maxHp;
-        Hp = MaxHp;//
-        Hp = 10;
+        Hp = MaxHp;
         Attack = data.attack;
 
         speed = data.speed;

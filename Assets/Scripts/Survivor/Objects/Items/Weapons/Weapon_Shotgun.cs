@@ -21,6 +21,7 @@ public class Weapon_Shotgun : Weapon
 
     public override void Init()
     {
+        base.Init();
         gameObject.SetActive(true);
 
         _accTime = 0.0f;
@@ -35,15 +36,7 @@ public class Weapon_Shotgun : Weapon
 
     public override void LevelUp(Define.AbilityType type)
     {
-        switch (type)
-        {
-            case Define.AbilityType.CoolTime:
-                _coolTimeLevel += 1;
-                break;
-            case Define.AbilityType.Attack:
-                _attackLevel += 1;
-                break;
-        }
+        base.LevelUp(type);
     }
 
     // 몬스터 탐색은 Physics를 사용하기에 FixedUpdate에서
@@ -113,7 +106,7 @@ public class Weapon_Shotgun : Weapon
         }
 
         _accTime += Time.deltaTime;
-        if (_isFire == false && _nearTarget != null && _accTime > _itemData.coolTimes[_coolTimeLevel])
+        if (_isFire == false && _nearTarget != null && _accTime > (float)_stats[(int)Define.AbilityType.CoolTime])
         {
             _isFire = true;
             StartCoroutine(FireReady(_nearTarget, () => { Fire(_nearTarget); }));
@@ -205,7 +198,8 @@ public class Weapon_Shotgun : Weapon
             fireBullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
             float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-            fireBullet.GetComponent<Projectile_BigBullet>().Init(dir, attackRatio * _itemData.attacks[_attackLevel]);
+            fireBullet.GetComponent<Projectile_BigBullet>().Init(
+                dir, attackRatio * (float)_stats[(int)Define.AbilityType.Attack], _itemData.stat.knockbackPower);
         }
 
         Managers.SoundManager.PlaySFX("weaponSounds/ShotGun");

@@ -107,18 +107,22 @@ public class PopUpUI_GameOver : UI_PopUp
 
         yield return new WaitForSeconds(1.0f);
 
+        Managers.SoundManager.PlaySFX("UISounds/BonusGold");
         UI_Get<Text>((int)Texts.KillBonusText).text = (Managers.GameManagerEx.Kill / 10).ToString();
         UI_Get<GameObject>((int)BonusPanels.KillBonusPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
+        Managers.SoundManager.PlaySFX("UISounds/BonusGold");
         UI_Get<Text>((int)Texts.TimeBonusText).text = ((int)Managers.GameManagerEx.ProgressTime / 20).ToString();
         UI_Get<GameObject>((int)BonusPanels.TimeBonusPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
+        Managers.SoundManager.PlaySFX("UISounds/BonusGold");
         UI_Get<Text>((int)Texts.LevelBonusText).text = (Managers.GameManagerEx.GameLevel / 5).ToString();
         UI_Get<GameObject>((int)BonusPanels.LevelBonusPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
+        Managers.SoundManager.PlaySFX("UISounds/ResultGold");
         UI_Get<Text>((int)Texts.ResultBonusText).text = result.ToString();
         UI_Get<GameObject>((int)BonusPanels.ResultPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);

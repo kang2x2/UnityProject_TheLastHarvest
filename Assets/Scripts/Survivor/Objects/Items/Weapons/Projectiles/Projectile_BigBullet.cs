@@ -16,13 +16,14 @@ public class Projectile_BigBullet : Projectile
     float _destroyTime;
     float _accTime;
 
-    public void Init(Vector3 dir, float attack)
+    public void Init(Vector3 dir, float attack, float knockBackPower)
     {
         _sprite = GetComponent<SpriteRenderer>();
         _trail = GetComponent<TrailRenderer>();
         _collider = GetComponent<Collider2D>();
 
         Attack = attack;
+        KnockBackPower = knockBackPower;
         AttackCount = 1;
         Effect = EffectType.BigBullet;
 

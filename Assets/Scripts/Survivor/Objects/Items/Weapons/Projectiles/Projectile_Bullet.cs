@@ -16,13 +16,14 @@ public class Projectile_Bullet : Projectile
     float _destroyTime;
     float _accTime;
 
-    public void Init(Vector3 dir, float attack, float fen)
+    public void Init(Vector3 dir, float attack, float fen, float knockBackPower)
     {
         _sprite = GetComponent<SpriteRenderer>();
         _rigid = GetComponent<Rigidbody2D>();
         _trail = GetComponent<TrailRenderer>();
 
         Attack = attack;
+        KnockBackPower = knockBackPower;
         AttackCount = 1;
         Effect = EffectType.Bullet;
 

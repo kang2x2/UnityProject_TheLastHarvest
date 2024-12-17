@@ -68,24 +68,25 @@ public class Boss_Skull : BossMonster
 
             if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Bullet)
             {
-                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                Managers.SoundManager.PlaySFX("Battles/Hit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/BulletHitEffect");
                 effect.transform.position = transform.position;
             }
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.BigBullet)
             {
-                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                Managers.SoundManager.PlaySFX("Battles/Hit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/BigBulletHitEffect");
                 effect.transform.position = transform.position;
             }
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Slash)
             {
+                Managers.SoundManager.PlaySFX("Battles/Hit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
                 effect.transform.position = transform.position;
             }
             else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
             {
-                Managers.SoundManager.PlaySFX("Battles/BlowHit");
+                Managers.SoundManager.PlaySFX("Battles/Hit");
                 GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
                 // GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
                 effect.transform.position = transform.position;
@@ -93,11 +94,13 @@ public class Boss_Skull : BossMonster
 
             if (Hp > 0)
             {
-                _anim.SetTrigger("Hit");
-
+                _sprite.color = new Vector4(1.0f, 1.0f, 0.4f, 1.0f);
+                Managers.SoundManager.PlaySFX("Battles/BlowHit");
             }
             else
             {
+                _sprite.color = Color.white;
+                Managers.SoundManager.PlaySFX("Battles/Dead");
                 IsLive = false;
                 _collider.isTrigger = true;
                 _rigid.simulated = false;
@@ -108,6 +111,7 @@ public class Boss_Skull : BossMonster
 
             yield return new WaitForSeconds(0.1f);
         }
+        _sprite.color = Color.white;
     }
 
     #region Collision

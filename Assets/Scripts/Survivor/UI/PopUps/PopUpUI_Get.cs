@@ -37,6 +37,8 @@ public class PopUpUI_Get : UI_PopUp
         IsShow = true;
         int index = (int)param;
 
+        Managers.SoundManager.PlaySFX("UISounds/CharacterGet"); 
+
         UI_Get<Image>((int)Images.ObjectImage).sprite = _characterDatas[index].image;
         UI_Get<Text>((int)Texts.NameText).text = _characterDatas[index].name;
         UI_Get<Text>((int)Texts.DescText).text = _characterDatas[index].desc;

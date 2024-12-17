@@ -5,15 +5,17 @@ using UnityEngine;
 public class Passive_Shoose : Survivor_Item
 {
     Player _player;
-    float _defaultMoveSpeed;
+    float defaultValue;
     public override void Init()
     {
+        base.Init();
         _player = transform.parent.GetComponent<Player>();
-        _defaultMoveSpeed = _player.MoveSpeed;
+        defaultValue = _player.MoveSpeed;
+        _player.MoveSpeed = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
     public override void LevelUp(Define.AbilityType type)
     {
-        _floatUtilLevel += 1;
-        _player.MoveSpeed = _defaultMoveSpeed * _itemData.floatUtils[_floatUtilLevel];
+        base.LevelUp(type);
+        _player.MoveSpeed = defaultValue + (float)_stats[(int)Define.AbilityType.FloatUtil];
     }
 }

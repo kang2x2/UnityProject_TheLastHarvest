@@ -28,10 +28,10 @@ public class SceneUI_GameHUD : UI_Scene
         LevelText,
         KillText,
         TimerText,
+        HpText,
 
         AttackStatText,
         SpeedStatText,
-        HpStatText,
         RecoveryStatText,
         ExpStatText,
         MargnetStatText,
@@ -46,15 +46,16 @@ public class SceneUI_GameHUD : UI_Scene
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.PauseButton).gameObject, ClickPauseButton);
 
-        if(Managers.GameManagerEx.MapType == Define.MapType.Cave)
+        foreach(Text text in UI_GetAll<Text>())
         {
-            UI_Get<Text>((int)Texts.KillText).color = Color.white;
-            UI_Get<Text>((int)Texts.LevelText).color = Color.white;
-        }
-        else
-        {
-            UI_Get<Text>((int)Texts.KillText).color = Color.black;
-            UI_Get<Text>((int)Texts.LevelText).color = Color.black;
+            if (Managers.GameManagerEx.MapType == Define.MapType.Cave)
+            {
+                text.color = Color.white;
+            }
+            else
+            {
+                text.color = Color.black;
+            }
         }
 
         UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.SetActive(false);
@@ -76,10 +77,26 @@ public class SceneUI_GameHUD : UI_Scene
         }
 
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
-        if(float.IsNaN(player.Hp / player.MaxHp) == false)
+
+        #region Hp
+        if (player.Hp < player.MaxHp && player.Hp > 0.0f)
+        {
+            UI_Get<Text>((int)Texts.HpText).text = string.Format("{0:N1} / {1:F0}", player.Hp, player.MaxHp);
+        }
+        else
+        {
+            if(player.Hp < 0.0f)
+            {
+                player.Hp = 0;
+            }
+            UI_Get<Text>((int)Texts.HpText).text = string.Format("{0:F0} / {1:F0}", player.Hp, player.MaxHp);
+        }
+
+        if (float.IsNaN(player.Hp / player.MaxHp) == false)
         {
             UI_Get<Slider>((int)Sliders.PlayerHpBar).value = player.Hp / player.MaxHp;
         }
+        #endregion
 
         UI_Get<Slider>((int)Sliders.ExpBar).value = (float)Managers.GameManagerEx.CurExp / Managers.GameManagerEx.DestExp;
         UI_Get<Text>((int)Texts.KillText).text = string.Format("{0:F0}", Managers.GameManagerEx.Kill);
@@ -99,12 +116,11 @@ public class SceneUI_GameHUD : UI_Scene
         }
 
         #region UserStat
-        UI_Get<Text>((int)Texts.AttackStatText).text = string.Format("{0:N1}", player.AttackRatio);
-        UI_Get<Text>((int)Texts.SpeedStatText).text = string.Format("{0:N1}", player.MoveSpeed);
-        UI_Get<Text>((int)Texts.HpStatText).text = string.Format("{0:N1}", player.MaxHp);
-        UI_Get<Text>((int)Texts.RecoveryStatText).text = string.Format("{0:N1}", player.RecoveryRatio);
-        UI_Get<Text>((int)Texts.ExpStatText).text = string.Format("{0:N1}", player.GetExpRatio);
-        UI_Get<Text>((int)Texts.MargnetStatText).text = string.Format("{0:N1}", player.Margent.GetComponent<CircleCollider2D>().radius);
+        UI_Get<Text>((int)Texts.AttackStatText).text = string.Format("{0:N2}", player.AttackRatio);
+        UI_Get<Text>((int)Texts.SpeedStatText).text = string.Format("{0:N2}", player.MoveSpeed);
+        UI_Get<Text>((int)Texts.RecoveryStatText).text = string.Format("{0:N2}", player.RecoveryRatio);
+        UI_Get<Text>((int)Texts.ExpStatText).text = string.Format("{0:N2}", player.GetExpRatio);
+        UI_Get<Text>((int)Texts.MargnetStatText).text = string.Format("{0:N2}", player.Margent.GetComponent<CircleCollider2D>().radius);
         #endregion
     }
 

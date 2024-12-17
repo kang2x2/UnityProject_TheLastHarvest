@@ -5,10 +5,9 @@ using UnityEngine;
 public class SoundManager
 {
     public AudioSource BGMSource { get; set; }
-    AudioSource _sfxSource;
-
     Dictionary<string, AudioClip> _bgmClips = new Dictionary<string, AudioClip>();
-    Dictionary<string, AudioClip> _sfxClips = new Dictionary<string, AudioClip>();
+
+    Dictionary<string, AudioSource> _sfxSources = new Dictionary<string, AudioSource>();
 
     public float BGMVolum { get; set; }
     public float SFXVolum { get; set; }
@@ -30,9 +29,8 @@ public class SoundManager
         BGMSource = _bgmObj.AddComponent<AudioSource>();
         BGMSource.loop = true;
 
-        GameObject _sfxObj = new GameObject { name = "SFXObject" };
-        _sfxObj.transform.parent = soundRoot.transform;
-        _sfxSource = _sfxObj.AddComponent<AudioSource>();
+       GameObject _sfxObj = new GameObject { name = "SFXObjects" };
+       _sfxObj.transform.parent = soundRoot.transform;
 
         GetBGMClip("BGMs/TitleBGM");
         GetBGMClip("BGMs/FieldBGM");
@@ -64,8 +62,13 @@ public class SoundManager
             return;
         }
 
-        _sfxSource.volume = SFXVolum;
-        _sfxSource.PlayOneShot(sfxClip);
+        if(_sfxSources[name].isPlaying == true)
+        {
+            _sfxSources[name].Stop();
+        }
+
+        _sfxSources[name].volume = SFXVolum;
+        _sfxSources[name].PlayOneShot(sfxClip);
     }
 
     private AudioClip GetBGMClip(string name)
@@ -90,22 +93,25 @@ public class SoundManager
 
     private AudioClip GetSFXClip(string name)
     {
-        AudioClip sfxClip;
-        string path = $"Sounds/{name}";
+        AudioSource sfxSource;
 
-        if(_sfxClips.TryGetValue(name, out sfxClip) == false)
+        if(_sfxSources.TryGetValue(name, out sfxSource) == false)
         {
-            sfxClip = Resources.Load<AudioClip>(path);
-            _sfxClips.Add(name, sfxClip);
+            string path = $"Sounds/{name}";
+
+            GameObject _sfxObj = new GameObject { name = "SFXObject" };
+            _sfxObj.transform.parent = GameObject.Find("@SoundRoot").transform.Find("SFXObjects");
+            if(_sfxObj.transform.parent == null)
+            {
+                Debug.Log("Fail Find SFXObjects");
+                return null;
+            }
+            sfxSource = _sfxObj.AddComponent<AudioSource>();
+            _sfxSources.Add(name, sfxSource);
+            _sfxSources[name].clip = Resources.Load<AudioClip>(path);
         }
 
-        if(sfxClip == null)
-        {
-            Debug.Log("Fail GetSFXClip...");
-            return null;
-        }
-
-        return sfxClip;
+        return _sfxSources[name].clip;
     }
 
     public void Clear()
@@ -113,7 +119,11 @@ public class SoundManager
         BGMSource.Stop();
         BGMSource.clip = null;
 
-        _sfxSource.clip = null;
-        _sfxClips.Clear();
+        foreach(AudioSource sfx in _sfxSources.Values)
+        {
+            sfx.Stop();
+            sfx.clip = null;
+        }
+        _sfxSources.Clear();
     }
 }

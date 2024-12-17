@@ -11,10 +11,13 @@ public class Projectile_Trident : Projectile
     int _bounce;
     float _speed;
 
-    public void Init(int bounce, float attack, Vector3 dir, Transform parent)
+    public void Init(int bounce, float attack, float knockBackPower, Vector3 dir, Transform parent)
     {
+        Managers.SoundManager.PlaySFX("weaponSounds/Trident");
+
         _rigid = GetComponent<Rigidbody2D>();
         Attack = attack;
+        KnockBackPower = knockBackPower;
         AttackCount = 1;
         Effect = EffectType.Slash;
 
@@ -46,6 +49,9 @@ public class Projectile_Trident : Projectile
         {
             if(_bounce > 0)
             {
+                Managers.SoundManager.PlaySFX("weaponSounds/TridentWall");
+                Managers.SoundManager.PlaySFX("weaponSounds/Trident");
+
                 Vector3 normal = Vector2.zero;
                 switch (collision.gameObject.name)
                 {

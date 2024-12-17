@@ -18,6 +18,7 @@ MonoBehaviour:
   itemDesc: "\uB2E4\uC218\uC758 \uC801\uC744 \uACF5\uACA9\uD558\uB294 \uC0F7\uAC74\uC785\uB2C8\uB2E4."
   abilityDesc: 
   icon: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  stat: {fileID: 11400000, guid: 9b2859a7f6bed0940a16deac37e1f631, type: 2}
   maxLevel: 5
   speeds: []
   coolTimes:

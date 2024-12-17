@@ -19,6 +19,7 @@ MonoBehaviour:
     \uC0BC\uC9C0\uCC3D\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   abilityDesc: 
   icon: {fileID: -1786786079, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  stat: {fileID: 11400000, guid: 7b7c4ea7f9b6ab845a76b52fb82b0029, type: 2}
   maxLevel: 5
   speeds: []
   coolTimes: []
