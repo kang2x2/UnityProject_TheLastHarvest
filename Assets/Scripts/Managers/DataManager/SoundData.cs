@@ -42,8 +42,8 @@ public class SoundData
         string filePath = folderPath + "Sound.json";
         if (File.Exists(filePath) == false)
         {
-            Data.bgmVolum = 100.0f;
-            Data.sfxVolum = 100.0f;
+            Data.bgmVolum = 1.0f;
+            Data.sfxVolum = 1.0f;
             string json = JsonUtility.ToJson(Data, true);
             File.WriteAllText(filePath, json);
         }

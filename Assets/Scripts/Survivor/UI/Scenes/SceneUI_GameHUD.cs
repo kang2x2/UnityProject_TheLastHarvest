@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;
 
 public class SceneUI_GameHUD : UI_Scene
 {
+    enum GameObjects
+    {
+        Stick,
+    }
     enum Sliders
     {
         ExpBar,
@@ -39,6 +43,7 @@ public class SceneUI_GameHUD : UI_Scene
 
     private void Awake()
     {
+        UI_Bind<GameObject>(typeof(GameObjects));
         UI_Bind<Slider>(typeof(Sliders));
         UI_Bind<Image>(typeof(Images));
         UI_Bind<Button>(typeof(Buttons));
@@ -59,6 +64,7 @@ public class SceneUI_GameHUD : UI_Scene
         }
 
         UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.SetActive(false);
+        Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
     }
 
     private void Update()

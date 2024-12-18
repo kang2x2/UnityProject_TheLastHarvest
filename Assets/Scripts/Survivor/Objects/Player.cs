@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -85,20 +86,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            _anim.SetBool("move", true);
-
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _curDir = mousePos - new Vector2(transform.position.x, transform.position.y);
-
-            transform.Translate(_curDir.normalized * MoveSpeed * Time.fixedDeltaTime);
-        }
-        else
-        {
-            _anim.SetBool("move", false);
-        }
-
+        transform.Translate(_curDir.normalized * MoveSpeed * Time.fixedDeltaTime);
         _rigid.velocity = Vector2.zero;
     }
 
@@ -119,13 +107,13 @@ public class Player : MonoBehaviour
             Managers.GameManagerEx.GetExp(100);
         }
 
-        if (_curDir.normalized.x < 0)
+        if (_curDir.x != 0)
         {
-            _sprite.flipX = true;
+            _sprite.flipX = _curDir.x < 0;
         }
-        else
+        if(_curDir.magnitude <= 0)
         {
-            _sprite.flipX = false;
+            _anim.SetBool("move", false);
         }
 
         if (IsLive == true && Hp < MaxHp && RecoveryRatio > 0.0f)
@@ -212,5 +200,11 @@ public class Player : MonoBehaviour
             _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             _sprite.color = Color.white;
         }
+    }
+
+    private void OnMove(InputValue value)
+    {
+        _anim.SetBool("move", true);
+        _curDir = value.Get<Vector2>();
     }
 }

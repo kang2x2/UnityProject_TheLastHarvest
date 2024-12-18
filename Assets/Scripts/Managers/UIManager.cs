@@ -6,10 +6,18 @@ using UnityEngine;
 public class UIManager
 {
     int _curOrder = 1;
-
     Dictionary<string, UI_PopUp> _popUps = new Dictionary<string, UI_PopUp>();
 
+    RectTransform _joystick;
+
     public UI_PopUp CurPopUp { get; private set; }
+
+    public void SetJoyStick(RectTransform joystick)
+    {
+        _joystick = joystick;
+        _joystick.localScale = Vector3.one;
+    }
+
     public void ShowPopUpUI_Check(string name, string text, Action action)
     {
         ShowPopUpUI(name);
@@ -26,6 +34,11 @@ public class UIManager
 
     public void ShowPopUpUI(string name, object param = null)
     {
+        if(_joystick != null)
+        {
+            _joystick.localScale = Vector3.zero;
+        }
+
         UI_PopUp popUp;
 
         if(_popUps.TryGetValue(name, out popUp) == false)
@@ -50,6 +63,11 @@ public class UIManager
 
     public void ClosePopUpUI(string name)
     {
+        if (_joystick != null)
+        {
+            _joystick.localScale = Vector3.one;
+        }
+
         UI_PopUp popUp = null;
 
         if (_popUps.TryGetValue(name, out popUp) == false)
@@ -64,6 +82,7 @@ public class UIManager
 
     public void Clear()
     {
+        _joystick = null;
         _popUps.Clear();
         _curOrder = 1;
     }

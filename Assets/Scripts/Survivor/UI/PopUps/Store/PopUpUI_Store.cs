@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;
 
 public class PopUpUI_Store : UI_PopUp
 {
+    enum Scrollbars
+    {
+        ScrollbarVertical,
+    }
     enum GameObjects
     {
         Content,
@@ -30,6 +34,7 @@ public class PopUpUI_Store : UI_PopUp
 
     public override void Init()
     {
+        UI_Bind<Scrollbar>(typeof(Scrollbars));
         UI_Bind<GameObject>(typeof(GameObjects));
         UI_Bind<Button>(typeof(Buttons));
         UI_Bind<Text>(typeof(Texts));
@@ -43,6 +48,12 @@ public class PopUpUI_Store : UI_PopUp
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.ReturnButton).gameObject, ClickReturnButton);
     }
+
+    public override void Show(object param = null)
+    {
+        UI_Get<Scrollbar>((int)Scrollbars.ScrollbarVertical).value = 1;
+    }
+
 
     public void ClickReturnButton(PointerEventData data)
     {

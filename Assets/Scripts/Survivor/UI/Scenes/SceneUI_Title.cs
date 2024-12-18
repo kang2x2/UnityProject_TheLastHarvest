@@ -20,6 +20,7 @@ public class SceneUI_Title : UI_Scene
         UI_BindEvent(UI_Get<Button>((int)Buttons.StartButton).gameObject, ClickStartButton);
         UI_BindEvent(UI_Get<Button>((int)Buttons.StoreButton).gameObject, ClickStoreButton);
         UI_BindEvent(UI_Get<Button>((int)Buttons.SettingButton).gameObject, ClickSettingButton);
+        UI_BindEvent(UI_Get<Button>((int)Buttons.ExitButton).gameObject, ClickExitButton);
     }
 
     public void ClickStartButton(PointerEventData data)
@@ -37,6 +38,11 @@ public class SceneUI_Title : UI_Scene
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ShowPopUpUI("PopUpUI_TitleSetting");
+    }
+
+    public void ClickExitButton(PointerEventData data)
+    {
+        Application.Quit();
     }
 }
 

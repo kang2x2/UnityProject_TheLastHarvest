@@ -36,6 +36,8 @@ public class Managers : MonoBehaviour
     {
         if (s_instance == null)
         {
+            Application.targetFrameRate = 60;
+
             GameObject go = GameObject.Find("@Managers");
             if(go == null)
             {
