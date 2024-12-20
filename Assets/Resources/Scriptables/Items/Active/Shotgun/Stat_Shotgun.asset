@@ -19,17 +19,17 @@ MonoBehaviour:
   - 0.5
   - 0.5
   - 0.5
-  - 0.5
+  - 1
   fens: []
   amounts: 
   attacks:
   - 1.5
-  - 0.75
-  - 0.75
-  - 0.75
-  - 0.75
   - 1
+  - 1
+  - 1
+  - 1
+  - 1.5
   sizes: []
-  knockbackPower: 6
+  knockbackPower: 8
   floatUtils: []
   intUtils: 

@@ -49,23 +49,22 @@ public class Weapon_Shotgun : Weapon
 
         if (_isFire == false)
         {
-
-            _targets = Physics2D.CircleCastAll(Managers.GameManagerEx.Player.transform.position, 2.5f, Vector3.zero, 0, _targetLayer);
-            _nearTarget = GetTarget();
-
             Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
+            _targets = Physics2D.CircleCastAll(playerPos, 2.5f, Vector3.zero, 0, _targetLayer);
+            _nearTarget = GetTarget(playerPos);
+
             transform.position = new Vector2(playerPos.x + _offset.x, playerPos.y + _offset.y);
         }
     }
 
-    Transform GetTarget()
+    Transform GetTarget(Vector3 playerPos)
     {
         Transform target = null;
         float nearDiff = float.MaxValue;
 
         foreach (RaycastHit2D enemy in _targets)
         {
-            float diff = Vector3.Distance(transform.position, enemy.transform.position);
+            float diff = Vector3.Distance(playerPos, enemy.transform.position);
             if (diff < nearDiff)
             {
                 nearDiff = diff;
@@ -131,9 +130,13 @@ public class Weapon_Shotgun : Weapon
 
         Managers.SoundManager.PlaySFX("weaponSounds/ReLoad");
 
+        float rotAccTime = 0.0f;
+        float rotTime = 1.0f;
+
         while (true)
         {
-            accAngle = Mathf.Lerp(accAngle, rotValue, 2.0f * Time.deltaTime);
+            float t = rotAccTime / rotTime;
+            accAngle = Mathf.Lerp(accAngle, rotValue, t);
 
             if(accAngle < rotValue)
             {
@@ -145,7 +148,9 @@ public class Weapon_Shotgun : Weapon
 
             transform.position = Vector3.Lerp(transform.position, destPos, Time.deltaTime * _moveSpeed);
 
-            if(Vector3.Distance(transform.position, destPos) <= 0.02f && rotValue - accAngle <= 1.0f)
+            rotAccTime += Time.deltaTime;
+
+            if (Vector3.Distance(transform.position, destPos) <= 0.02f && rotValue - accAngle <= 1.0f)
             {
                 _isFire = false;
                 break;

@@ -63,5 +63,10 @@ public class WorldUI_HpBar : UI_Base
     private void LateUpdate()
     {
         _slider.value = _curVal / _maxVal;
+
+        if(_owner.name != "Monster")
+        {
+            Debug.Log(_owner.name);
+        }
     }
 }

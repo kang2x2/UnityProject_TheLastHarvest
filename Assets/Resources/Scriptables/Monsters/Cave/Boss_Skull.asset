@@ -15,7 +15,7 @@ MonoBehaviour:
   name: BossSkull
   type: 0
   Animator: {fileID: 22100000, guid: 4d8cc0cefaa1ca8409122e76db41f614, type: 2}
-  hp: 5000
-  maxHp: 5000
+  hp: 3000
+  maxHp: 3000
   attack: 40
   speed: 1

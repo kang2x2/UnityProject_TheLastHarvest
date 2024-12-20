@@ -12,6 +12,8 @@ public class PopUpUI_GameOver : UI_PopUp
         KillBonusPanel,
         TimeBonusPanel,
         LevelBonusPanel,
+        ClearPanel,
+
         ResultPanel,
     }
     enum Images
@@ -37,7 +39,7 @@ public class PopUpUI_GameOver : UI_PopUp
     }
 
     public Sprite[] headerImage;
-
+    Define.GameOverType _gameOverType;
     public override void Init()
     {
         UI_Bind<GameObject>(typeof(BonusPanels));
@@ -51,10 +53,10 @@ public class PopUpUI_GameOver : UI_PopUp
     public override void Show(object param = null)
     {
         #region GameOverType
-        Define.GameOverType gameOverType = (Define.GameOverType)param;
+        _gameOverType = (Define.GameOverType)param;
 
-        UI_Get<Image>((int)Images.GameOverImage).sprite = headerImage[(int)gameOverType];
-        switch(gameOverType)
+        UI_Get<Image>((int)Images.GameOverImage).sprite = headerImage[(int)_gameOverType];
+        switch(_gameOverType)
         {
             case Define.GameOverType.Clear:
                 UI_Get<Image>((int)Images.BackGroundImage).color = new Vector4(0.48f, 0.73f, 0.0f, 0.6f);
@@ -100,8 +102,23 @@ public class PopUpUI_GameOver : UI_PopUp
     IEnumerator ScoreCalculation()
     {
         int result = Managers.GameManagerEx.Kill / 10;
-        result += (int)Managers.GameManagerEx.ProgressTime / 20;
         result += Managers.GameManagerEx.GameLevel / 5;
+
+        int timeBonus = 0;
+        if(Managers.GameManagerEx.ProgressTime > 600.0f)
+        {
+            timeBonus = 600 / 20;
+        }
+        else
+        {
+            timeBonus = (int)Managers.GameManagerEx.ProgressTime / 20;
+        }
+        result += timeBonus;
+
+        if (_gameOverType == Define.GameOverType.Clear)
+        {
+            result *= 2;
+        }
         Managers.DataManager.User.Data.gold += result;
         Managers.DataManager.User.UserDataOverwrite();
 
@@ -113,7 +130,7 @@ public class PopUpUI_GameOver : UI_PopUp
         yield return new WaitForSeconds(1.0f);
 
         Managers.SoundManager.PlaySFX("UISounds/BonusGold");
-        UI_Get<Text>((int)Texts.TimeBonusText).text = ((int)Managers.GameManagerEx.ProgressTime / 20).ToString();
+        UI_Get<Text>((int)Texts.TimeBonusText).text = timeBonus.ToString();
         UI_Get<GameObject>((int)BonusPanels.TimeBonusPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
@@ -121,6 +138,13 @@ public class PopUpUI_GameOver : UI_PopUp
         UI_Get<Text>((int)Texts.LevelBonusText).text = (Managers.GameManagerEx.GameLevel / 5).ToString();
         UI_Get<GameObject>((int)BonusPanels.LevelBonusPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
+
+        if(_gameOverType == Define.GameOverType.Clear)
+        {
+            Managers.SoundManager.PlaySFX("UISounds/BonusGold");
+            UI_Get<GameObject>((int)BonusPanels.ClearPanel).SetActive(true);
+            yield return new WaitForSeconds(1.0f);
+        }
 
         Managers.SoundManager.PlaySFX("UISounds/ResultGold");
         UI_Get<Text>((int)Texts.ResultBonusText).text = result.ToString();

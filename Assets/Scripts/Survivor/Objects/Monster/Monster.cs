@@ -12,7 +12,8 @@ public class Monster : MonoBehaviour
     GameObject _target = null;
     float _rePositionOffSet = 10.0f;
 
-    bool _isLive = true;
+    bool _isLive;
+    bool _isClearEvent;
 
     SpriteRenderer _sprite;
     Animator _anim;
@@ -31,7 +32,7 @@ public class Monster : MonoBehaviour
         _target = Managers.GameManagerEx.Player;
         _isLive = true;
 
-        if(_sprite != null)
+        if (_sprite != null)
         {
             _sprite.sortingOrder = 4;
         }
@@ -53,6 +54,7 @@ public class Monster : MonoBehaviour
         _collider = GetComponent<Collider2D>();
 
         _sprite.sortingOrder = 4;
+        _isClearEvent = false;
 
         MonsterSetting(datas[index], Managers.GameManagerEx.GameLevel);
 
@@ -78,9 +80,9 @@ public class Monster : MonoBehaviour
         }
         else
         {
-            _maxHp = data.maxHp + (gameLevel * 1.2f);
+            _maxHp = data.maxHp + (gameLevel * 1.15f);
             _hp = _maxHp;
-            Attack = data.attack + (gameLevel * 1.2f);
+            Attack = data.attack + (gameLevel * 1.15f);
         }
 
         _speed = data.speed;
@@ -138,8 +140,13 @@ public class Monster : MonoBehaviour
 
         if(Managers.GameManagerEx.IsClear == true)
         {
-            // Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
-            Managers.ResourceManager.Destroy(_hpBar.gameObject);
+            if(_isClearEvent == false)
+            {
+                Managers.SoundManager.PlaySFX("Battles/Dead");
+                Managers.ResourceManager.Instantiate("Objects/ExpObject").transform.position = transform.position;
+                Managers.ResourceManager.Destroy(_hpBar.gameObject);
+                _isClearEvent = true;
+            }
 
             _isLive = false;
             _collider.enabled = false;
@@ -152,6 +159,7 @@ public class Monster : MonoBehaviour
     void Dead()
     {
         _collider.enabled = false;
+        Managers.ResourceManager.Destroy(_hpBar.gameObject);
         Managers.ResourceManager.Destroy(gameObject);
     }
 
@@ -203,8 +211,8 @@ public class Monster : MonoBehaviour
                 exp.GetComponent<ExpObject>().Init();
                 exp.transform.position = transform.position;
 
+                _hpBar.gameObject.SetActive(false);
                 Managers.GameManagerEx.Kill += 1;
-                Managers.ResourceManager.Destroy(_hpBar.gameObject);
 
                 _isLive = false;
                 _collider.isTrigger = true;

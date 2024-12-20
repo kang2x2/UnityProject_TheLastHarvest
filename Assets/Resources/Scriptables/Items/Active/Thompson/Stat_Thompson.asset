@@ -23,11 +23,11 @@ MonoBehaviour:
   amounts: 030000000300000004000000060000000700000007000000
   attacks:
   - 1
-  - 0.5
-  - 0.5
-  - 0.5
-  - 0.5
-  - 0.5
+  - 0.7
+  - 0.7
+  - 0.7
+  - 0.7
+  - 0.7
   sizes: []
   knockbackPower: 1
   floatUtils: []

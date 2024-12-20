@@ -102,11 +102,6 @@ public class Player : MonoBehaviour
             _anim.speed = 1.0f;
         }
 
-        if (Input.GetMouseButton(1))
-        {
-            Managers.GameManagerEx.GetExp(100);
-        }
-
         if (_curDir.x != 0)
         {
             _sprite.flipX = _curDir.x < 0;

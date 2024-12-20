@@ -194,4 +194,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 39b32059df8d00c44b8a18df36e32ede, type: 2}
-  _whiteMaterial: {fileID: 2100000, guid: 83ec88572f311a74bbd9191bc5b63503, type: 2}
+  _whiteMaterial: {fileID: 2100000, guid: 42685862f7454a94f8456c97a0edb04f, type: 2}

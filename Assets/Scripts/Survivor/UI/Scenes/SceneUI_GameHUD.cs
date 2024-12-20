@@ -9,6 +9,7 @@ public class SceneUI_GameHUD : UI_Scene
     enum GameObjects
     {
         Stick,
+        BossPanel,
     }
     enum Sliders
     {
@@ -63,7 +64,7 @@ public class SceneUI_GameHUD : UI_Scene
             }
         }
 
-        UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.SetActive(false);
+        UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.SetActive(false);
         Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
     }
 
@@ -91,11 +92,14 @@ public class SceneUI_GameHUD : UI_Scene
         }
         else
         {
-            if(player.Hp < 0.0f)
+            if(player.Hp <= 0.0f)
             {
-                player.Hp = 0;
+                UI_Get<Text>((int)Texts.HpText).text = string.Format("{0:F0} / {1:F0}", 0, player.MaxHp);
             }
-            UI_Get<Text>((int)Texts.HpText).text = string.Format("{0:F0} / {1:F0}", player.Hp, player.MaxHp);
+            else
+            {
+                UI_Get<Text>((int)Texts.HpText).text = string.Format("{0:F0} / {1:F0}", player.Hp, player.MaxHp);
+            }
         }
 
         if (float.IsNaN(player.Hp / player.MaxHp) == false)
@@ -114,9 +118,9 @@ public class SceneUI_GameHUD : UI_Scene
 
         if(Managers.GameManagerEx.IsBossBattle == true)
         {
-            if(UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.activeSelf == false)
+            if(UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.activeSelf == false)
             {
-                UI_Get<Slider>((int)Sliders.BossHpBar).gameObject.SetActive(true);
+                UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.SetActive(true);
             }
             UI_Get<Slider>((int)Sliders.BossHpBar).value = Managers.GameManagerEx.Boss.Hp / Managers.GameManagerEx.Boss.MaxHp;
         }

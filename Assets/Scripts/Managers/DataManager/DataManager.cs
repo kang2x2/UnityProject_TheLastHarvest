@@ -17,10 +17,17 @@ public class DataManager
         User.Init();
     }
 
-    public void DataReset()
+    public void DataAllReset()
     {
         Character.DataReset();
         Store.DataReset();
         User.DataReset();
+    }
+
+    public void DataAllOverwrite()
+    {
+        Character.CharacterDataOverwrite();
+        Store.StoreDataOverwrite();
+        User.UserDataOverwrite();
     }
 }

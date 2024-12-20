@@ -62,7 +62,7 @@ public class PopUpUI_TitleSetting : UI_PopUp
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ShowPopUpUI_Check("PopUpUI_Check", "획득한 캐릭터 및 강화한 능력치가 전부 사라집니다. 정말 모든 데이터를 초기화 합니까?", () =>
         {
-            Managers.DataManager.DataReset();
+            Managers.DataManager.DataAllReset();
             Managers.UIManager.ClosePopUpUI("PopUpUI_Check");
             Managers.UIManager.ShowPopUpUI("PopUpUI_Complete", "모든 데이터의 초기화가 완료됐습니다.");
         });

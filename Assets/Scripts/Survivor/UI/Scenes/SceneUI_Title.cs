@@ -42,6 +42,7 @@ public class SceneUI_Title : UI_Scene
 
     public void ClickExitButton(PointerEventData data)
     {
+        Managers.DataManager.DataAllOverwrite();
         Application.Quit();
     }
 }

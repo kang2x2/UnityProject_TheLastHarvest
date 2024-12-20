@@ -60,7 +60,7 @@ public class CharacterData
             popUp = Managers.UIManager.CurPopUp;
         }
 
-        if (Managers.GameManagerEx.ProgressTime >= 3.0f &&
+        if (Managers.GameManagerEx.ProgressTime >= 300.0f &&
             Data.unLocks[(int)Define.CharacterType.Character2] == false)
         {
             PopUpSet((int)Define.CharacterType.Character2);

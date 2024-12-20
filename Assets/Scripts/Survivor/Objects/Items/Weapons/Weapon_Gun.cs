@@ -31,25 +31,25 @@ public class Weapon_Gun : Weapon
             return;
         }
 
-        _targets = Physics2D.CircleCastAll(transform.position, 3.0f, Vector3.zero, 0, _targetLayer);
-        _nearTarget = GetTarget();
+        Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
+        _targets = Physics2D.CircleCastAll(playerPos, 3.0f, Vector3.zero, 0, _targetLayer);
+        _nearTarget = GetTarget(playerPos);
 
         float dir = Managers.GameManagerEx.Player.GetComponent<SpriteRenderer>().flipX == false ? 1.0f : -1.0f;
 
-        Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
         transform.position = new Vector2(playerPos.x + (_offset.x * dir), playerPos.y + _offset.y);
 
         SetDir();
     }
 
-    Transform GetTarget()
+    Transform GetTarget(Vector3 playerPos)
     {
         Transform target = null;
         float nearDiff = float.MaxValue;
 
         foreach (RaycastHit2D enemy in _targets)
         {
-            float diff = Vector3.Distance(transform.position, enemy.transform.position);
+            float diff = Vector3.Distance(playerPos, enemy.transform.position);
             if (diff < nearDiff)
             {
                 nearDiff = diff;

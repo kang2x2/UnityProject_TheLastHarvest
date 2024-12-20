@@ -372,6 +372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scene_Title
       objectReference: {fileID: 0}
+    - target: {fileID: 2786416699536957618, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4249624739394109988, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
       propertyPath: m_MatchWidthOrHeight
       value: 0.5

@@ -48,6 +48,7 @@ public class Pool
         {
             Push(Create());
             obj = _poolQ.Dequeue();
+            Debug.Log(obj.name + " ÃÊ°ú");
         }
 
         obj.SetActive(true);
