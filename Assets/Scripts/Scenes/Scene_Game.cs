@@ -17,9 +17,13 @@ public class Scene_Game : Scene_Base
 
     public override IEnumerator Loading(Action<float> onProgress)
     {
-        int taskCount = 9;
+        int taskCount = 10;
         float progressRatio = 1.0f / taskCount;
         int successTaskCount = 0;
+
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 100);
+        onProgress?.Invoke(progressRatio * ++successTaskCount);
+        yield return null;
 
         Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 200);
         onProgress?.Invoke(progressRatio * ++successTaskCount);

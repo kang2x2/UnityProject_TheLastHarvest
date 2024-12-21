@@ -151,6 +151,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        // 충돌한 것도 없는데 왜 내부로 진입하는가? 
+        if(collision.CompareTag("Enemy"))
+        {
+            Debug.Log("TriggerStay : " + collision.gameObject.transform.position);
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Enemy") == true)
@@ -163,11 +172,6 @@ public class Player : MonoBehaviour
                 if (collision.gameObject.GetComponent<Monster>() != null)
                 {
                     Hp -= collision.gameObject.GetComponent<Monster>().Attack * Time.deltaTime;
-                }
-
-                else if (collision.gameObject.GetComponent<BossMonster>() != null)
-                {
-                    Hp -= collision.gameObject.GetComponent<BossMonster>().Attack * Time.deltaTime;
                 }
             }
             else

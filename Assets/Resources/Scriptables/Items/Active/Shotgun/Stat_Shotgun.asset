@@ -30,6 +30,6 @@ MonoBehaviour:
   - 1
   - 1.5
   sizes: []
-  knockbackPower: 8
+  knockbackPower: 12
   floatUtils: []
   intUtils: 

@@ -64,7 +64,7 @@ public class WorldUI_HpBar : UI_Base
     {
         _slider.value = _curVal / _maxVal;
 
-        if(_owner.name != "Monster")
+        if(_owner.name != "Monster" && _owner.name != "FlyMonster")
         {
             Debug.Log(_owner.name);
         }

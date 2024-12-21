@@ -2,23 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossMonster : MonoBehaviour
+public class BossMonster : Monster
 {
     public Data_Monster data;
-
-    public float Hp { get; protected set; }
-    public float MaxHp { get; protected set; }
-    public float Attack { get; private set; }
-    public bool IsLive { get; protected set; }
-
-    protected SpriteRenderer _sprite;
-    protected Animator _anim;
-    protected Rigidbody2D _rigid;
-    protected Collider2D _collider;
-
-    protected GameObject _target = null;
-
-    protected float speed;
     protected float _rePositionOffSet = 10.0f;
 
     protected Material _defaultMaterial;
@@ -34,21 +20,16 @@ public class BossMonster : MonoBehaviour
 
     public virtual void Init() 
     {
-        _target = Managers.GameManagerEx.Player;
-        IsLive = true;
-
-        _sprite = GetComponent<SpriteRenderer>();
-        _rigid = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<Collider2D>();
+        FieldInit();
 
         _defaultMaterial = _sprite.material;
         _flashTime = 0.1f;
         _isFlashing = false;
 
-        MonsterSetting(data, Managers.GameManagerEx.GameLevel);
+        MonsterSetting(data);
     }
 
-    protected void MonsterSetting(Data_Monster data, int gameLevel)
+    protected void MonsterSetting(Data_Monster data)
     {
         _anim = GetComponent<Animator>();
         _anim.runtimeAnimatorController = data.Animator;
@@ -57,26 +38,26 @@ public class BossMonster : MonoBehaviour
         Hp = MaxHp;
         Attack = data.attack;
 
-        speed = data.speed;
+        Speed = data.speed;
 
         Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
         transform.position = new Vector3(playerPos.x, playerPos.y + 10, playerPos.z);
     }
-
-    void LateUpdate()
+    void FixedUpdate()
     {
-        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
+        if (FixedStopCheck() == false)
         {
-            _anim.speed = 0.0f;
-            if (Managers.SceneManagerEx.IsLoading == true)
-            {
-                _rigid.velocity = Vector2.zero;
-            }
             return;
         }
-        else
+        Vector2 dir = _target.GetComponent<Rigidbody2D>().position - _rigid.position;
+        Vector2 destPos = dir.normalized * Speed * Time.fixedDeltaTime;
+        _rigid.MovePosition(_rigid.position + destPos);
+    }
+    void LateUpdate()
+    {
+        if (LateStopCheck() == false)
         {
-            _anim.speed = 1.0f;
+            return;
         }
 
         if (Managers.Instance != null && IsLive == true)
@@ -102,33 +83,7 @@ public class BossMonster : MonoBehaviour
         Projectile projectile = collision.transform.GetComponent<Projectile>();
         for (int i = 0; i < projectile.AttackCount; ++i)
         {
-            Hp -= collision.transform.GetComponent<Projectile>().Attack;
-
-            if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Bullet)
-            {
-                Managers.SoundManager.PlaySFX("Battles/Hit");
-                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BulletHitEffect");
-                effect.transform.position = transform.position;
-            }
-            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.BigBullet)
-            {
-                Managers.SoundManager.PlaySFX("Battles/Hit");
-                GameObject effect = Managers.ResourceManager.Instantiate("Objects/BigBulletHitEffect");
-                effect.transform.position = transform.position;
-            }
-            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Slash)
-            {
-                Managers.SoundManager.PlaySFX("Battles/Hit");
-                GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
-                effect.transform.position = transform.position;
-            }
-            else if (collision.GetComponent<Projectile>().Effect == Projectile.EffectType.Blow)
-            {
-                Managers.SoundManager.PlaySFX("Battles/Hit");
-                GameObject effect = Managers.ResourceManager.Instantiate("Objects/SlashHitEffect");
-                // GameObject effect = Managers.ResourceManager.Instantiate("Objects/BlowHitEffect");
-                effect.transform.position = transform.position;
-            }
+            MonsterHit(projectile);
 
             if (Hp > 0)
             {
@@ -159,24 +114,6 @@ public class BossMonster : MonoBehaviour
             _isFlashing = true;
             _flashTime = 0.1f;
             StartCoroutine(HitEvent(collision));
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("PlayerArea") && IsLive == true)
-        {
-            if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
-            {
-                float randomAngle = Random.Range(0.0f, 360.0f);
-                float randomRadian = randomAngle * Mathf.Deg2Rad;
-
-                Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
-                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSet / 2))).x;
-                float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
-
-                transform.position = new Vector2(monsterPosX, monsterPosY);
-            }
         }
     }
     #endregion

@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: fe0d305c386c24f49b22110bd836c48d
+guid: 0aff58a705260724ba202eab0ca4f5f7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8625846662236638254
-    second: Hit (44x30)_0
+      213: -5097002624622362120
+    second: Desappear (44x30)_0
   - first:
-      213: 1570143437731978870
-    second: Hit (44x30)_1
+      213: -2432630741062489389
+    second: Desappear (44x30)_1
   - first:
-      213: 293275071455328999
-    second: Hit (44x30)_2
+      213: 3033054285088897030
+    second: Desappear (44x30)_2
   - first:
-      213: -3073595936789769836
-    second: Hit (44x30)_3
-  - first:
-      213: 2640212775168743854
-    second: Hit (44x30)_4
+      213: 1963251448663112220
+    second: Desappear (44x30)_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -151,11 +148,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hit (44x30)_0
+      name: Desappear (44x30)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
+        y: 0
         width: 44
         height: 30
       alignment: 0
@@ -165,18 +162,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6294412e5470cf74fb34c5a00e1d6a42
-      internalID: -8625846662236638254
+      spriteID: 3b8e17418fb565540a4a1fa80fdcd36c
+      internalID: -5097002624622362120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit (44x30)_1
+      name: Desappear (44x30)_1
       rect:
         serializedVersion: 2
         x: 44
-        y: 1
+        y: 0
         width: 44
         height: 30
       alignment: 0
@@ -186,18 +183,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17850508c71cbbc479ee400ee2bca929
-      internalID: 1570143437731978870
+      spriteID: 73f9d56a9967354458ac7c5bda7d91fc
+      internalID: -2432630741062489389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit (44x30)_2
+      name: Desappear (44x30)_2
       rect:
         serializedVersion: 2
         x: 88
-        y: 1
+        y: 0
         width: 44
         height: 30
       alignment: 0
@@ -207,18 +204,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5134a51df043abe42b85c5bcb2f60cee
-      internalID: 293275071455328999
+      spriteID: a5323c25f32442047a223946921b4059
+      internalID: 3033054285088897030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit (44x30)_3
+      name: Desappear (44x30)_3
       rect:
         serializedVersion: 2
         x: 132
-        y: 1
+        y: 0
         width: 44
         height: 30
       alignment: 0
@@ -228,29 +225,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0641e16ee3c133b45bbfc2d3a077693d
-      internalID: -3073595936789769836
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hit (44x30)_4
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 1
-        width: 44
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ea809f2d4ecf0949a0f1b0e53c0b98f
-      internalID: 2640212775168743854
+      spriteID: 8f011809461ab374f951bf9489a183b1
+      internalID: 1963251448663112220
       vertices: []
       indices: 
       edges: []
@@ -266,11 +242,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hit (44x30)_0: -8625846662236638254
-      Hit (44x30)_1: 1570143437731978870
-      Hit (44x30)_2: 293275071455328999
-      Hit (44x30)_3: -3073595936789769836
-      Hit (44x30)_4: 2640212775168743854
+      Desappear (44x30)_0: -5097002624622362120
+      Desappear (44x30)_1: -2432630741062489389
+      Desappear (44x30)_2: 3033054285088897030
+      Desappear (44x30)_3: 1963251448663112220
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

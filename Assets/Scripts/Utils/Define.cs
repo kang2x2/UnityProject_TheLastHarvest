@@ -102,7 +102,10 @@ public class Define
         Skeleton,
         DevilStone,
 
+        //Fly
+        Bird,
+        Ghost,
+
         End
     }
-
 }
