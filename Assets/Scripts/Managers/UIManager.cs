@@ -32,6 +32,20 @@ public class UIManager
         popUpCheck.ValueInit(text, action);
     }
 
+    public void ShowPopUpUI_Complete(string name, string text, Action action = null)
+    {
+        ShowPopUpUI(name);
+        PopUpUI_Complete popUpComplete = _popUps["PopUpUI_Complete"] as PopUpUI_Complete;
+
+        if (popUpComplete == null)
+        {
+            Debug.Log("Complete PopUpUI Is Null...");
+            return;
+        }
+
+        popUpComplete.ValueInit(text, action);
+    }
+
     public void ShowPopUpUI(string name, object param = null)
     {
         if(_joystick != null)
@@ -61,7 +75,7 @@ public class UIManager
         CurPopUp = popUp;
     }
 
-    public void ClosePopUpUI(string name)
+    public void ClosePopUpUI(string name, float closeTime = 0.0f)
     {
         if (_joystick != null)
         {
@@ -75,11 +89,10 @@ public class UIManager
             Debug.Log("Fail Find PopUpUI...");
             return;
         }
-
         _curOrder -= 1;
         popUp.gameObject.SetActive(false);
-    }
 
+    }
     public void Clear()
     {
         _joystick = null;

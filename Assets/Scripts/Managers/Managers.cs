@@ -12,6 +12,7 @@ public class Managers : MonoBehaviour
     private static GameManager s_gameManager = new GameManager();
     private static PoolManager s_poolManager = new PoolManager();
     private static SceneManagerEx s_sceneManager = new SceneManagerEx();
+    private static WebManager s_webManager = new WebManager();
     private static FadeManager s_fadeManager = new FadeManager();
     private static ResourceManager s_resoruceManager = new ResourceManager();
     private static SoundManager s_soundManager = new SoundManager();
@@ -22,6 +23,7 @@ public class Managers : MonoBehaviour
     public static GameManager GameManagerEx { get { Init(); return s_gameManager; } }
     public static PoolManager PoolManager { get { Init(); return s_poolManager; } }
     public static SceneManagerEx SceneManagerEx { get { Init(); return s_sceneManager; } }
+    public static WebManager WebManager { get { Init(); return s_webManager; } }
     public static FadeManager FadeManager { get { Init(); return s_fadeManager; } }
     public static ResourceManager ResourceManager { get { Init(); return s_resoruceManager; } }
     public static SoundManager SoundManager { get { Init(); return s_soundManager; } }
@@ -62,13 +64,25 @@ public class Managers : MonoBehaviour
             s_poolManager.Init();
             s_fadeManager.Init();
             s_sceneManager.Init();
+            s_webManager.Init();
             s_soundManager.Init();
         }
     }
 
     private void Update()
     {
-        if(s_gameManager != null && SceneManagerEx.CurScene.SceneType == Define.SceneType.GameScene)
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+        {
+            // 전체화면 전환 후 비율 조정을 강제
+            if (Screen.fullScreen == true)
+            {
+                int setWidth = 1080;
+                int setHeight = 1280;
+                Screen.SetResolution(setWidth, setHeight, true);
+            }
+        }
+
+        if (s_gameManager != null && SceneManagerEx.CurScene.SceneType == Define.SceneType.GameScene)
         {
             s_gameManager.Update();
         }

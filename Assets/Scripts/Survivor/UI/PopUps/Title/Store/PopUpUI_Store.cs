@@ -46,14 +46,16 @@ public class PopUpUI_Store : UI_PopUp
             itemUI.Init(i);
         }
 
+        UI_Get<Scrollbar>((int)Scrollbars.ScrollbarVertical).value = 1;
         UI_BindEvent(UI_Get<Button>((int)Buttons.ReturnButton).gameObject, ClickReturnButton);
     }
 
     public override void Show(object param = null)
     {
         UI_Get<Scrollbar>((int)Scrollbars.ScrollbarVertical).value = 1;
+        Vector2 downPos = new Vector2(0.0f, -1000.0f);
+        UI_Get<GameObject>((int)GameObjects.Content).GetComponent<RectTransform>().localPosition = downPos;
     }
-
 
     public void ClickReturnButton(PointerEventData data)
     {

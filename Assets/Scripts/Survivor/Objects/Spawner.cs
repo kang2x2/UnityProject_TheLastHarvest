@@ -26,7 +26,40 @@ public class Spawner : MonoBehaviour
             }
 
             _allPoints.Add(transform.GetChild(i));
+            transform.GetChild(i).position = transform.position;
         }
+
+        SpawnPosSet();
+    }
+
+    private void SpawnPosSet()
+    {
+        float height = Camera.main.orthographicSize * 2.0f;
+        float width = height * Camera.main.aspect;
+
+        GameObject point = GameObject.Find("SpawnPointUp");
+        point.transform.position = new Vector2(transform.position.x, transform.position.y + (height / 2) + 1.0f);
+        
+        point = GameObject.Find("SpawnPointRightUp");
+        point.transform.position = new Vector2(transform.position.x + (width / 2) + 1.0f, transform.position.y + (height / 2) + 1.0f);
+
+        point = GameObject.Find("SpawnPointRight");
+        point.transform.position = new Vector2(transform.position.x + (width / 2) + 1.0f, transform.position.y);
+
+        point = GameObject.Find("SpawnPointRightDown");
+        point.transform.position = new Vector2(transform.position.x + (width / 2) + 1.0f, transform.position.y - (height / 2) - 1.0f);
+
+        point = GameObject.Find("SpawnPointDown");
+        point.transform.position = new Vector2(transform.position.x, transform.position.y - (height / 2) - 1.0f);
+
+        point = GameObject.Find("SpawnPointLeftDown");
+        point.transform.position = new Vector2(transform.position.x - (width / 2) - 1.0f, transform.position.y - (height / 2) - 1.0f);
+
+        point = GameObject.Find("SpawnPointLeft");
+        point.transform.position = new Vector2(transform.position.x - (width / 2) - 1.0f, transform.position.y);
+
+        point = GameObject.Find("SpawnPointLeftUp");
+        point.transform.position = new Vector2(transform.position.x - (width / 2) - 1.0f, transform.position.y + (height / 2) + 1.0f);
     }
 
     private void Update()
@@ -50,7 +83,7 @@ public class Spawner : MonoBehaviour
         {
             for (int i = 0; i < 4; ++i)
             {
-                GameObject monster = Managers.ResourceManager.Instantiate("Objects/Monster");
+                GameObject monster = Managers.ResourceManager.Instantiate("Objects/Monster", null, false);
 
                 #region Lagacy : 주변 360도 랜덤 위치
                 // 삼각 함수 메서드들은 Radian 단위를 사용.

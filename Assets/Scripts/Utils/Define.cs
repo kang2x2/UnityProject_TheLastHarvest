@@ -108,4 +108,11 @@ public class Define
 
         End
     }
+
+    public enum RankingType
+    {
+        Kill,
+        Clear,
+        End
+    }
 }

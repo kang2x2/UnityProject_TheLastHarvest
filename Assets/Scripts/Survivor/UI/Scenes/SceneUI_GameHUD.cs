@@ -65,7 +65,7 @@ public class SceneUI_GameHUD : UI_Scene
         }
 
         UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.SetActive(false);
-        Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
+        // Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
     }
 
     private void Update()

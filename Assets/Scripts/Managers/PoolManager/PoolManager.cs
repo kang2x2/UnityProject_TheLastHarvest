@@ -31,14 +31,14 @@ public class PoolManager
         _pools.Add(original.name, pool);
     }
 
-    public GameObject Pop(GameObject original)
+    public GameObject Pop(GameObject original, bool isActive)
     {
         if (_pools.ContainsKey(original.name) == false)
         {
             CreatePool(original);
         }
 
-        return _pools[original.name].Pop();
+        return _pools[original.name].Pop(isActive);
     }
 
     public void Push(GameObject obj)

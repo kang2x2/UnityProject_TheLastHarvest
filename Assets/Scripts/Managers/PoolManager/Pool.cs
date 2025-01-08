@@ -37,7 +37,7 @@ public class Pool
         _poolQ.Enqueue(obj);
     }
 
-    public GameObject Pop()
+    public GameObject Pop(bool isActive)
     {
         GameObject obj = null;
         if (_poolQ.Count > 0)
@@ -51,7 +51,7 @@ public class Pool
             Debug.Log(obj.name + " ÃÊ°ú");
         }
 
-        obj.SetActive(true);
+        obj.SetActive(isActive);
         obj.transform.SetParent(Managers.SceneManagerEx.CurScene.transform); 
 
         return obj;

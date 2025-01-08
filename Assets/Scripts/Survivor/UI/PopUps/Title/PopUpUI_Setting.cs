@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class PopUpUI_TitleSetting : UI_PopUp
+public class PopUpUI_Setting : UI_PopUp
 {
     enum Sliders
     {
@@ -64,7 +64,7 @@ public class PopUpUI_TitleSetting : UI_PopUp
         {
             Managers.DataManager.DataAllReset();
             Managers.UIManager.ClosePopUpUI("PopUpUI_Check");
-            Managers.UIManager.ShowPopUpUI("PopUpUI_Complete", "모든 데이터의 초기화가 완료됐습니다.");
+            Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "모든 데이터의 초기화가 완료됐습니다.");
         });
     }
 
@@ -75,7 +75,7 @@ public class PopUpUI_TitleSetting : UI_PopUp
             UI_Get<Slider>((int)Sliders.SFXVolum).value);
 
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_TitleSetting");
+        Managers.UIManager.ClosePopUpUI("PopUpUI_Setting");
     }
 
     public void VolumSet_BGM(PointerEventData data)

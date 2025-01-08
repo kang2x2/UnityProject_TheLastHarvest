@@ -5,9 +5,17 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
     float _rePositionOffSet;
+    // float _rePositionOffSetX;
+    // float _rePositionOffSetY;
 
     private void Start()
     {
+        // float height = Camera.main.orthographicSize * 2.0f;
+        // float width = height * Camera.main.aspect;
+        // 
+        // _rePositionOffSetX = width / 2.0f;
+        // _rePositionOffSetX = height / 2.0f;
+
         _rePositionOffSet = 20.0f;
     }
 

@@ -11,6 +11,13 @@ public class Scene_Title : Scene_Base
 
     public override void Init()
     {
+        if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+        {
+            int setWidth = 1080; // 화면 너비
+            int setHeight = 1280; // 화면 높이
+            Screen.SetResolution(setWidth, setHeight, true);
+        }
+
         SceneType = Define.SceneType.TitleScene;
         Managers.SceneManagerEx.CurScene = this;
 

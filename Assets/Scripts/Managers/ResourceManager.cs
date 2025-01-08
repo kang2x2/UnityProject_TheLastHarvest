@@ -25,7 +25,7 @@ public class ResourceManager
         return Resources.Load<T>($"Prefabs/{path}");
     }
 
-    public GameObject Instantiate(string path, Transform parent = null)
+    public GameObject Instantiate(string path, Transform parent = null, bool isActive = true)
     {
         GameObject original = Load<GameObject>(path);
         if (original == null)
@@ -36,7 +36,7 @@ public class ResourceManager
 
         if(original.GetComponent<UsePooling>() != null)
         {
-            return Managers.PoolManager.Pop(original);
+            return Managers.PoolManager.Pop(original, isActive);
         }
 
         GameObject obj = Object.Instantiate(original, parent);

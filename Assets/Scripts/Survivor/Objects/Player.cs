@@ -86,7 +86,10 @@ public class Player : MonoBehaviour
             return;
         }
 
-        transform.Translate(_curDir.normalized * MoveSpeed * Time.fixedDeltaTime);
+        Vector2 nextVec = _curDir.normalized * MoveSpeed * Time.fixedDeltaTime;
+        _rigid.MovePosition(_rigid.position + nextVec);
+
+        // transform.Translate(_curDir.normalized * MoveSpeed * Time.fixedDeltaTime);
         _rigid.velocity = Vector2.zero;
     }
 
@@ -156,7 +159,7 @@ public class Player : MonoBehaviour
         // 충돌한 것도 없는데 왜 내부로 진입하는가? 
         if(collision.CompareTag("Enemy"))
         {
-            Debug.Log("TriggerStay : " + collision.gameObject.transform.position);
+            // Debug.Log("TriggerStay : " + collision.gameObject.transform.position);
         }
     }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NormalMonster : Monster
 {
-    float _rePositionOffSet;
+    float _rePositionOffSetX;
+    float _rePositionOffSetY;
 
     bool _isClearEvent;
 
@@ -37,9 +38,15 @@ public class NormalMonster : Monster
 
     public void Init(int index)
     {
+        // 게임 시작 시 멀리 있는 몬스터 공격 방지.
+        gameObject.SetActive(true);
         FieldInit();
 
-        _rePositionOffSet = 10.0f;
+       float height = Camera.main.orthographicSize * 2.0f;
+       float width = height * Camera.main.aspect;
+       _rePositionOffSetX = (width / 2.0f) + 2.0f;
+       _rePositionOffSetY = (height / 2.0f) + 2.0f;
+
         _knockBackAccTime = 0.0f;
         _knockBackTime = 0.1f;
 
@@ -205,8 +212,10 @@ public class NormalMonster : Monster
                 float randomRadian = randomAngle * Mathf.Deg2Rad;
 
                 Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
-                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSet / 2))).x;
-                float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
+                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetX))).x;
+                float monsterPosY = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetY))).y;
+                // float monsterPosX = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).x;
+                // float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
 
                 transform.position = new Vector2(monsterPosX, monsterPosY);
             }

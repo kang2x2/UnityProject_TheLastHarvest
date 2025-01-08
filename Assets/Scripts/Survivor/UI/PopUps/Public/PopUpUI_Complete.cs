@@ -7,6 +7,8 @@ using System;
 
 public class PopUpUI_Complete : UI_PopUp
 {
+    Action _action;
+
     enum Texts
     {
         CheckText,
@@ -24,14 +26,16 @@ public class PopUpUI_Complete : UI_PopUp
         UI_BindEvent(UI_Get<Button>((int)Buttons.OkButton).gameObject, ClickOkButton);
     }
 
-    public override void Show(object param = null)
+    public void ValueInit(string text, Action action = null)
     {
-        UI_Get<Text>((int)Texts.CheckText).text = (string)param;
+        UI_Get<Text>((int)Texts.CheckText).text = text;
+        _action = action;
     }
 
     public void ClickOkButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
         Managers.UIManager.ClosePopUpUI("PopUpUI_Complete");
+        _action?.Invoke();
     }
 }
