@@ -26,6 +26,8 @@ public class PopUpUI_SignUp : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<InputField>(typeof(InputFields));
         UI_Bind<Button>(typeof(Buttons));
         UI_Bind<Text>(typeof(Texts));

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a634591520ec58f43ac8c4b4a70860ab, type: 3}
   m_Name: Item_BoxUpgrade
   m_EditorClassIdentifier: 
-  itemType: 9
+  itemName: 9
   abilityType: 8
   name: "\uB354 \uD070 \uC0C1\uC790"
   itemDesc: "\uB808\uBCA8\uC5C5 \uC2DC, \uC120\uD0DD\uD560 \uC218 \uC788\uB294 \uC544\uC774\uD15C
@@ -20,11 +20,4 @@ MonoBehaviour:
   abilityDesc: "\uC120\uD0DD \uAC00\uB2A5\uD55C \uAC1C\uC218 1 \uC99D\uAC00"
   icon: {fileID: -1330563799, guid: 6a9a61088c831c34582cf19b328d7350, type: 3}
   maxLevel: 2
-  speeds: []
-  coolTimes: []
-  fens: []
-  amounts: 
-  attacks: []
-  sizes: []
-  floatUtils: []
-  intUtils: 030000000400000005000000
+  stat: {fileID: 0}

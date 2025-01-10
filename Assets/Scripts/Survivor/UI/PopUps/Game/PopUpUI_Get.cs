@@ -25,6 +25,8 @@ public class PopUpUI_Get : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<Image>(typeof(Images));
         UI_Bind<Text>(typeof(Texts));
         UI_Bind<Button>(typeof(Buttons));

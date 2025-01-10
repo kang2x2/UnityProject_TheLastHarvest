@@ -76,7 +76,7 @@ public class UI_StoreItem : UI_Base
         int price = Managers.DataManager.Store.Data.passiveItems[_itemIndex].price;
         if (Managers.DataManager.User.Data.gold >= price)
         {
-            Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+            Managers.SoundManager.PlaySFX("UISounds/BuyItem");
             Managers.DataManager.Store.Data.passiveItems[_itemIndex].level += 1;
 
             if (_itemIndex != (int)Define.UserStatType.SelectCount)

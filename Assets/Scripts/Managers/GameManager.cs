@@ -19,18 +19,24 @@ public class GameManager
     public bool IsBossBattle { get; private set; } = false;
     public bool IsClear { get; private set; }
 
+    // Item
+    public int HealpackCount { get; set; }
+    public int BoxCount { get; set; }
+
     // Data
     public Data_Spawn SpawnData { get; private set; }
     public Data_Character PlayerData { get; set; }
 
-    // Player And Map, Boss
     public GameObject Player { get; private set; }
     public BossMonster Boss { get; private set; }
     public Define.MapType MapType { get; set; }
-
+    public Define.GameOverType GameOverType { get; set; }
+    public int GameSpeedIndex { get; set; }
+    float[] _gameSpeeds = new float[3] { 1.0f, 1.5f, 2.0f };
     public void Init()
     {
         Player = Managers.ResourceManager.Instantiate("Objects/Player");
+        Managers.ItemCardManager.Init();
 
         switch (MapType)
         {
@@ -47,6 +53,7 @@ public class GameManager
         Player.GetComponent<Player>().CharacterSetting(PlayerData);
         IsBossBattle = false;
         IsClear = false;
+        GameSpeedIndex = 0;
     }
 
     public void Update()
@@ -137,8 +144,9 @@ public class GameManager
     {
         yield return new WaitForSeconds(2.0f);
 
+        GameOverType = Define.GameOverType.Clear;
         // Survived UI Show
-        Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver", Define.GameOverType.Clear);
+        Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver");
     }
 
     public void GetExp(float expValue)
@@ -146,16 +154,27 @@ public class GameManager
         CurExp += expValue;
     }
 
+    public void SetGameSpeed()
+    {
+        GameSpeedIndex += 1;
+        if (GameSpeedIndex >= _gameSpeeds.Length)
+        {
+            GameSpeedIndex = 0;
+        }
+
+        Time.timeScale = _gameSpeeds[GameSpeedIndex];
+    }
+
     public void Pause()
     {
         IsPause = true;
-        Time.timeScale = 0;
+        Time.timeScale = 0.0f;
     }
 
     public void Continue()
     {
         IsPause = false;
-        Time.timeScale = 1;
+        Time.timeScale = _gameSpeeds[GameSpeedIndex];
     }
 
     public void Clear()
@@ -168,5 +187,7 @@ public class GameManager
         SpawnTimeLevel = 0;
         CurExp = 0.0f;
         DestExp = 5.0f;
+        GameSpeedIndex = 0;
+        Time.timeScale = 1.0f;
     }
 }

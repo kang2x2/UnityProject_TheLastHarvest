@@ -21,6 +21,8 @@ public class PopUpUI_Check : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<Text>(typeof(Texts));
         UI_Bind<Button>(typeof(Buttons));
 

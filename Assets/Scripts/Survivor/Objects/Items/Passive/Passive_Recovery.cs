@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Passive_Recovery : Survivor_Item
+public class Passive_Recovery : Passive
 {
     Player _player;
     float defaultValue;

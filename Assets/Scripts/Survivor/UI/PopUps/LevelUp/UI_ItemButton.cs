@@ -34,11 +34,11 @@ public class UI_ItemButton : UI_Base
         GetButton,
     }
 
-    public Data_Item _itemData;
-    public Data_Item ItemData { get { return _itemData; } set { _itemData = value; } }
+    public Data_Item ItemData { get; set; }
 
-    public Survivor_Item _item;
-    public Survivor_Item Item { get { return _item; } set { _item = value; } }
+    public Survivor_Item Item { get; set; } = null;
+
+    public string ParentUIName { get; set; }
 
     public bool IsLive { get; private set; } = true;
 
@@ -50,43 +50,68 @@ public class UI_ItemButton : UI_Base
         UI_Bind<Text>(typeof(Texts));
         UI_Bind<Button>(typeof(Buttons));
 
-        UI_Get<Image>((int)Images.ItemImage).sprite = _itemData.icon;
+        UI_Get<Image>((int)Images.ItemImage).sprite = ItemData.icon;
 
-        UI_Get<Text>((int)Texts.NameText).text = _itemData.name;
-        UI_Get<Text>((int)Texts.ItemDescText).text = _itemData.itemDesc;
-        UI_Get<Text>((int)Texts.AbilityDescText).text = _itemData.abilityDesc;
+        UI_Get<Text>((int)Texts.NameText).text = ItemData.name;
+        UI_Get<Text>((int)Texts.ItemDescText).text = ItemData.itemDesc;
+        UI_Get<Text>((int)Texts.AbilityDescText).text = ItemData.abilityDesc;
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.GetButton).gameObject, ClickGetButton);
+
+        if(ItemData.itemName == Define.ItemName.Shotgun ||
+           ItemData.itemName == Define.ItemName.HealthPack ||
+           ItemData.itemName == Define.ItemName.Gun)
+        {
+            IsLive = true;
+        }
+        else
+        {
+            IsLive = false;
+        }
     }
 
     private void LateUpdate()
     {
-        if(ItemData.abilityType != Define.AbilityType.Init)
+        if(ItemData.abilityType == Define.AbilityType.Init)
         {
-            string nextLevel = _level + 1 >= ItemData.maxLevel ? "Max" : "Lv." + (_level + 2).ToString();
-            UI_Get<Text>((int)Texts.LevelText).text = $"Lv.{_level + 1} -> {nextLevel}";
+            UI_Get<Text>((int)Texts.LevelText).text = "½Å±Ô È¹µæ";
+        }
+        else if (ItemData.abilityType == Define.AbilityType.Consumption)
+        {
+            UI_Get<Text>((int)Texts.LevelText).text = "¼Ò¸ðÇ°";
         }
         else
         {
-            UI_Get<Text>((int)Texts.LevelText).text = "½Å±Ô È¹µæ";
+            string nextLevel = _level + 1 >= ItemData.maxLevel ? "Max" : "Lv." + (_level + 2).ToString();
+            UI_Get<Text>((int)Texts.LevelText).text = $"Lv.{_level + 1} -> {nextLevel}";
         }
     }
 
     public void ClickGetButton(PointerEventData data)
     {
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
-        if (_itemData.abilityType == Define.AbilityType.Init)
+
+        if (ItemData.abilityType == Define.AbilityType.Init)
         {
-            _item.Init();
-            player.HasItem[(int)_itemData.itemType] = true;
+            Item.Init();
+            player.HasItem[(int)ItemData.itemName] = true;
             IsLive = false;
+        }
+        else if(ItemData.abilityType == Define.AbilityType.Consumption)
+        {
+            switch(ItemData.itemName)
+            {
+                case Define.ItemName.HealthPack:
+                    player.Hp = player.MaxHp;
+                    break;
+            }
         }
         else
         {
             _level += 1;
-            _item.LevelUp(_itemData.abilityType);
+            Item.LevelUp(ItemData.abilityType);
 
-            if (_level >= _itemData.maxLevel)
+            if (_level >= ItemData.maxLevel)
             {
                 IsLive = false;
                 UI_Get<Button>((int)Buttons.GetButton).interactable = false;
@@ -94,7 +119,7 @@ public class UI_ItemButton : UI_Base
         }
 
         Managers.SoundManager.PlaySFX("UISounds/CardSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_LevelUp");
+        Managers.UIManager.ClosePopUpUI(ParentUIName);
         Managers.GameManagerEx.Continue();
     }
 }

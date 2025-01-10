@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public float Hp { get; set; }
     public float MaxHp { get; set; }
     public Transform Margent { get; private set; }
-    public bool[] HasItem { get; set; } = new bool[(int)Define.ItemType.End];
+    public bool[] HasItem { get; set; } = new bool[(int)Define.ItemName.End];
 
     public bool IsLive { get; private set; }
 
@@ -35,13 +35,13 @@ public class Player : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 
-        HasItem[(int)Define.ItemType.Gun] = true;
-        HasItem[(int)Define.ItemType.Shoose] = true;
-        HasItem[(int)Define.ItemType.Margent] = true;
-        HasItem[(int)Define.ItemType.ExpBoost] = true;
-        HasItem[(int)Define.ItemType.PowerCore] = true;
-        HasItem[(int)Define.ItemType.MaxHp] = true;
-        HasItem[(int)Define.ItemType.Recovery] = true;
+        HasItem[(int)Define.ItemName.Gun] = true;
+        HasItem[(int)Define.ItemName.Shoose] = true;
+        HasItem[(int)Define.ItemName.Margent] = true;
+        HasItem[(int)Define.ItemName.ExpBoost] = true;
+        HasItem[(int)Define.ItemName.PowerCore] = true;
+        HasItem[(int)Define.ItemName.MaxHp] = true;
+        HasItem[(int)Define.ItemName.Recovery] = true;
 
         IsLive = true;
 
@@ -146,7 +146,8 @@ public class Player : MonoBehaviour
             accTime += Time.deltaTime;
             if(accTime > pauseTime)
             {
-                Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver", Define.GameOverType.Dead);
+                Managers.GameManagerEx.GameOverType = Define.GameOverType.Dead;
+                Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver");
                 Managers.GameManagerEx.IsPause = true;
                 break;
             }

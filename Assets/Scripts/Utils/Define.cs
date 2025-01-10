@@ -43,6 +43,14 @@ public class Define
 
     public enum ItemType
     {
+        Weapon,
+        Passive,
+        Consumption,
+        End
+    }
+
+    public enum ItemName
+    {
         Gun, // 기본 무기
         Shovel,
         Scythe,
@@ -57,6 +65,7 @@ public class Define
         ExpBoost,
         MaxHp,
         Recovery,
+
         HealthPack,
 
         End
@@ -72,6 +81,8 @@ public class Define
         Init, // 아이템 최초 획득
         FloatUtil, // 패시브 및 웨폰마다의 고유 능력치
         IntUtil, // 패시브 및 웨폰마다의 고유 능력치
+        Consumption, // 소비 아이템
+
         End
     }
 

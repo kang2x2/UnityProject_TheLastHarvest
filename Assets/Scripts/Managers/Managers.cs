@@ -14,6 +14,7 @@ public class Managers : MonoBehaviour
     private static SceneManagerEx s_sceneManager = new SceneManagerEx();
     private static WebManager s_webManager = new WebManager();
     private static FadeManager s_fadeManager = new FadeManager();
+    private static ItemCardManager s_itemCardManager = new ItemCardManager();
     private static ResourceManager s_resoruceManager = new ResourceManager();
     private static SoundManager s_soundManager = new SoundManager();
     private static UIManager s_uiManager = new UIManager();
@@ -25,6 +26,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx SceneManagerEx { get { Init(); return s_sceneManager; } }
     public static WebManager WebManager { get { Init(); return s_webManager; } }
     public static FadeManager FadeManager { get { Init(); return s_fadeManager; } }
+    public static ItemCardManager ItemCardManager { get { Init(); return s_itemCardManager; } }
     public static ResourceManager ResourceManager { get { Init(); return s_resoruceManager; } }
     public static SoundManager SoundManager { get { Init(); return s_soundManager; } }
     public static UIManager UIManager { get { Init(); return s_uiManager; } }

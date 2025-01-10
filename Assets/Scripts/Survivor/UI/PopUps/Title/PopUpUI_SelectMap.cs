@@ -28,6 +28,8 @@ public class PopUpUI_SelectMap : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         _mapIndex = 0;
 
         UI_Bind<Image>(typeof(Images));

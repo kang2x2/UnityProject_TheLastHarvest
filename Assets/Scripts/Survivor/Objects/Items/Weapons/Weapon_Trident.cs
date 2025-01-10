@@ -87,6 +87,8 @@ public class Weapon_Trident : Weapon
 
     void Fire()
     {
+        Managers.SoundManager.PlaySFX("weaponSounds/Trident");
+
         Transform trident = null;
         trident = Managers.ResourceManager.Instantiate("Objects/Projectile_Trident").transform;
 

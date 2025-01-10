@@ -34,6 +34,8 @@ public class PopUpUI_Store : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<Scrollbar>(typeof(Scrollbars));
         UI_Bind<GameObject>(typeof(GameObjects));
         UI_Bind<Button>(typeof(Buttons));

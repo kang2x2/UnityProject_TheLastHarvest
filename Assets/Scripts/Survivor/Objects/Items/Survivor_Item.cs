@@ -8,6 +8,8 @@ public class Survivor_Item : MonoBehaviour
     protected int[] _levels = new int[(int)Define.AbilityType.End];
     protected object[] _stats = new object[(int)Define.AbilityType.End];
 
+    public Define.ItemType ItemType { get; protected set; }
+
     public virtual void Init() 
     {
         if (_itemData.stat.amounts.Length > 0)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -151,6 +152,29 @@ public class NormalMonster : Monster
         Managers.ResourceManager.Destroy(gameObject);
     }
 
+    void DropItem()
+    {
+        float ranIndex = UnityEngine.Random.Range(0.0f, 100.0f);
+        if (ranIndex <= 95.5f && Managers.GameManagerEx.BoxCount == 0)
+        {
+            GameObject box = Managers.ResourceManager.Instantiate("Objects/BoxObject");
+            box.transform.position = transform.position;
+            Managers.GameManagerEx.BoxCount = 1;
+        }
+        else if (ranIndex <= 2.5f && Managers.GameManagerEx.HealpackCount < 2)
+        {
+            GameObject healPack = Managers.ResourceManager.Instantiate("Objects/HealPackObject");
+            healPack.transform.position = transform.position;
+            Managers.GameManagerEx.HealpackCount += 1;
+        }
+        else
+        {
+            GameObject exp = Managers.ResourceManager.Instantiate("Objects/ExpObject");
+            exp.GetComponent<ExpObject>().Init();
+            exp.transform.position = transform.position;
+        }
+    }
+
     IEnumerator HitEvent(Collider2D collision)
     {
         Projectile projectile = collision.transform.GetComponent<Projectile>();
@@ -174,9 +198,7 @@ public class NormalMonster : Monster
             {
                 Managers.SoundManager.PlaySFX("Battles/Dead");
 
-                GameObject exp = Managers.ResourceManager.Instantiate("Objects/ExpObject");
-                exp.GetComponent<ExpObject>().Init();
-                exp.transform.position = transform.position;
+                DropItem();
 
                 _hpBar.gameObject.SetActive(false);
                 Managers.GameManagerEx.Kill += 1;
@@ -198,7 +220,8 @@ public class NormalMonster : Monster
     {
         if (collision.CompareTag("PlayerProjectile"))
         {
-            StartCoroutine(HitEvent(collision));
+            IEnumerator coHit = HitEvent(collision);
+            StartCoroutine(coHit);
         }
     }
 
@@ -208,7 +231,7 @@ public class NormalMonster : Monster
         {
             if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
             {
-                float randomAngle = Random.Range(0.0f, 360.0f);
+                float randomAngle = UnityEngine.Random.Range(0.0f, 360.0f);
                 float randomRadian = randomAngle * Mathf.Deg2Rad;
 
                 Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Passive_PowerCore : Survivor_Item
+public class Passive_PowerCore : Passive
 {
     Player _player;
     float defaultValue;

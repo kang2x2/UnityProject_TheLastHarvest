@@ -70,7 +70,12 @@ public class UIManager
 
         popUp.gameObject.SetActive(true);
         popUp.GetComponent<Canvas>().sortingOrder = _curOrder++;
-        popUp.Show(param);
+        
+        IEnumerator coShow = popUp.coShowUI(() =>
+        {
+            popUp.Show(param);
+        });
+        Managers.CoroutineManager.StartCoroutine(coShow);
 
         CurPopUp = popUp;
     }
@@ -89,10 +94,14 @@ public class UIManager
             Debug.Log("Fail Find PopUpUI...");
             return;
         }
-        _curOrder -= 1;
-        popUp.gameObject.SetActive(false);
 
+        IEnumerator coShow = popUp.coCloseUI(()=> {
+            _curOrder -= 1;
+            popUp.gameObject.SetActive(false);
+        });
+        Managers.CoroutineManager.StartCoroutine(coShow);
     }
+
     public void Clear()
     {
         _joystick = null;

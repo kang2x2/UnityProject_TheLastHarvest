@@ -25,6 +25,8 @@ public class PopUpUI_Login : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<InputField>(typeof(InputFields));
         UI_Bind<Button>(typeof(Buttons));
         UI_Bind<Text>(typeof(Texts));
@@ -50,24 +52,27 @@ public class PopUpUI_Login : UI_PopUp
         string id = UI_Get<InputField>((int)InputFields.IdInputField).text;
         string pw = UI_Get<InputField>((int)InputFields.PasswordInputField).text;
 
-        StartCoroutine(Managers.WebManager.CoLoginRequest("ranking/getuserdata", "Get",
+        IEnumerator coLogin = Managers.WebManager.CoLoginRequest("ranking/getuserdata", "Get",
             id, pw, (str) =>
-        {
-            if (str == "로그인 완료!")
             {
-                Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
-                Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "로그인 완료!", ()=> { 
-                    Managers.UIManager.ClosePopUpUI("PopUpUI_Login");
-                });
-            }
-            else
-            {
-                Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-                UI_Get<Text>((int)Texts.ErrorText).color = Color.red;
-            }
+                if (str == "로그인 완료!")
+                {
+                    Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+                    Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "로그인 완료!", () =>
+                    {
+                        Managers.UIManager.ClosePopUpUI("PopUpUI_Login");
+                    });
+                }
+                else
+                {
+                    Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+                    UI_Get<Text>((int)Texts.ErrorText).color = Color.red;
+                }
 
-            UI_Get<Text>((int)Texts.ErrorText).text = str;
-        }));
+                UI_Get<Text>((int)Texts.ErrorText).text = str;
+            });
+
+        StartCoroutine(coLogin);
     }
 
     public void ClickReturnButton(PointerEventData data)

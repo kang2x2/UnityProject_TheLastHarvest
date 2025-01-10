@@ -25,15 +25,18 @@ public class SceneUI_GameHUD : UI_Scene
 
     enum Buttons
     {
+        GameSpeedButton,
         PauseButton,
     }
-    
+
     enum Texts
     {
         LevelText,
         KillText,
         TimerText,
         HpText,
+
+        GameSpeedText,
 
         AttackStatText,
         SpeedStatText,
@@ -51,8 +54,9 @@ public class SceneUI_GameHUD : UI_Scene
         UI_Bind<Text>(typeof(Texts));
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.PauseButton).gameObject, ClickPauseButton);
+        UI_BindEvent(UI_Get<Button>((int)Buttons.GameSpeedButton).gameObject, ClickGameSpeedButton);
 
-        foreach(Text text in UI_GetAll<Text>())
+        foreach (Text text in UI_GetAll<Text>())
         {
             if (Managers.GameManagerEx.MapType == Define.MapType.Cave)
             {
@@ -132,6 +136,20 @@ public class SceneUI_GameHUD : UI_Scene
         UI_Get<Text>((int)Texts.ExpStatText).text = string.Format("{0:N2}", player.GetExpRatio);
         UI_Get<Text>((int)Texts.MargnetStatText).text = string.Format("{0:N2}", player.Margent.GetComponent<CircleCollider2D>().radius);
         #endregion
+    }
+
+    public void ClickGameSpeedButton(PointerEventData data)
+    {
+        Managers.GameManagerEx.SetGameSpeed();
+
+        if (Managers.GameManagerEx.GameSpeedIndex == 1)
+        {
+            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("{0:N1}", Time.timeScale);
+        }
+        else
+        {
+            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("{0:F0}", Time.timeScale);
+        }
     }
 
     public void ClickPauseButton(PointerEventData data)

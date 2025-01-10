@@ -9,7 +9,6 @@ public class Data_ItemStatInfo : ScriptableObject
 {
     // 모든 능력치 배열의 0번 인덱스는 Default Value.
     // 1번 인덱스부턴 value 증가량.
-
     [Header("# Default Info")]
     public float[] speeds;
     public float[] coolTimes;

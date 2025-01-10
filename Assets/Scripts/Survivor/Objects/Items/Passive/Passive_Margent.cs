@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Passive_Margent : Survivor_Item
+public class Passive_Margent : Passive
+
 {
     CircleCollider2D _collider;
     public override void Init()

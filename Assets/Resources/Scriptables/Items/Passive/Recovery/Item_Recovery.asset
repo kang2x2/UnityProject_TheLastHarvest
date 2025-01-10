@@ -12,19 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a634591520ec58f43ac8c4b4a70860ab, type: 3}
   m_Name: Item_Recovery
   m_EditorClassIdentifier: 
-  itemType: 12
+  itemName: 12
   abilityType: 7
   name: "\uD68C\uBCF5\uB825 \uC99D\uAC00"
   itemDesc: "\uCD08\uB2F9 Hp\uB97C \uD68C\uBCF5\uD558\uB294 \uC591\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   abilityDesc: "\uD68C\uBCF5\uB7C9 0.2% \uC99D\uAC00"
   icon: {fileID: -930580424, guid: f964d891e59348147b7eff3c391dc7fc, type: 3}
-  stat: {fileID: 11400000, guid: deca5fff2d2ff984ca44de3d35874a8e, type: 2}
   maxLevel: 6
-  speeds: []
-  coolTimes: []
-  fens: []
-  amounts: 
-  attacks: []
-  sizes: []
-  floatUtils: []
-  intUtils: 
+  stat: {fileID: 11400000, guid: deca5fff2d2ff984ca44de3d35874a8e, type: 2}

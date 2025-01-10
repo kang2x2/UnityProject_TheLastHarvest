@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Passive_ExpBoost : Survivor_Item
+public class Passive_ExpBoost : Passive
 {
     Player _player;
     float defaultValue;

@@ -12,31 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a634591520ec58f43ac8c4b4a70860ab, type: 3}
   m_Name: Item_ShotgunAttack
   m_EditorClassIdentifier: 
-  itemType: 4
+  itemName: 4
   abilityType: 4
   name: "\uC0F7\uAC74"
   itemDesc: "\uB2E4\uC218\uC758 \uC801\uC744 \uACF5\uACA9\uD558\uB294 \uC0F7\uAC74\uC785\uB2C8\uB2E4."
   abilityDesc: "\uACF5\uACA9\uB825 \uC99D\uAC00"
   icon: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
-  stat: {fileID: 11400000, guid: 9b2859a7f6bed0940a16deac37e1f631, type: 2}
   maxLevel: 5
-  speeds: []
-  coolTimes:
-  - 5
-  - 4.5
-  - 4
-  - 3.5
-  - 3
-  - 2.5
-  fens: []
-  amounts: 
-  attacks:
-  - 1
-  - 1.5
-  - 2
-  - 2.5
-  - 3
-  - 3.5
-  sizes: []
-  floatUtils: []
-  intUtils: 
+  stat: {fileID: 11400000, guid: 9b2859a7f6bed0940a16deac37e1f631, type: 2}

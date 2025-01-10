@@ -29,6 +29,8 @@ public class PopUpUI_SelectCharacter : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         _characterIndex = 0;
 
         UI_Bind<GameObject>(typeof(GameObjects));

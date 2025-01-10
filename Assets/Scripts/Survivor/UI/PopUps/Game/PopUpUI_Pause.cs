@@ -29,6 +29,8 @@ public class UIPopUp_Pause : UI_PopUp
 
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<Button>(typeof(Buttons));
         UI_Bind<Slider>(typeof(Sliders));
         UI_Bind<Text>(typeof(Texts));

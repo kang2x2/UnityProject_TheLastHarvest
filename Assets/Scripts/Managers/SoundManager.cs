@@ -5,6 +5,8 @@ using UnityEngine;
 public class SoundManager
 {
     public AudioSource BGMSource { get; set; }
+    public AudioSource SubBGMSource { get; set; }
+
     Dictionary<string, AudioClip> _bgmClips = new Dictionary<string, AudioClip>();
 
     Dictionary<string, AudioSource> _sfxSources = new Dictionary<string, AudioSource>();

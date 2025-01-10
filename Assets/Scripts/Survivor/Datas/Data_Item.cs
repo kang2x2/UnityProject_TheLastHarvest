@@ -8,7 +8,7 @@ using System.IO;
 public class Data_Item : ScriptableObject
 {
     [Header("# Type Info")]
-    public Define.ItemType itemType;
+    public Define.ItemName itemName;
     public Define.AbilityType abilityType;
 
     [Header("# Text Info")]

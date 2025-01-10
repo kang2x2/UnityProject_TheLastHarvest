@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a634591520ec58f43ac8c4b4a70860ab, type: 3}
   m_Name: Item_ScytheAmount
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemName: 2
   abilityType: 3
   name: "\uB0AB"
   itemDesc: "\uD50C\uB808\uC774\uC5B4\uAC00 \uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C

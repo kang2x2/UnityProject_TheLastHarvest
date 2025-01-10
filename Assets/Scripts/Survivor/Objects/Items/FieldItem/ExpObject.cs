@@ -19,14 +19,14 @@ public class ExpObject : MonoBehaviour
         _collider = GetComponent<Collider2D>();
         _collider.enabled = false;
 
-        int ranIndex = Random.Range(0, 100);
+        float ranIndex = Random.Range(0.0f, 100.0f);
         
-        if(ranIndex <= 5)
+        if(ranIndex <= 5.0f)
         {
             _expValue = 15;
             _sprite.sprite = sprites[(int)ExpType.Gold];
         }
-        else if(ranIndex <= 10)
+        else if(ranIndex <= 10.0f)
         {
             _expValue = 8;
             _sprite.sprite = sprites[(int)ExpType.Silver];

@@ -13,8 +13,6 @@ public class Projectile_Trident : Projectile
 
     public void Init(int bounce, float attack, float knockBackPower, Vector3 dir, Transform parent)
     {
-        Managers.SoundManager.PlaySFX("weaponSounds/Trident");
-
         _rigid = GetComponent<Rigidbody2D>();
         Attack = attack;
         KnockBackPower = knockBackPower;

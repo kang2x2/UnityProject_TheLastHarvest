@@ -39,9 +39,11 @@ public class PopUpUI_GameOver : UI_PopUp
     }
 
     public Sprite[] headerImage;
-    Define.GameOverType _gameOverType;
+
     public override void Init()
     {
+        base.Init();
+
         UI_Bind<GameObject>(typeof(BonusPanels));
         UI_Bind<Image>(typeof(Images));
         UI_Bind<Text>(typeof(Texts));
@@ -52,11 +54,12 @@ public class PopUpUI_GameOver : UI_PopUp
 
     public override void Show(object param = null)
     {
-        #region GameOverType
-        _gameOverType = (Define.GameOverType)param;
+        Time.timeScale = 1.0f;
 
-        UI_Get<Image>((int)Images.GameOverImage).sprite = headerImage[(int)_gameOverType];
-        switch(_gameOverType)
+        #region GameOverType
+
+        UI_Get<Image>((int)Images.GameOverImage).sprite = headerImage[(int)Managers.GameManagerEx.GameOverType];
+        switch(Managers.GameManagerEx.GameOverType)
         {
             case Define.GameOverType.Clear:
                 UI_Get<Image>((int)Images.BackGroundImage).color = new Vector4(0.48f, 0.73f, 0.0f, 0.6f);
@@ -115,7 +118,7 @@ public class PopUpUI_GameOver : UI_PopUp
         }
         result += timeBonus;
 
-        if (_gameOverType == Define.GameOverType.Clear)
+        if (Managers.GameManagerEx.GameOverType == Define.GameOverType.Clear)
         {
             result *= 2;
         }
@@ -139,7 +142,7 @@ public class PopUpUI_GameOver : UI_PopUp
         UI_Get<GameObject>((int)BonusPanels.LevelBonusPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
-        if(_gameOverType == Define.GameOverType.Clear)
+        if(Managers.GameManagerEx.GameOverType == Define.GameOverType.Clear)
         {
             Managers.SoundManager.PlaySFX("UISounds/BonusGold");
             UI_Get<GameObject>((int)BonusPanels.ClearPanel).SetActive(true);
@@ -151,6 +154,20 @@ public class PopUpUI_GameOver : UI_PopUp
         UI_Get<GameObject>((int)BonusPanels.ResultPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
-        UI_Get<Button>((int)Buttons.ReturnButton).gameObject.SetActive(true);
+        // TODO : 데이터 업데이트
+        if(Managers.WebManager.IsLogin == true)
+        {
+            // return button 점수 계산 끝나고 생성
+            IEnumerator coUpdate = Managers.WebManager.CoUpdateRequest("ranking", "Put", () =>
+            {
+                UI_Get<Button>((int)Buttons.ReturnButton).gameObject.SetActive(true);
+            });
+
+            StartCoroutine(coUpdate);
+        }
+        else
+        {
+            UI_Get<Button>((int)Buttons.ReturnButton).gameObject.SetActive(true);
+        }
     }
 }

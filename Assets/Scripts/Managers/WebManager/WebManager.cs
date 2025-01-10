@@ -112,14 +112,33 @@ public class WebManager
         }
     }
 
-    public IEnumerator CoUpdateRequest(string url, string method)
+    public IEnumerator CoUpdateRequest(string url, string method, Action action)
     {
         // DownloadHandlerBuffer : 단순한 데이터 스토리지, 서버에서 수신한 데이터를 UTF-8 문자열이나
         // 바이트 배열로 사용할 수 있다.
         string sendUrl = $"{BaseUrl}/{url}";
+        byte[] jsonBytes = null;
+        if (MyGameResult != null)
+        {
+            MyGameResult.killScore += Managers.GameManagerEx.Kill;
+            MyGameResult.playTime += Managers.GameManagerEx.ProgressTime;
+
+            if(Managers.GameManagerEx.GameOverType == Define.GameOverType.Clear)
+            {
+                MyGameResult.clearScore += 1;
+            }
+
+            string json = JsonUtility.ToJson(MyGameResult);
+            jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
+        }
+
         var uwr = new UnityWebRequest(sendUrl, method);
+        uwr.uploadHandler = new UploadHandlerRaw(jsonBytes);
         uwr.downloadHandler = new DownloadHandlerBuffer();
+        uwr.SetRequestHeader("Content-Type", "application/json");
 
         yield return uwr.SendWebRequest();
+
+        action.Invoke();
     }
 }
