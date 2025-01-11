@@ -33,6 +33,6 @@ public class PopUpUI_BoxSelect : UI_PopUp
         Managers.SoundManager.PlaySFX("UISounds/LevelUp");
         Managers.GameManagerEx.Pause();
 
-        Managers.ItemCardManager.ItemCardSuffle(3, UI_Get<GameObject>((int)GameObjects.Content).transform, "PopUpUI_BoxSelect");
+        Managers.ItemCardManager.ItemCardSuffle(2, UI_Get<GameObject>((int)GameObjects.Content).transform, ItemCardManager.SelectType.Box);
     }
 }

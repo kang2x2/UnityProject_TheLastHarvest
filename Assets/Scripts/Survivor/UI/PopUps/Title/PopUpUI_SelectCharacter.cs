@@ -64,7 +64,7 @@ public class PopUpUI_SelectCharacter : UI_PopUp
     public void ClickReturnButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_SelectCharacter");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 
     public void ClickNextButton(PointerEventData data)

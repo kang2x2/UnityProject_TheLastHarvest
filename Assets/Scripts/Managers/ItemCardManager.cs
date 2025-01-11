@@ -1,26 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemCardManager
 {
+    public enum SelectType
+    {
+        LevelUp,
+        Box,
+        End
+    }
+
     GameObject _itemCardRoot;
 
     List<Data_Item> _itemDatas = new List<Data_Item>();
-    public int LiveButtonCount { get; set; } = 0;
 
     List<UI_ItemButton> _itemButtons = new List<UI_ItemButton>();
+    HashSet<UI_ItemButton> selectButtons = new HashSet<UI_ItemButton>();
 
     // 플레이어의 아이템 슬롯을 참조하기 위함
     Survivor_Item[] _items = new Survivor_Item[(int)Define.ItemName.End];
-
+    UI_ItemButton _healPackButton;
     public void Init()
     {
         string[] guids = AssetDatabase.FindAssets("t:ScriptableObject", new[] { "Assets/Resources/SCriptables/Items" });
 
-        foreach(string guid in guids)
+        foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             ScriptableObject scriptableObject = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
@@ -31,7 +36,7 @@ public class ItemCardManager
                 return;
             }
 
-            if(scriptableObject as Data_Item != null)
+            if (scriptableObject as Data_Item != null)
             {
                 _itemDatas.Add(scriptableObject as Data_Item);
             }
@@ -62,7 +67,7 @@ public class ItemCardManager
         {
             UI_ItemButton btn = Managers.ResourceManager.
                 Instantiate("UI/PopUps/UI_ItemCard", _itemCardRoot.transform).GetComponent<UI_ItemButton>();
-            
+
             switch (_itemDatas[i].itemName)
             {
                 case Define.ItemName.Gun:
@@ -107,12 +112,18 @@ public class ItemCardManager
             btn.Init();
 
             _itemButtons.Add(btn);
+
+            if(btn.ItemData.itemName == Define.ItemName.HealthPack)
+            {
+                _healPackButton = btn;
+            }
         }
     }
 
-    public void ItemCardSuffle(int SelectCount, Transform parent, string parentUIName)
+    public void ItemCardSuffle(int SelectCount, Transform parent, SelectType type = SelectType.LevelUp)
     {
-        LiveButtonCount = 0;
+        selectButtons.Clear();
+
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
 
         // 1. 유효 아이템 뽑기.
@@ -121,16 +132,22 @@ public class ItemCardManager
         {
             button.transform.SetParent(_itemCardRoot.transform);
             button.gameObject.SetActive(false);
+
+            if(type == SelectType.Box && button.ItemData.itemName == Define.ItemName.HealthPack)
+            {
+                continue;
+            }
+
             if (button.IsLive == true)
             {
                 // 소비 아이템들은 Item이 null.
                 // Weapon의 경우엔 획득하지도 않은 무기의 스탯 카드를 선택하면 안되기에 검사가 필요하다.
-                if(button.Item != null && button.Item.ItemType == Define.ItemType.Weapon)
+                if (button.Item != null && button.Item.ItemType == Define.ItemType.Weapon)
                 {
                     // 최초 획득한 Weapon인가?
                     if (button.ItemData.abilityType == Define.AbilityType.Init)
                     {
-                        if(player.HasItem[(int)button.ItemData.itemName] == false)
+                        if (player.HasItem[(int)button.ItemData.itemName] == false)
                         {
                             liveButtons.Add(button);
                         }
@@ -145,15 +162,14 @@ public class ItemCardManager
                 }
                 else
                 {
-                  liveButtons.Add(button);
+                    liveButtons.Add(button);
                 }
             }
         }
 
-        HashSet<UI_ItemButton> selectButtons = new HashSet<UI_ItemButton>();
         if (liveButtons.Count > SelectCount)
         {
-            while(true)
+            while (true)
             {
                 for (int i = 0; i < SelectCount; ++i)
                 {
@@ -161,7 +177,7 @@ public class ItemCardManager
                     selectButtons.Add(liveButtons[ranIndex]);
                 }
 
-                if(selectButtons.Count >= SelectCount)
+                if (selectButtons.Count >= SelectCount)
                 {
                     break;
                 }
@@ -172,10 +188,15 @@ public class ItemCardManager
         }
         else
         {
-            foreach(UI_ItemButton button in liveButtons)
+            foreach (UI_ItemButton button in liveButtons)
             {
                 selectButtons.Add(button);
             }
+        }
+
+        if(type == SelectType.Box)
+        {
+            selectButtons.Add(_healPackButton);
         }
 
         // 2. 선택창 활성화
@@ -183,8 +204,16 @@ public class ItemCardManager
         {
             button.gameObject.SetActive(true);
             button.transform.SetParent(parent);
-            button.ParentUIName = parentUIName;
             button.transform.localScale = Vector3.one;
+        }
+    }
+
+    public void CompletedSelect()
+    {
+        foreach (UI_ItemButton button in selectButtons)
+        {
+            button.gameObject.SetActive(false);
+            button.transform.SetParent(_itemCardRoot.transform);
         }
     }
 }

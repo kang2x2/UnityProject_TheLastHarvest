@@ -67,6 +67,7 @@ public class SceneUI_GameHUD : UI_Scene
                 text.color = Color.black;
             }
         }
+        UI_Get<Text>((int)Texts.GameSpeedText).color = Color.black;
 
         UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.SetActive(false);
         // Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
@@ -155,7 +156,7 @@ public class SceneUI_GameHUD : UI_Scene
     public void ClickPauseButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ShowPopUpUI("PopUpUI_Pause");
         Managers.GameManagerEx.Pause();
+        Managers.UIManager.ShowPopUpUI("PopUpUI_Pause");
     }
 }

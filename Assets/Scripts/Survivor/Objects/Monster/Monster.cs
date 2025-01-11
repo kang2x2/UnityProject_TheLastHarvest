@@ -30,18 +30,14 @@ public class Monster : MonoBehaviour
 
     protected bool FixedStopCheck()
     {
-        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
-        {
-            return false;
-        }
-
-        if (IsLive == false)
+        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true || 
+            IsLive == false)
         {
             _rigid.velocity = Vector2.zero;
+
             return false;
         }
 
-        // _rigid.velocity = Vector2.zero;
         return true;
     }
 

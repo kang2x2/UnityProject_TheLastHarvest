@@ -32,6 +32,7 @@ public class PopUpUI_Store : UI_PopUp
         SelectStatText,
     }
 
+    List<UI_StoreItem> _itemUis = new List<UI_StoreItem>();
     public override void Init()
     {
         base.Init();
@@ -46,6 +47,8 @@ public class PopUpUI_Store : UI_PopUp
             UI_StoreItem itemUI = Managers.ResourceManager.Instantiate
                 ("UI/PopUps/UI_PassiveCard", UI_Get<GameObject>((int)GameObjects.Content).transform).GetComponent< UI_StoreItem>();
             itemUI.Init(i);
+            itemUI.gameObject.SetActive(false);
+            _itemUis.Add(itemUI);
         }
 
         UI_Get<Scrollbar>((int)Scrollbars.ScrollbarVertical).value = 1;
@@ -56,13 +59,23 @@ public class PopUpUI_Store : UI_PopUp
     {
         UI_Get<Scrollbar>((int)Scrollbars.ScrollbarVertical).value = 1;
         Vector2 downPos = new Vector2(0.0f, -1000.0f);
+        foreach (UI_StoreItem ui in _itemUis)
+        {
+            ui.gameObject.SetActive(true);
+        }
+
         UI_Get<GameObject>((int)GameObjects.Content).GetComponent<RectTransform>().localPosition = downPos;
     }
 
     public void ClickReturnButton(PointerEventData data)
     {
+        foreach(UI_StoreItem ui in _itemUis)
+        {
+            ui.gameObject.SetActive(false);
+        }
+
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Store");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 
     private void LateUpdate()

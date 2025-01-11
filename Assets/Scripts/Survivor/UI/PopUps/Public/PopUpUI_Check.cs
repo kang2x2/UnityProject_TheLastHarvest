@@ -39,14 +39,16 @@ public class PopUpUI_Check : UI_PopUp
     public void ClickYes(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Check");
-        Managers.GameManagerEx.Continue();
-        _action.Invoke(); 
+        Managers.UIManager.CloseCurPopUpUI(() => 
+        {
+            Managers.GameManagerEx.Continue();
+            _action.Invoke();
+        });
     }
 
     public void ClickNo(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Check");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 }

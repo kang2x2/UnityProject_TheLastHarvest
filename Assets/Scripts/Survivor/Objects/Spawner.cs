@@ -78,7 +78,7 @@ public class Spawner : MonoBehaviour
     void NormalSpawn()
     {
         _accTime += Time.deltaTime;
-
+        // Managers.GameManagerEx.SpawnData.spawnTimes[Managers.GameManagerEx.SpawnTimeLevel]
         if (_accTime > Managers.GameManagerEx.SpawnData.spawnTimes[Managers.GameManagerEx.SpawnTimeLevel])
         {
             for (int i = 0; i < 4; ++i)

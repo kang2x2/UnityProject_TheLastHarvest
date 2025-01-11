@@ -5,8 +5,16 @@ using UnityEngine;
 
 public class UIManager
 {
+    public enum UIAnimationType
+    {
+        Scale,
+        Page,
+        End
+    }
+
     int _curOrder = 1;
     Dictionary<string, UI_PopUp> _popUps = new Dictionary<string, UI_PopUp>();
+    Stack<UI_PopUp> _popUpStack = new Stack<UI_PopUp>();
 
     RectTransform _joystick;
 
@@ -18,9 +26,9 @@ public class UIManager
         _joystick.localScale = Vector3.one;
     }
 
-    public void ShowPopUpUI_Check(string name, string text, Action action)
+    public void ShowPopUpUI_Check(string name, string text, Action action, UIAnimationType type = UIAnimationType.Scale)
     {
-        ShowPopUpUI(name);
+        ShowPopUpUI(name, type);
         PopUpUI_Check popUpCheck = _popUps["PopUpUI_Check"] as PopUpUI_Check;
 
         if(popUpCheck == null)
@@ -32,9 +40,9 @@ public class UIManager
         popUpCheck.ValueInit(text, action);
     }
 
-    public void ShowPopUpUI_Complete(string name, string text, Action action = null)
+    public void ShowPopUpUI_Complete(string name, string text, Action action = null, UIAnimationType type = UIAnimationType.Scale)
     {
-        ShowPopUpUI(name);
+        ShowPopUpUI(name, type);
         PopUpUI_Complete popUpComplete = _popUps["PopUpUI_Complete"] as PopUpUI_Complete;
 
         if (popUpComplete == null)
@@ -46,7 +54,7 @@ public class UIManager
         popUpComplete.ValueInit(text, action);
     }
 
-    public void ShowPopUpUI(string name, object param = null)
+    public void ShowPopUpUI(string name, object param = null, UIAnimationType type = UIAnimationType.Scale)
     {
         if(_joystick != null)
         {
@@ -70,36 +78,58 @@ public class UIManager
 
         popUp.gameObject.SetActive(true);
         popUp.GetComponent<Canvas>().sortingOrder = _curOrder++;
-        
-        IEnumerator coShow = popUp.coShowUI(() =>
-        {
-            popUp.Show(param);
-        });
-        Managers.CoroutineManager.StartCoroutine(coShow);
+        _popUpStack.Push(popUp);
+        CurPopUp = _popUpStack.Peek();
 
-        CurPopUp = popUp;
+        Action showAction = () => { CurPopUp.Show(param); };
+
+        switch(type)
+        {
+            case UIAnimationType.Scale:
+                IEnumerator coShowScale = CurPopUp.coShowScale(showAction);
+                Managers.CoroutineManager.MyStartCoroutine(coShowScale);
+                break;
+            case UIAnimationType.Page:
+
+                break;
+        }
     }
 
-    public void ClosePopUpUI(string name, float closeTime = 0.0f)
+    public void CloseCurPopUpUI(Action afterAction = null, UIAnimationType type = UIAnimationType.Scale, float closeTime = 0.0f)
     {
         if (_joystick != null)
         {
             _joystick.localScale = Vector3.one;
         }
 
-        UI_PopUp popUp = null;
-
-        if (_popUps.TryGetValue(name, out popUp) == false)
+        Action closeAction = () =>
         {
-            Debug.Log("Fail Find PopUpUI...");
-            return;
-        }
-
-        IEnumerator coShow = popUp.coCloseUI(()=> {
             _curOrder -= 1;
-            popUp.gameObject.SetActive(false);
-        });
-        Managers.CoroutineManager.StartCoroutine(coShow);
+            CurPopUp.gameObject.SetActive(false);
+            _popUpStack.Pop();
+
+            if (_popUpStack.Count != 0)
+            {
+                CurPopUp = _popUpStack.Peek();
+            }
+            else
+            {
+                CurPopUp = null;
+            }
+
+            afterAction?.Invoke();
+        };
+
+        switch(type)
+        {
+            case UIAnimationType.Scale:
+                IEnumerator coCloseScale = CurPopUp.coCloseScale(closeAction);
+                Managers.CoroutineManager.MyStartCoroutine(coCloseScale);
+                break;
+            case UIAnimationType.Page:
+
+                break;
+        }
     }
 
     public void Clear()
@@ -107,5 +137,6 @@ public class UIManager
         _joystick = null;
         _popUps.Clear();
         _curOrder = 1;
+        CurPopUp = null;
     }
 }

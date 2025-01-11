@@ -49,6 +49,6 @@ public class PopUpUI_Get : UI_PopUp
     public void ClickOkButton(PointerEventData data)
     {
         IsShow = false;
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Get");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 }

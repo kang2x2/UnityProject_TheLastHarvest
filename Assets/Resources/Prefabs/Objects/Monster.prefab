@@ -97,8 +97,8 @@ GameObject:
   - component: {fileID: 1799848003104596531}
   - component: {fileID: 7165947481737926365}
   - component: {fileID: 6550960061437145443}
-  - component: {fileID: 8166830039428700732}
   - component: {fileID: -3297270910253654499}
+  - component: {fileID: -480036910496784471}
   m_Layer: 6
   m_Name: Monster
   m_TagString: Enemy
@@ -257,18 +257,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.7, y: 0.9}
   m_Direction: 0
---- !u!114 &8166830039428700732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5494884774296041177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-3297270910253654499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,3 +280,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1cad70293959234c89f3493f179c776, type: 2}
   - {fileID: 11400000, guid: 851d8043f06e4314ba966e70a01b4fe2, type: 2}
   - {fileID: 11400000, guid: 5981523492885ed498a68f79b572b1c2, type: 2}
+--- !u!114 &-480036910496784471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5494884774296041177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

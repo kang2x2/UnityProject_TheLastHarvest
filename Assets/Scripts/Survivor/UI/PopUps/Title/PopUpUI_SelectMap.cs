@@ -52,7 +52,7 @@ public class PopUpUI_SelectMap : UI_PopUp
     public void ClickReturnButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_SelectMap");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 
     public void ClickNextButton(PointerEventData data)

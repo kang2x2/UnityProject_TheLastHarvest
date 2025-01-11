@@ -21,19 +21,19 @@ public class Scene_Game : Scene_Base
         float progressRatio = 1.0f / taskCount;
         int successTaskCount = 0;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 100);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 400);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 200);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 400);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 200);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 400);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/ExpObject"), 100);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/ExpObject"), 200);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 

@@ -54,8 +54,6 @@ public class PopUpUI_GameOver : UI_PopUp
 
     public override void Show(object param = null)
     {
-        Time.timeScale = 1.0f;
-
         #region GameOverType
 
         UI_Get<Image>((int)Images.GameOverImage).sprite = headerImage[(int)Managers.GameManagerEx.GameOverType];

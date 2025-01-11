@@ -20,7 +20,7 @@ public class WebManager
         BaseUrl = "https://localhost:44384/api";
         IsLogin = false;
 
-        Managers.CoroutineManager.StartCoroutine(CoGetAllRequest("ranking", "GET"));
+        Managers.CoroutineManager.MyStartCoroutine(CoGetAllRequest("ranking", "GET"));
     }
 
     public IEnumerator CoSignUpRequest(string url, string method, object obj, Action<string> action)

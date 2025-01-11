@@ -11,92 +11,103 @@ public class PopUpUI_BoxOpen : UI_PopUp
         BoxImage,
     }
 
-    [SerializeField]
-    Sprite closeImage;
-    [SerializeField]
-    Sprite openImage;
-
     Vector3 _boxInitPos;
 
     [SerializeField]
     protected Material _whiteMaterial;
 
+    Animator _anim;
+    Image _boxImage;
     ParticleSystem _gatherEffect;
     ParticleSystem _spreadParticle;
     public override void Init()
     {
         base.Init();
-        // GetComponent<Canvas>().worldCamera = GameObject.Find("UIParticleCamera").GetComponent<Camera>();
+        GetComponent<Canvas>().worldCamera = GameObject.Find("UIParticleCamera").GetComponent<Camera>();
 
         UI_Bind<Image>(typeof(Images));
 
-        Image boxImage = UI_Get<Image>((int)Images.BoxImage);
+        _boxImage = UI_Get<Image>((int)Images.BoxImage);
+        _anim = _boxImage.GetComponent<Animator>();
 
-        _gatherEffect = boxImage.transform.Find("GatherParticle").GetComponent<ParticleSystem>();
-        _gatherEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        _spreadParticle = boxImage.transform.Find("SpreadParticle").GetComponent<ParticleSystem>();
-        _spreadParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        _gatherEffect = _boxImage.transform.Find("GatherParticle").GetComponent<ParticleSystem>();
+        _gatherEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        _boxImage.gameObject.SetActive(false);
     }
 
     public override void Show(object param = null)
     {
-        Time.timeScale = 1.0f;
         _whiteMaterial.SetFloat("_Amount", 0.0f);
 
         _boxInitPos = UI_Get<Image>((int)Images.BoxImage).rectTransform.position;
-        UI_Get<Image>((int)Images.BoxImage).sprite = closeImage;
 
-        IEnumerator coVibration = CoVibration();
-        StartCoroutine(coVibration);
+        IEnumerator coDrop = CoDropBox();
+        StartCoroutine(coDrop);
 
         Managers.SoundManager.PlaySFX("UISounds/CharacterGet"); 
     }
 
-    IEnumerator CoVibration()
+    IEnumerator CoDropBox()
+    {
+        _boxImage.gameObject.SetActive(true);
+        _anim.SetBool("IsDrop", true);
+
+        while(true)
+        {
+            _gatherEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            if (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f &&
+               _anim.GetCurrentAnimatorStateInfo(0).IsName("BoxDrop"))
+            { 
+                IEnumerator coVibration = CoVibrationBox();
+                StartCoroutine(coVibration);
+                break;
+            }
+            yield return null;
+        }
+    }
+
+    IEnumerator CoVibrationBox()
     {
         float openTime = 2.0f;
-        float spreadTime = 1.0f;
         float processTime = 0.0f;
         float whiteValue = 0.0f;
-
-        bool isSpread = false;
 
         _gatherEffect.Play();
         while (true)
         {
-            float x = Random.Range(-2.0f, 2.0f);
-            float y = Random.Range(-2.0f, 2.0f);
+            float x = Random.Range(-1.0f, 1.0f);
+            float y = Random.Range(-1.0f, 1.0f);
             UI_Get<Image>((int)Images.BoxImage).rectTransform.position = 
-                        new Vector3(_boxInitPos.x + x, _boxInitPos.y + y);
+                        new Vector3(_boxInitPos.x + x, _boxInitPos.y + y, _boxInitPos.z + 0.0f);
 
             float t = processTime / openTime;
             whiteValue = Mathf.Lerp(0.0f, 1.0f, t);
             _whiteMaterial.SetFloat("_Amount", whiteValue);
 
-            if(processTime > spreadTime && isSpread == false)
-            {
-                isSpread = true;
-                _spreadParticle.Play();
-            }
-
             if (processTime > openTime)
             {
+                _anim.SetBool("IsDrop", false);
+                _anim.SetBool("IsOpen", true);
+
                 _gatherEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                _spreadParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
                 UI_Get<Image>((int)Images.BoxImage).rectTransform.position = _boxInitPos;
-                UI_Get<Image>((int)Images.BoxImage).sprite = openImage;
                 _whiteMaterial.SetFloat("_Amount", 0.0f);
 
                 yield return new WaitForSeconds(1.5f);
 
-                Managers.UIManager.ClosePopUpUI("PopUpUI_BoxOpen");
-                Managers.UIManager.ShowPopUpUI("PopUpUI_BoxSelect");
+                Managers.UIManager.CloseCurPopUpUI(() =>
+                {
+                    _anim.SetBool("IsOpen", false);
+                    _boxImage.gameObject.SetActive(false);
+                    Managers.UIManager.ShowPopUpUI("PopUpUI_BoxSelect");
+                });
                 break;
             }
 
             processTime += Time.deltaTime;
-            spreadTime += Time.deltaTime;
             yield return null;
         }
     }

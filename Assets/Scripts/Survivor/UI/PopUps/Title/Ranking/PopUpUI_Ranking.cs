@@ -113,6 +113,6 @@ public class PopUpUI_Ranking : UI_PopUp
     public void ClickReturnButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Ranking");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 }

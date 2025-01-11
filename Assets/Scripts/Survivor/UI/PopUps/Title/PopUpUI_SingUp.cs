@@ -61,7 +61,7 @@ public class PopUpUI_SignUp : UI_PopUp
                 Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
                 Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "회원가입이 완료되었습니다.", () =>
                 {
-                    Managers.UIManager.ClosePopUpUI("PopUpUI_SignUp");
+                    Managers.UIManager.CloseCurPopUpUI();
                 });
             }
             else
@@ -79,6 +79,6 @@ public class PopUpUI_SignUp : UI_PopUp
     public void ClickReturnButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_SignUp");
+        Managers.UIManager.CloseCurPopUpUI();
     }
 }

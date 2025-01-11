@@ -54,7 +54,7 @@ public class PopUpUI_LevelUp : UI_PopUp
         Managers.GameManagerEx.Pause();
 
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
-        Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform, "PopUpUI_LevelUp");
+        Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform);
     }
 
     public void ClickReRollButton_Item(PointerEventData data)
@@ -71,7 +71,7 @@ public class PopUpUI_LevelUp : UI_PopUp
             Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
 
             player.ReRollCount -= 1;
-            Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform, "PopUpUI_LevelUp");
+            Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform);
         }
     }
 
@@ -92,7 +92,7 @@ public class PopUpUI_LevelUp : UI_PopUp
             _reRollPrice *= 2;
 
             Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
-            Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform, "PopUpUI_LevelUp");
+            Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform);
         }
     }
 

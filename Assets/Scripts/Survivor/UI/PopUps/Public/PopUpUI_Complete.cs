@@ -37,7 +37,6 @@ public class PopUpUI_Complete : UI_PopUp
     public void ClickOkButton(PointerEventData data)
     {
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Complete");
-        _action?.Invoke();
+        Managers.UIManager.CloseCurPopUpUI(() => { _action?.Invoke(); });
     }
 }

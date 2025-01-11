@@ -69,8 +69,8 @@ public class UIPopUp_Pause : UI_PopUp
             UI_Get<Slider>((int)Sliders.SFXVolum).value);
 
         Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-        Managers.UIManager.ClosePopUpUI("PopUpUI_Pause");
-        Managers.GameManagerEx.Continue();
+        Managers.UIManager.CloseCurPopUpUI(()=> { Managers.GameManagerEx.Continue(); });
+        
     }
 
     public void VolumSet_BGM(PointerEventData data)

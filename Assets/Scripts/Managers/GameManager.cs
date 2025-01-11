@@ -135,7 +135,7 @@ public class GameManager
             if(Boss.IsLive == false && IsClear == false)
             {
                 IsClear = true;
-                Managers.CoroutineManager.StartCoroutine(Survived());
+                Managers.CoroutineManager.MyStartCoroutine(Survived());
             }
         }
     }

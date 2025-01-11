@@ -38,8 +38,6 @@ public class UI_ItemButton : UI_Base
 
     public Survivor_Item Item { get; set; } = null;
 
-    public string ParentUIName { get; set; }
-
     public bool IsLive { get; private set; } = true;
 
     int _level = 0;
@@ -57,17 +55,6 @@ public class UI_ItemButton : UI_Base
         UI_Get<Text>((int)Texts.AbilityDescText).text = ItemData.abilityDesc;
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.GetButton).gameObject, ClickGetButton);
-
-        if(ItemData.itemName == Define.ItemName.Shotgun ||
-           ItemData.itemName == Define.ItemName.HealthPack ||
-           ItemData.itemName == Define.ItemName.Gun)
-        {
-            IsLive = true;
-        }
-        else
-        {
-            IsLive = false;
-        }
     }
 
     private void LateUpdate()
@@ -119,7 +106,9 @@ public class UI_ItemButton : UI_Base
         }
 
         Managers.SoundManager.PlaySFX("UISounds/CardSelect");
-        Managers.UIManager.ClosePopUpUI(ParentUIName);
-        Managers.GameManagerEx.Continue();
+        Managers.UIManager.CloseCurPopUpUI(() => {
+            Managers.ItemCardManager.CompletedSelect();
+            Managers.GameManagerEx.Continue(); 
+        });
     }
 }
