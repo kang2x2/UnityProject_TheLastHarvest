@@ -102,6 +102,8 @@ public class PopUpUI_GameOver : UI_PopUp
 
     IEnumerator ScoreCalculation()
     {
+        Time.timeScale = 1.0f;
+
         int result = Managers.GameManagerEx.Kill / 10;
         result += Managers.GameManagerEx.GameLevel / 5;
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: DevilStone
   type: 9
   Animator: {fileID: 22100000, guid: 25f7a818644b68042bb0c0c2a28d1550, type: 2}
-  hp: 40
-  maxHp: 40
+  hp: 400
+  maxHp: 400
   attack: 10
   speed: 1

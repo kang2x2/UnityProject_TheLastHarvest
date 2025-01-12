@@ -27,7 +27,6 @@ public class PopUpUI_LevelUp : UI_PopUp
     }
 
     int _reRollPrice;
-
     public override void Init()
     {
         base.Init();
@@ -55,6 +54,9 @@ public class PopUpUI_LevelUp : UI_PopUp
 
         Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
         Managers.ItemCardManager.ItemCardSuffle(player.SelectItemCount, UI_Get<GameObject>((int)GameObjects.Content).transform);
+        
+        Time.timeScale = 1.0f;
+        Managers.GameManagerEx.LevelUpEffect.Play();
     }
 
     public void ClickReRollButton_Item(PointerEventData data)

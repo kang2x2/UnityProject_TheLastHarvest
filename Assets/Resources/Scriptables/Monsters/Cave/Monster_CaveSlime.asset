@@ -15,7 +15,7 @@ MonoBehaviour:
   name: CaveSlime
   type: 7
   Animator: {fileID: 22100000, guid: 51ee2ee1f889fd64dba6eaa6f1fee0ca, type: 2}
-  hp: 15
-  maxHp: 15
+  hp: 150
+  maxHp: 150
   attack: 6
   speed: 0.75

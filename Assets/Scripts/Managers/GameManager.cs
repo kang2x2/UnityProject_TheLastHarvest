@@ -33,6 +33,10 @@ public class GameManager
     public Define.GameOverType GameOverType { get; set; }
     public int GameSpeedIndex { get; set; }
     float[] _gameSpeeds = new float[3] { 1.0f, 1.5f, 2.0f };
+
+    // LevelUp Effect
+    public ParticleSystem LevelUpEffect { get; set; }
+
     public void Init()
     {
         Player = Managers.ResourceManager.Instantiate("Objects/Player");
@@ -54,6 +58,8 @@ public class GameManager
         IsBossBattle = false;
         IsClear = false;
         GameSpeedIndex = 0;
+
+        LevelUpEffect = GameObject.Find("LevelUpEffect").GetComponent<ParticleSystem>();
     }
 
     public void Update()
@@ -85,7 +91,7 @@ public class GameManager
             IsBossBattle = true;
         }
 
-        if(IsClear == false)
+        if(IsClear == false && IsPause == false)
         {
             ProgressTime += Time.deltaTime;
         }
@@ -146,7 +152,7 @@ public class GameManager
 
         GameOverType = Define.GameOverType.Clear;
         // Survived UI Show
-        Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver");
+        Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver", UIManager.UIAnimationType.None);
     }
 
     public void GetExp(float expValue)

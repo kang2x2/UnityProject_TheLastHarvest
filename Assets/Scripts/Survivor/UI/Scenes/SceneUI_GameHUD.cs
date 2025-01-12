@@ -21,6 +21,7 @@ public class SceneUI_GameHUD : UI_Scene
     enum Images
     {
         KillIcon,
+        BossPortraitImage,
     }
 
     enum Buttons
@@ -43,7 +44,11 @@ public class SceneUI_GameHUD : UI_Scene
         RecoveryStatText,
         ExpStatText,
         MargnetStatText,
+        CriticalStatText,
     }
+
+    [SerializeField]
+    Sprite[] _bossPortraits;
 
     private void Awake()
     {
@@ -55,6 +60,17 @@ public class SceneUI_GameHUD : UI_Scene
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.PauseButton).gameObject, ClickPauseButton);
         UI_BindEvent(UI_Get<Button>((int)Buttons.GameSpeedButton).gameObject, ClickGameSpeedButton);
+
+        switch(Managers.GameManagerEx.MapType)
+        {
+            case Define.MapType.Field:
+                UI_Get<Image>((int)Images.BossPortraitImage).sprite = _bossPortraits[(int)Define.MapType.Field];
+                break;
+
+            case Define.MapType.Cave:
+                UI_Get<Image>((int)Images.BossPortraitImage).sprite = _bossPortraits[(int)Define.MapType.Cave];
+                break;
+        }
 
         foreach (Text text in UI_GetAll<Text>())
         {
@@ -136,6 +152,7 @@ public class SceneUI_GameHUD : UI_Scene
         UI_Get<Text>((int)Texts.RecoveryStatText).text = string.Format("{0:N2}", player.RecoveryRatio);
         UI_Get<Text>((int)Texts.ExpStatText).text = string.Format("{0:N2}", player.GetExpRatio);
         UI_Get<Text>((int)Texts.MargnetStatText).text = string.Format("{0:N2}", player.Margent.GetComponent<CircleCollider2D>().radius);
+        UI_Get<Text>((int)Texts.CriticalStatText).text = string.Format("{0:N1}", player.CriticalRatio);
         #endregion
     }
 

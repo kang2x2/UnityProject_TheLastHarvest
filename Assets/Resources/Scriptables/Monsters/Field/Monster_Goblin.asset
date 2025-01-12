@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Goblin
   type: 4
   Animator: {fileID: 22100000, guid: 8d1d920724ffb8a409ce0e458dc4b7a9, type: 2}
-  hp: 40
-  maxHp: 40
+  hp: 400
+  maxHp: 400
   attack: 10
   speed: 1

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bird
   type: 10
   Animator: {fileID: 22100000, guid: 53f263aad1f95814a8944a530766431f, type: 2}
-  hp: 20
-  maxHp: 20
+  hp: 200
+  maxHp: 200
   attack: 6
   speed: 2

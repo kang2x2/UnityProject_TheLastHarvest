@@ -65,6 +65,7 @@ public class Define
         ExpBoost,
         MaxHp,
         Recovery,
+        CriticalUp,
 
         HealthPack,
 
@@ -93,6 +94,7 @@ public class Define
         MoveSpeed,
         MaxHP,
         Recovery,
+        Critical,
         SelectCount,
         End
     }
@@ -117,6 +119,13 @@ public class Define
         Bird,
         Ghost,
 
+        End
+    }
+
+    public enum DamageType
+    {
+        Normal,
+        Critical,
         End
     }
 

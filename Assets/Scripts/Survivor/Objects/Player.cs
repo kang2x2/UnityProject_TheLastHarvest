@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public float AttackRatio { get; set; }
     public float GetExpRatio { get; set; }
     public float RecoveryRatio { get; set; }
+    public float CriticalRatio { get; set; }
     public int SelectItemCount { get; set; }
     public int ReRollCount { get; set; }
     public float Hp { get; set; }
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     Animator _anim;
 
     ParticleSystem _hitEffect;
+    ParticleSystem _healEffect;
 
     void Start()
     {
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
 
         _hitEffect = transform.Find("PlayerHitEffect").GetComponent<ParticleSystem>();
         _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        _healEffect = transform.Find("HealEffect").GetComponent<ParticleSystem>();
+        _healEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
     public void CharacterSetting(Data_Character data)
@@ -59,6 +63,7 @@ public class Player : MonoBehaviour
         MaxHp = Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.MaxHP];
         RecoveryRatio = Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.Recovery];
         GetExpRatio = data.expBonus + Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.Exp];
+        CriticalRatio = Managers.DataManager.User.Data.bonus[(int)Define.UserStatType.Critical];
         Margent = transform.Find("Passive_Margnet");
         SelectItemCount = Managers.DataManager.User.Data.selectCount;
         ReRollCount = 3;
@@ -124,6 +129,11 @@ public class Player : MonoBehaviour
         }    
     }
 
+    public void PlayHealEffect()
+    {
+        _healEffect.Play();
+    }
+
     IEnumerator Dead()
     {
         _sprite.color = Color.white;
@@ -147,7 +157,7 @@ public class Player : MonoBehaviour
             if(accTime > pauseTime)
             {
                 Managers.GameManagerEx.GameOverType = Define.GameOverType.Dead;
-                Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver");
+                Managers.UIManager.ShowPopUpUI("PopUpUI_GameOver", null, UIManager.UIAnimationType.None);
                 Managers.GameManagerEx.IsPause = true;
                 break;
             }
@@ -155,20 +165,43 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        // 충돌한 것도 없는데 왜 내부로 진입하는가? 
-        if(collision.CompareTag("Enemy"))
-        {
-            // Debug.Log("TriggerStay : " + collision.gameObject.transform.position);
-        }
-    }
+   //private void OnTriggerStay2D(Collider2D collision)
+   //{
+   //    if(collision.CompareTag("Enemy")) // 충돌한 대상이 Enemy인가?
+   //    {
+   //        if (Hp > 0)
+   //        {
+   //            _sprite.color = Color.red;
+   //            _hitEffect.Play();
+   //
+   //            if (collision.gameObject.GetComponent<Monster>() != null)
+   //            {
+   //                Hp -= collision.gameObject.GetComponent<Monster>().Attack * Time.deltaTime;
+   //            }
+   //        }
+   //        else
+   //        {
+   //            if (IsLive == true)
+   //            {
+   //                IsLive = false;
+   //                _rigid.velocity = Vector2.zero;
+   //                _sprite.sortingOrder = 5;
+   //                _anim.SetBool("Dead", true);
+   //                Hp = 0.0f;
+   //
+   //                _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+   //
+   //                StartCoroutine(Dead());
+   //            }
+   //        }
+   //    }
+   //}
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Enemy") == true)
         {
-            if(Hp > 0)
+            if (Hp > 0)
             {
                 _sprite.color = Color.red;
                 _hitEffect.Play();
@@ -180,7 +213,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if(IsLive == true)
+                if (IsLive == true)
                 {
                     IsLive = false;
                     _rigid.velocity = Vector2.zero;

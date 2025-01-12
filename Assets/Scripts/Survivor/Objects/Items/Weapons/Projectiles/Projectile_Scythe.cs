@@ -44,6 +44,12 @@ public class Projectile_Scythe : Projectile
         float moveTime = 0.5f;
         while (true)
         {
+            if (Managers.GameManagerEx.IsPause == true)
+            {
+                yield return null;
+                continue;
+            }
+
             float distX = Mathf.Abs(player.position.x - transform.position.x);
 
             if (player.GetComponent<SpriteRenderer>().flipX == true)
@@ -82,6 +88,12 @@ public class Projectile_Scythe : Projectile
         float rotTime = 0.5f;
         while (true)
         {
+            if (Managers.GameManagerEx.IsPause == true)
+            {
+                yield return null;
+                continue;
+            }
+
             transform.SetParent(_parent.transform);
             float t = accTime / rotTime;
             curAngle = Mathf.Lerp(curAngle, destAngle, t);
@@ -132,6 +144,12 @@ public class Projectile_Scythe : Projectile
 
         while (true)
         {
+            if (Managers.GameManagerEx.IsPause == true)
+            {
+                yield return null;
+                continue;
+            }
+
             float t = accTime / attackTime;
             curPosValue = Mathf.Lerp(curPosValue, destPosValue, t);
             curAngle = Mathf.Lerp(curAngle, destAngle, t);
@@ -178,6 +196,12 @@ public class Projectile_Scythe : Projectile
 
         while (true)
         {
+            if (Managers.GameManagerEx.IsPause == true)
+            {
+                yield return null;
+                continue;
+            }
+
             float t = accTime / moveTime;
             transform.Rotate(Vector3.back * 2160.0f * Time.deltaTime);
             transform.position = Vector2.Lerp(transform.position, player.position, t);

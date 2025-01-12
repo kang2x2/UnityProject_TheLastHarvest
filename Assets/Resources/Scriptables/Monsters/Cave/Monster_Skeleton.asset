@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Skeleton
   type: 8
   Animator: {fileID: 22100000, guid: 12cfc8b2360c2fc4499d4f6f6607671a, type: 2}
-  hp: 20
-  maxHp: 20
+  hp: 200
+  maxHp: 200
   attack: 8
   speed: 0.65

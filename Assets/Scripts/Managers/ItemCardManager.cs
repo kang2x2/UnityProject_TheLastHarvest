@@ -106,6 +106,9 @@ public class ItemCardManager
                 case Define.ItemName.Recovery:
                     btn.Item = _items[(int)Define.ItemName.Recovery];
                     break;
+                case Define.ItemName.CriticalUp:
+                    btn.Item = _items[(int)Define.ItemName.CriticalUp];
+                    break;
             }
 
             btn.ItemData = _itemDatas[i];

@@ -29,12 +29,12 @@ MonoBehaviour:
   - 1
   amounts: 
   attacks:
-  - 2.5
-  - 1.5
-  - 1.5
-  - 1.5
-  - 1.5
-  - 1.5
+  - 25
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
   sizes: []
   knockbackPower: 2
   floatUtils: []

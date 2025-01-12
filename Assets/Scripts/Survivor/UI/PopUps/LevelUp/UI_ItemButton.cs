@@ -107,6 +107,10 @@ public class UI_ItemButton : UI_Base
 
         Managers.SoundManager.PlaySFX("UISounds/CardSelect");
         Managers.UIManager.CloseCurPopUpUI(() => {
+            if (Managers.GameManagerEx.LevelUpEffect.isPlaying == true)
+            {
+                Managers.GameManagerEx.LevelUpEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
             Managers.ItemCardManager.CompletedSelect();
             Managers.GameManagerEx.Continue(); 
         });

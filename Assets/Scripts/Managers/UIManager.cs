@@ -7,6 +7,7 @@ public class UIManager
 {
     public enum UIAnimationType
     {
+        None,
         Scale,
         Page,
         End
@@ -85,6 +86,9 @@ public class UIManager
 
         switch(type)
         {
+            case UIAnimationType.None:
+                CurPopUp.Show(param);
+                break;
             case UIAnimationType.Scale:
                 IEnumerator coShowScale = CurPopUp.coShowScale(showAction);
                 Managers.CoroutineManager.MyStartCoroutine(coShowScale);
@@ -122,6 +126,9 @@ public class UIManager
 
         switch(type)
         {
+            case UIAnimationType.None:
+                closeAction.Invoke();
+                break;
             case UIAnimationType.Scale:
                 IEnumerator coCloseScale = CurPopUp.coCloseScale(closeAction);
                 Managers.CoroutineManager.MyStartCoroutine(coCloseScale);

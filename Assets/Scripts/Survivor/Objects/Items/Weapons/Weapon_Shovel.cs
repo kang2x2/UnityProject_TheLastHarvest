@@ -60,9 +60,7 @@ public class Weapon_Shovel : Weapon
             shovel.transform.Translate(shovel.transform.up * 1.25f, Space.World);
 
             float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-            shovel.GetComponent<Projectile_Shovel>().Init(
-                attackRatio * (float)_stats[(int)Define.AbilityType.Attack],
-                _itemData.stat.knockbackPower);
+            shovel.GetComponent<Projectile_Shovel>().Init(DamageCalculator(), _itemData.stat.knockbackPower);
         }
     }
 }

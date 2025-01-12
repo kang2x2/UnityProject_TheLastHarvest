@@ -124,8 +124,7 @@ public class Weapon_Gun : Weapon
         fireBullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
         float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-        fireBullet.GetComponent<Projectile_Bullet>().
-            Init(dir, (float)_stats[(int)Define.AbilityType.Attack] * attackRatio,
+        fireBullet.GetComponent<Projectile_Bullet>().Init(dir, DamageCalculator(),
             (float)_stats[(int)Define.AbilityType.Fen], _itemData.stat.knockbackPower);
 
         Managers.SoundManager.PlaySFX("weaponSounds/Rifle");

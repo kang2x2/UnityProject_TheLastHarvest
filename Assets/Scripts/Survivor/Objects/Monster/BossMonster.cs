@@ -65,7 +65,7 @@ public class BossMonster : Monster
             _sprite.flipX = transform.position.x < _target.transform.position.x;
         }
 
-        if(_isFlashing == true)
+        if (_isFlashing == true)
         {
             _sprite.material = _whiteMaterial;
             _flashTime -= Time.deltaTime;

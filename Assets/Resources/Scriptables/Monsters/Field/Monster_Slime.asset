@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Slime
   type: 1
   Animator: {fileID: 22100000, guid: 90028da1047156047b8fb908e4fe7f10, type: 2}
-  hp: 10
-  maxHp: 10
+  hp: 100
+  maxHp: 100
   attack: 5
   speed: 0.5

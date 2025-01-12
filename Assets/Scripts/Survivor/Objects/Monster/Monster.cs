@@ -43,32 +43,42 @@ public class Monster : MonoBehaviour
 
     protected bool LateStopCheck()
     {
-        if (Managers.GameManagerEx.IsPause == true)
+        if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
         {
             _anim.speed = 0.0f;
-            if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == false)
-            {
+            //if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == false)
+            //{
                 _rigid.velocity = Vector2.zero;
-            }
+            //}
             return false;
         }
 
-        if (Managers.SceneManagerEx.IsLoading == true)
-        {
-            _anim.speed = 0.0f;
-            _rigid.velocity = Vector2.zero;
-        }
-
+        _anim.speed = 1.0f;
         return true;
     }
 
     protected void MonsterHit(Projectile projectile)
     {
-        WorldUI_DamageText damageText = Managers.ResourceManager.
-            Instantiate("UI/Worlds/WorldUI_DamageText").GetComponent<WorldUI_DamageText>();
-        damageText.Init(transform.position, projectile.Attack);
+        float ranFloat = Random.Range(0.0f, 101.0f);
+        float damage = 0.0f;
+        if(ranFloat > Managers.GameManagerEx.Player.GetComponent<Player>().CriticalRatio)
+        {
+            damage = projectile.Attack;
 
-        Hp -= projectile.Attack;
+            WorldUI_DamageText damageText = Managers.ResourceManager.
+                Instantiate("UI/Worlds/WorldUI_DamageText").GetComponent<WorldUI_DamageText>();
+            damageText.Init(transform.position, damage, Define.DamageType.Normal);
+        }
+        else
+        {
+            damage = projectile.Attack * 1.3f;
+
+            WorldUI_DamageText damageText = Managers.ResourceManager.
+                Instantiate("UI/Worlds/WorldUI_DamageText").GetComponent<WorldUI_DamageText>();
+            damageText.Init(transform.position, damage, Define.DamageType.Critical);
+        }
+
+        Hp -= damage;
 
         if (projectile.Effect == Projectile.EffectType.Bullet)
         {

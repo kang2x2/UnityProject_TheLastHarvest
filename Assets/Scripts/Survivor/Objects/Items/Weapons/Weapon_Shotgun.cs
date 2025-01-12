@@ -204,7 +204,7 @@ public class Weapon_Shotgun : Weapon
 
             float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
             fireBullet.GetComponent<Projectile_BigBullet>().Init(
-                dir, attackRatio * (float)_stats[(int)Define.AbilityType.Attack], _itemData.stat.knockbackPower);
+                dir, DamageCalculator(), _itemData.stat.knockbackPower);
         }
 
         Managers.SoundManager.PlaySFX("weaponSounds/ShotGun");

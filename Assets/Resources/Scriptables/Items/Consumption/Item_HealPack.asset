@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a634591520ec58f43ac8c4b4a70860ab, type: 3}
   m_Name: Item_HealPack
   m_EditorClassIdentifier: 
-  itemName: 13
+  itemName: 14
   abilityType: 9
   name: "\uD790\uD329"
   itemDesc: "\uBAB8\uC5D0 \uC88B\uC740 \uAC83\uB4E4\uB9CC \uB4E4\uC5B4\uC788\uB294

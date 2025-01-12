@@ -45,7 +45,7 @@ public class PopUpUI_BoxOpen : UI_PopUp
         IEnumerator coDrop = CoDropBox();
         StartCoroutine(coDrop);
 
-        Managers.SoundManager.PlaySFX("UISounds/CharacterGet"); 
+        // Managers.SoundManager.PlaySFX("UISounds/CharacterGet"); 
     }
 
     IEnumerator CoDropBox()
@@ -59,9 +59,20 @@ public class PopUpUI_BoxOpen : UI_PopUp
 
             if (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f &&
                _anim.GetCurrentAnimatorStateInfo(0).IsName("BoxDrop"))
-            { 
-                IEnumerator coVibration = CoVibrationBox();
-                StartCoroutine(coVibration);
+            {
+                _anim.SetBool("IsDrop", false);
+                _anim.SetBool("IsOpen", true);
+
+                yield return new WaitForSeconds(0.5f);
+
+                Managers.UIManager.CloseCurPopUpUI(() =>
+                {
+                    _anim.SetBool("IsOpen", false);
+                    _boxImage.gameObject.SetActive(false);
+                    Managers.UIManager.ShowPopUpUI("PopUpUI_BoxSelect");
+                });
+                // IEnumerator coVibration = CoVibrationBox();
+                // StartCoroutine(coVibration);
                 break;
             }
             yield return null;

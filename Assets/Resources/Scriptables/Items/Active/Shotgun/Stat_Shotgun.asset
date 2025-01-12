@@ -23,12 +23,12 @@ MonoBehaviour:
   fens: []
   amounts: 
   attacks:
-  - 1.5
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1.5
+  - 15
+  - 10
+  - 10
+  - 10
+  - 10
+  - 15
   sizes: []
   knockbackPower: 12
   floatUtils: []

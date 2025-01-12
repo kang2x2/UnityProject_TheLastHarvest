@@ -112,5 +112,10 @@ public class StoreData
         Data.passiveItems[(int)Define.UserStatType.SelectCount] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_11", "Level Up 시 선택 가능한 아이템 카드가 1개 추가됩니다.",
             (int)Define.UserStatType.SelectCount, 0, 1.0f, 50);
+
+        Data.passiveItems[(int)Define.UserStatType.Critical] =
+            new PassiveItem("Sprites/UserStatUI", "UserStatUI_16", "치명타 확률이 0.25% 증가합니다.",
+            (int)Define.UserStatType.Recovery, 0, 0.25f, 10);
+
     }
 }

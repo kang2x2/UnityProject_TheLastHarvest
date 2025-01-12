@@ -34,5 +34,8 @@ public class PopUpUI_BoxSelect : UI_PopUp
         Managers.GameManagerEx.Pause();
 
         Managers.ItemCardManager.ItemCardSuffle(2, UI_Get<GameObject>((int)GameObjects.Content).transform, ItemCardManager.SelectType.Box);
+
+        Time.timeScale = 1.0f;
+        Managers.GameManagerEx.LevelUpEffect.Play();
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: WeakZombie
   type: 5
   Animator: {fileID: 9100000, guid: f2855d618fc8d9c499189d3f39b9cbbc, type: 2}
-  hp: 7.5
-  maxHp: 7.5
+  hp: 75
+  maxHp: 75
   attack: 3
   speed: 0.5

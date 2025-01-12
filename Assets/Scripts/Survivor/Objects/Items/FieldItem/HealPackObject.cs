@@ -9,10 +9,10 @@ public class HealPackObject : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             Managers.SoundManager.PlaySFX("Battles/Heal");
-            Managers.GameManagerEx.HealpackCount -= 1;
 
             Player player = Managers.GameManagerEx.Player.GetComponent<Player>();
             player.Hp = player.MaxHp;
+            player.PlayHealEffect();
             Managers.ResourceManager.Destroy(gameObject);
         }
     }

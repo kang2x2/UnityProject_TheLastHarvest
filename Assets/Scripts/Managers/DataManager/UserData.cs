@@ -70,6 +70,7 @@ public class UserData
             Data.bonus[(int)Define.UserStatType.Exp] = 0.0f;
             Data.bonus[(int)Define.UserStatType.MaxHP] = 0.0f;
             Data.bonus[(int)Define.UserStatType.Recovery] = 0.0f;
+            Data.bonus[(int)Define.UserStatType.Critical] = 0.0f;
 
             string json = JsonUtility.ToJson(Data, true);
             File.WriteAllText(filePath, json);
@@ -93,6 +94,7 @@ public class UserData
         Data.bonus[(int)Define.UserStatType.Exp] = 0.0f;
         Data.bonus[(int)Define.UserStatType.MaxHP] = 0.0f;
         Data.bonus[(int)Define.UserStatType.Recovery] = 0.0f;
+        Data.bonus[(int)Define.UserStatType.Critical] = 0.0f;
 
         string json = JsonUtility.ToJson(Data, true);
         File.WriteAllText(filePath, json);

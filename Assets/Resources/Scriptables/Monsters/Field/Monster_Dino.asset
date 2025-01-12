@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Dino
   type: 3
   Animator: {fileID: 22100000, guid: 80cdc95a1bd6af64da497a7b2afaef3d, type: 2}
-  hp: 20
-  maxHp: 20
+  hp: 200
+  maxHp: 200
   attack: 8
   speed: 0.8

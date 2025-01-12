@@ -120,12 +120,12 @@ public class NormalMonster : Monster
             return;
         }
 
-        _anim.speed = 1.0f;
-
         if (Managers.Instance != null && IsLive == true)
         {
             _sprite.flipX = transform.position.x > _target.transform.position.x;
         }
+
+        // _anim.speed = 1.0f;
 
         if (Managers.GameManagerEx.IsClear == true)
         {
@@ -155,18 +155,16 @@ public class NormalMonster : Monster
     void DropItem()
     {
         float ranIndex = UnityEngine.Random.Range(0.0f, 100.0f);
-        if (ranIndex <= 95.5f && Managers.GameManagerEx.BoxCount == 0)
+        if (ranIndex <= 10.1f)
         {
             GameObject box = Managers.ResourceManager.Instantiate("Objects/BoxObject");
             box.transform.position = transform.position;
-            Managers.GameManagerEx.BoxCount = 1;
         }
-        else if (ranIndex <= 2.5f && Managers.GameManagerEx.HealpackCount < 2)
-        {
-            GameObject healPack = Managers.ResourceManager.Instantiate("Objects/HealPackObject");
-            healPack.transform.position = transform.position;
-            Managers.GameManagerEx.HealpackCount += 1;
-        }
+        //else if (ranIndex <= 0.5f)
+        //{
+        //    GameObject healPack = Managers.ResourceManager.Instantiate("Objects/HealPackObject");
+        //    healPack.transform.position = transform.position;
+        //}
         else
         {
             GameObject exp = Managers.ResourceManager.Instantiate("Objects/ExpObject");

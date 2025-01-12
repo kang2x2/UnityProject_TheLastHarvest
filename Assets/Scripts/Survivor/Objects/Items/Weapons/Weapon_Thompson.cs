@@ -118,6 +118,16 @@ public class Weapon_Thompson : Weapon
     {
         for(int i = 0; i < (int)_stats[(int)Define.AbilityType.Amount]; ++i)
         {
+            if(Managers.GameManagerEx.IsPause == true)
+            {
+                yield return null;
+                if(i > 0)
+                {
+                    i -= 1;
+                }
+                continue;
+            }
+
             if(_nearTarget == null)
             {
                 break;
@@ -134,10 +144,9 @@ public class Weapon_Thompson : Weapon
             fireBullet.position = transform.Find("Muzzle").gameObject.transform.position;
             fireBullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
-            float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
             fireBullet.GetComponent<Projectile_Bullet>().
-                Init(dir, attackRatio * (float)_stats[(int)Define.AbilityType.Attack],
-                (float)_stats[(int)Define.AbilityType.Fen], _itemData.stat.knockbackPower);
+                Init(dir, DamageCalculator(), (float)_stats[(int)Define.AbilityType.Fen],
+                _itemData.stat.knockbackPower);
 
             Managers.SoundManager.PlaySFX("weaponSounds/Thompson");
 

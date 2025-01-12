@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Snake
   type: 2
   Animator: {fileID: 22100000, guid: b580efcb40d7de24187474d9c84a763d, type: 2}
-  hp: 15
-  maxHp: 15
+  hp: 150
+  maxHp: 150
   attack: 6
   speed: 0.65
