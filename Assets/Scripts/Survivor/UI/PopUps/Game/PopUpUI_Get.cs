@@ -36,7 +36,6 @@ public class PopUpUI_Get : UI_PopUp
 
     public override void Show(object param = null)
     {
-        IsShow = true;
         int index = (int)param;
 
         Managers.SoundManager.PlaySFX("UISounds/CharacterGet"); 

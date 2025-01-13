@@ -86,7 +86,12 @@ public class SceneUI_GameHUD : UI_Scene
         UI_Get<Text>((int)Texts.GameSpeedText).color = Color.black;
 
         UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.SetActive(false);
-        // Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
+
+        if (Application.platform == RuntimePlatform.Android ||
+            Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
+        }
     }
 
     private void Update()
@@ -160,13 +165,17 @@ public class SceneUI_GameHUD : UI_Scene
     {
         Managers.GameManagerEx.SetGameSpeed();
 
-        if (Managers.GameManagerEx.GameSpeedIndex == 1)
+        if (Managers.GameManagerEx.GameSpeedIndex == 0)
         {
-            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("{0:N1}", Time.timeScale);
+            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("x {0:F0}", Time.timeScale);
+        }
+        else if(Managers.GameManagerEx.GameSpeedIndex == 1)
+        {
+            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("x {0:N2}", Time.timeScale);
         }
         else
         {
-            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("{0:F0}", Time.timeScale);
+            UI_Get<Text>((int)Texts.GameSpeedText).text = string.Format("x {0:N1}", Time.timeScale);
         }
     }
 

@@ -19,18 +19,12 @@ public class PopUpUI_SignUp : UI_PopUp
         ReturnButton,
     }
 
-    enum Texts
-    {
-        ErrorText,
-    }
-
     public override void Init()
     {
         base.Init();
 
         UI_Bind<InputField>(typeof(InputFields));
         UI_Bind<Button>(typeof(Buttons));
-        UI_Bind<Text>(typeof(Texts));
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.SignUpButton).gameObject, ClickSignUpButton);
         UI_BindEvent(UI_Get<Button>((int)Buttons.ReturnButton).gameObject, ClickReturnButton);
@@ -38,7 +32,9 @@ public class PopUpUI_SignUp : UI_PopUp
 
     public override void Show(object param = null)
     {
-        UI_Get<Text>((int)Texts.ErrorText).text = "";
+        UI_Get<InputField>((int)InputFields.IdInputField).text = "";
+        UI_Get<InputField>((int)InputFields.PasswordInputField).text = "";
+        UI_Get<InputField>((int)InputFields.NickNameInputField).text = "";
     }
 
     public void ClickSignUpButton(PointerEventData data)
@@ -54,26 +50,29 @@ public class PopUpUI_SignUp : UI_PopUp
             date = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")
         };
 
-        IEnumerator coSignUp = Managers.WebManager.CoSignUpRequest("ranking/adduserdata", "POST", res, (str) =>
+        IEnumerator coServerCheck = Managers.WebManager.CheckServer(() =>
         {
-            if (str == "회원가입이 완료되었습니다.")
+            IEnumerator coSignUp = Managers.WebManager.CoSignUpRequest("ranking/adduserdata", "POST", res, (str) =>
             {
-                Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
-                Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "회원가입이 완료되었습니다.", () =>
+                if (str == "회원가입이 완료되었습니다.")
                 {
-                    Managers.UIManager.CloseCurPopUpUI();
-                });
-            }
-            else
-            {
-                Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-                UI_Get<Text>((int)Texts.ErrorText).color = Color.red;
-            }
+                    Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+                    Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "회원가입이 완료되었습니다.", () =>
+                    {
+                        Managers.UIManager.CloseCurPopUpUI();
+                    });
+                }
+                else
+                {
+                    Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+                    Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", str);
+                }
+            });
 
-            UI_Get<Text>((int)Texts.ErrorText).text = str;
+            StartCoroutine(coSignUp);
         });
 
-        StartCoroutine(coSignUp);
+        StartCoroutine(coServerCheck);
     }
 
     public void ClickReturnButton(PointerEventData data)

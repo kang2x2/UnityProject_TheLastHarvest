@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UI_PopUp : UI_Base
 {
-    public bool IsShow { get; protected set; }
+    public bool IsShow { get; set; }
     protected Image _antiTouchImage;
 
     RectTransform _backGroundRect;

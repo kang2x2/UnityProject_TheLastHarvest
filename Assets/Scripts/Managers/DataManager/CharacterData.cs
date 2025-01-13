@@ -51,28 +51,28 @@ public class CharacterData
 
     public IEnumerator UnLockCharacter(Action action)
     {
-        UI_PopUp popUp;
-
         void PopUpSet(int index)
         {
             Data.unLocks[index] = true;
             Managers.UIManager.ShowPopUpUI("PopUpUI_Get", index);
-            popUp = Managers.UIManager.CurPopUp;
         }
-
+       
         if (Managers.GameManagerEx.ProgressTime >= 300.0f &&
             Data.unLocks[(int)Define.CharacterType.Character2] == false)
         {
             PopUpSet((int)Define.CharacterType.Character2);
             while (true)
             {
-                if (popUp.IsShow == false)
+                if (Managers.UIManager.CurPopUp.GetComponent<PopUpUI_Get>() == null)
                 {
                     break;
                 }
                 yield return null;
             }
         }
+
+        // if (Managers.GameManagerEx.ProgressTime >= 0.0f &&
+        //     Data.unLocks[(int)Define.CharacterType.Character3] == false)
         if (Managers.GameManagerEx.MapType == Define.MapType.Field &&
             Managers.GameManagerEx.IsClear == true &&
             Data.unLocks[(int)Define.CharacterType.Character3] == false)
@@ -80,13 +80,16 @@ public class CharacterData
             PopUpSet((int)Define.CharacterType.Character3);
             while (true)
             {
-                if (popUp.IsShow == false)
+                if (Managers.UIManager.CurPopUp.GetComponent<PopUpUI_Get>() == null)
                 {
                     break;
                 }
                 yield return null;
             }
         }
+
+        // if (Managers.GameManagerEx.ProgressTime >= 0.0f &&
+        //     Data.unLocks[(int)Define.CharacterType.Character4] == false)
         if (Managers.GameManagerEx.MapType == Define.MapType.Cave &&
             Managers.GameManagerEx.IsClear == true &&
             Data.unLocks[(int)Define.CharacterType.Character4] == false)
@@ -94,7 +97,7 @@ public class CharacterData
             PopUpSet((int)Define.CharacterType.Character4);
             while (true)
             {
-                if (popUp.IsShow == false)
+                if (Managers.UIManager.CurPopUp.GetComponent<PopUpUI_Get>() == null)
                 {
                     break;
                 }

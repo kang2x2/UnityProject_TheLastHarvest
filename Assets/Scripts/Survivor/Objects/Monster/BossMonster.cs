@@ -41,7 +41,7 @@ public class BossMonster : Monster
         Speed = data.speed;
 
         Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
-        transform.position = new Vector3(playerPos.x, playerPos.y + 10, playerPos.z);
+        transform.position = new Vector3(playerPos.x, playerPos.y + 13, playerPos.z);
     }
     void FixedUpdate()
     {

@@ -154,16 +154,21 @@ public class PopUpUI_GameOver : UI_PopUp
         UI_Get<GameObject>((int)BonusPanels.ResultPanel).SetActive(true);
         yield return new WaitForSeconds(1.0f);
 
-        // TODO : 데이터 업데이트
         if(Managers.WebManager.IsLogin == true)
         {
-            // return button 점수 계산 끝나고 생성
-            IEnumerator coUpdate = Managers.WebManager.CoUpdateRequest("ranking", "Put", () =>
+            IEnumerator coServerCheck = Managers.WebManager.CheckServer(() =>
             {
-                UI_Get<Button>((int)Buttons.ReturnButton).gameObject.SetActive(true);
+                IEnumerator coUpdate = Managers.WebManager.CoUpdateRequest("ranking", "Put", () =>
+                {
+                    Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+                    Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "데이터 전송 완료.");
+                    UI_Get<Button>((int)Buttons.ReturnButton).gameObject.SetActive(true);
+                });
+
+                StartCoroutine(coUpdate);
             });
 
-            StartCoroutine(coUpdate);
+            StartCoroutine(coServerCheck);
         }
         else
         {

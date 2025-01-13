@@ -18,10 +18,6 @@ public class PopUpUI_Login : UI_PopUp
         LoginButton,
         ReturnButton,
     }
-    enum Texts
-    {
-        ErrorText,
-    }
 
     public override void Init()
     {
@@ -29,7 +25,6 @@ public class PopUpUI_Login : UI_PopUp
 
         UI_Bind<InputField>(typeof(InputFields));
         UI_Bind<Button>(typeof(Buttons));
-        UI_Bind<Text>(typeof(Texts));
 
         UI_BindEvent(UI_Get<Button>((int)Buttons.SignUpButton).gameObject, ClickSingUpButton);
         UI_BindEvent(UI_Get<Button>((int)Buttons.LoginButton).gameObject, ClickLoginButton);
@@ -38,7 +33,8 @@ public class PopUpUI_Login : UI_PopUp
 
     public override void Show(object param = null)
     {
-        UI_Get<Text>((int)Texts.ErrorText).text = "";
+        UI_Get<InputField>((int)InputFields.IdInputField).text = "";
+        UI_Get<InputField>((int)InputFields.PasswordInputField).text = "";
     }
 
     public void ClickSingUpButton(PointerEventData data)
@@ -52,27 +48,30 @@ public class PopUpUI_Login : UI_PopUp
         string id = UI_Get<InputField>((int)InputFields.IdInputField).text;
         string pw = UI_Get<InputField>((int)InputFields.PasswordInputField).text;
 
-        IEnumerator coLogin = Managers.WebManager.CoLoginRequest("ranking/getuserdata", "Get",
-            id, pw, (str) =>
-            {
-                if (str == "로그인 완료!")
+        IEnumerator coServerCheck = Managers.WebManager.CheckServer(() =>
+        {
+            IEnumerator coLogin = Managers.WebManager.CoLoginRequest("ranking/getuserdata", "Get",
+                id, pw, (str) =>
                 {
-                    Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
-                    Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "로그인 완료!", () =>
+                    if (str == "로그인 완료!")
                     {
-                        Managers.UIManager.CloseCurPopUpUI();
-                    });
-                }
-                else
-                {
-                    Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
-                    UI_Get<Text>((int)Texts.ErrorText).color = Color.red;
-                }
+                        Managers.SoundManager.PlaySFX("UISounds/SelectionComplete");
+                        Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", "로그인 완료!", () =>
+                        {
+                            Managers.UIManager.CloseCurPopUpUI();
+                        });
+                    }
+                    else
+                    {
+                        Managers.SoundManager.PlaySFX("UISounds/ButtonSelect");
+                        Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", str);
+                    }
+                });
 
-                UI_Get<Text>((int)Texts.ErrorText).text = str;
-            });
+            StartCoroutine(coLogin);
+        });
 
-        StartCoroutine(coLogin);
+        StartCoroutine(coServerCheck);
     }
 
     public void ClickReturnButton(PointerEventData data)

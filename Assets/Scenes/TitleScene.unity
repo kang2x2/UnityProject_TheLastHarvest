@@ -243,14 +243,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1159665374712882545, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1159665374712882545, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1626657784692784609, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -334,34 +326,6 @@ PrefabInstance:
     - target: {fileID: 2786416699536957618, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
       propertyPath: m_Name
       value: Scene_Title
-      objectReference: {fileID: 0}
-    - target: {fileID: 2786416699536957618, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3625312266412503601, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3625312266412503601, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4249624739394109988, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4249624739394109988, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4249624739394109988, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 135
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210477171523540744, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_VertexColorAlwaysGammaSpace
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

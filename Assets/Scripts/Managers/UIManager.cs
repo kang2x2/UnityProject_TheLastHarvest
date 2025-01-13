@@ -23,6 +23,7 @@ public class UIManager
 
     public void SetJoyStick(RectTransform joystick)
     {
+        _joystick.gameObject.SetActive(true);
         _joystick = joystick;
         _joystick.localScale = Vector3.one;
     }
@@ -81,6 +82,7 @@ public class UIManager
         popUp.GetComponent<Canvas>().sortingOrder = _curOrder++;
         _popUpStack.Push(popUp);
         CurPopUp = _popUpStack.Peek();
+        CurPopUp.IsShow = true;
 
         Action showAction = () => { CurPopUp.Show(param); };
 
@@ -105,6 +107,8 @@ public class UIManager
         {
             _joystick.localScale = Vector3.one;
         }
+
+        CurPopUp.IsShow = false;
 
         Action closeAction = () =>
         {

@@ -102,6 +102,15 @@ public class Player : MonoBehaviour
     {
         if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
         {
+            if(_hitEffect.isPlaying == true)
+            {
+                _hitEffect.Pause();
+            }
+            if(_healEffect.isPlaying == true)
+            {
+                _healEffect.Pause();
+            }
+
             _anim.speed = 0.0f;
             return;
         }

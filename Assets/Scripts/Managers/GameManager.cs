@@ -32,7 +32,7 @@ public class GameManager
     public Define.MapType MapType { get; set; }
     public Define.GameOverType GameOverType { get; set; }
     public int GameSpeedIndex { get; set; }
-    float[] _gameSpeeds = new float[3] { 1.0f, 1.5f, 2.0f };
+    float[] _gameSpeeds = new float[3] { 1.0f, 1.25f, 1.5f };
 
     // LevelUp Effect
     public ParticleSystem LevelUpEffect { get; set; }
@@ -69,7 +69,7 @@ public class GameManager
             return;
         }
 
-        if(ProgressTime >= 600.0f && IsBossBattle == false)
+        if(ProgressTime >= 900.0f && IsBossBattle == false)
         {
             // 카메라 고정
             // if (CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera != null)

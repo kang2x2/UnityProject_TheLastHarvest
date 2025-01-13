@@ -13,6 +13,7 @@ public class WebManager
 {
     public string BaseUrl { get; private set; }
     public bool IsLogin { get; set; }
+    public string ErrorMsg { get; private set; }
     public GameResult MyGameResult { get; private set; }
     public List<GameResult> GameResults { get; private set; } = new List<GameResult>();
     public void Init()
@@ -20,7 +21,43 @@ public class WebManager
         BaseUrl = "https://localhost:44384/api";
         IsLogin = false;
 
-        Managers.CoroutineManager.MyStartCoroutine(CoGetAllRequest("ranking", "GET"));
+        // Managers.CoroutineManager.MyStartCoroutine(CoGetAllRequest("ranking", "GET"));
+    }
+
+    public IEnumerator CheckServer(Action action = null)
+    {
+        Managers.UIManager.ShowPopUpUI("PopUpUI_Wait", null, UIManager.UIAnimationType.None);
+
+        string sendUrl = $"{BaseUrl}/ranking/connectcheck";
+        var uwr = new UnityWebRequest(sendUrl, "GET");
+        uwr.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            bool isConnected = bool.Parse(uwr.downloadHandler.text);
+            if(isConnected == true)
+            {
+                yield return new WaitForSeconds(1.0f);
+                Managers.UIManager.CloseCurPopUpUI(null, UIManager.UIAnimationType.None);
+                action?.Invoke();
+            }
+            else
+            {
+                Managers.UIManager.CloseCurPopUpUI(null, UIManager.UIAnimationType.None);
+                Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete", 
+                    "서버가 다운되었거나 응답하지 않습니다.");
+            }
+        }
+        else
+        {
+            Managers.UIManager.CloseCurPopUpUI(null, UIManager.UIAnimationType.None);
+            Debug.Log(uwr.error);
+
+            Managers.UIManager.ShowPopUpUI_Complete("PopUpUI_Complete",
+                "서버가 다운되었거나 응답하지 않습니다.");
+        }
     }
 
     public IEnumerator CoSignUpRequest(string url, string method, object obj, Action<string> action)

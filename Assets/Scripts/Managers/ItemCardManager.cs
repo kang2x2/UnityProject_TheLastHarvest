@@ -56,12 +56,15 @@ public class ItemCardManager
         _items[(int)Define.ItemName.ExpBoost] = player.Find("Passive_ExpBoost").GetComponent<Passive_ExpBoost>();
         _items[(int)Define.ItemName.MaxHp] = player.Find("Passive_MaxHp").GetComponent<Passive_MaxHp>();
         _items[(int)Define.ItemName.Recovery] = player.Find("Passive_Recovery").GetComponent<Passive_Recovery>();
+        _items[(int)Define.ItemName.CriticalUp] = player.Find("Passive_Critical").GetComponent<Passive_Critical>();
 
         _itemCardRoot = GameObject.Find("@ItemCardRoot");
         if (_itemCardRoot == null)
         {
             _itemCardRoot = new GameObject { name = "@ItemCardRoot" };
         }
+
+        GameObject.DontDestroyOnLoad(_itemCardRoot);
 
         for (int i = 0; i < _itemDatas.Count; ++i)
         {
