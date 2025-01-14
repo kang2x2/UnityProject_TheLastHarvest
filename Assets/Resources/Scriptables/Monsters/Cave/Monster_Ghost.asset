@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Ghost
   type: 11
   Animator: {fileID: 22100000, guid: 00dd7d3d7794cbb44a995df663367596, type: 2}
-  hp: 200
-  maxHp: 200
-  attack: 6
-  speed: 2
+  hp: 125
+  maxHp: 125
+  attack: 3
+  speed: 3

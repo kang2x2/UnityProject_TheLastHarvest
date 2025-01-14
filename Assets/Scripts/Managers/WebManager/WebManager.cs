@@ -18,7 +18,7 @@ public class WebManager
     public List<GameResult> GameResults { get; private set; } = new List<GameResult>();
     public void Init()
     {
-        BaseUrl = "https://localhost:44384/api";
+        BaseUrl = "https://localhost:7165/api";
         IsLogin = false;
 
         // Managers.CoroutineManager.MyStartCoroutine(CoGetAllRequest("ranking", "GET"));

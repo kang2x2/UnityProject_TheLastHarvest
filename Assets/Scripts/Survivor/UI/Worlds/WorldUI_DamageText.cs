@@ -53,10 +53,12 @@ public class WorldUI_DamageText : UI_Base
         if(Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
         {
             _rigid.velocity = Vector2.zero;
+            _rigid.gravityScale = 0.0f;
             _anim.speed = 0.0f;
             return;
         }
 
+        _rigid.gravityScale = 1.0f;
         _anim.speed = 1.0f;
     }
 

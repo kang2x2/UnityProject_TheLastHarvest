@@ -9,8 +9,10 @@ public class Spawner : MonoBehaviour
     List<Transform> _allPoints = new List<Transform>();
 
     bool _isOdd = false;
-    float _accTime = 0.0f;
-    float _flySpawnTime = 0.0f;
+    float _nmSpawnAccTime = 0.0f;
+
+    float _flySpawnTime = 60.0f;
+    float _flySpawnAccTime = 0.0f;
 
     private void Awake()
     {
@@ -72,14 +74,24 @@ public class Spawner : MonoBehaviour
         }
 
         NormalSpawn();
-        // FlySpawn();
+
+        if(Managers.GameManagerEx.ProgressTime >= 300.0f)
+        {
+            _flySpawnAccTime += Time.deltaTime;
+            if(_flySpawnAccTime >= _flySpawnTime)
+            {
+                _flySpawnAccTime = 0.0f;
+                IEnumerator coSpawn = FlySpawn();
+                StartCoroutine(coSpawn);
+            }
+        }
     }
 
     void NormalSpawn()
     {
-        _accTime += Time.deltaTime;
+        _nmSpawnAccTime += Time.deltaTime;
         // Managers.GameManagerEx.SpawnData.spawnTimes[Managers.GameManagerEx.SpawnTimeLevel]
-        if (_accTime > Managers.GameManagerEx.SpawnData.spawnTimes[Managers.GameManagerEx.SpawnTimeLevel])
+        if (_nmSpawnAccTime >= Managers.GameManagerEx.SpawnData.spawnTimes[Managers.GameManagerEx.SpawnTimeLevel])
         {
             for (int i = 0; i < 4; ++i)
             {
@@ -113,46 +125,39 @@ public class Spawner : MonoBehaviour
                 monster.GetComponent<NormalMonster>().Init(monsterIndex);
             }
 
-            _accTime = 0.0f;
+            _nmSpawnAccTime = 0.0f;
             _isOdd = !_isOdd;
         }
     }
 
-    void FlySpawn()
+    IEnumerator FlySpawn()
     {
-        if (Managers.GameManagerEx.ProgressTime < 0.0f)
-        {
-            return;
-        }
-
-        _flySpawnTime += Time.deltaTime;
-        if (_flySpawnTime >= 5.0f)
+        int spawnCount = 0;
+        while(spawnCount < 16)
         {
             int monsterIndex = 0;
-            switch(Managers.GameManagerEx.MapType)
+            switch (Managers.GameManagerEx.MapType)
             {
                 case Define.MapType.Field:
-                    monsterIndex = (int)Define.MonsterType.Bird - (int)Define.MonsterType.Bird;
+                    monsterIndex = (int)Define.FlyMonsterType.Bird;
                     break;
                 case Define.MapType.Cave:
-                    monsterIndex = (int)Define.MonsterType.Ghost - (int)Define.MonsterType.Bird;
+                    monsterIndex = (int)Define.FlyMonsterType.Ghost;
                     break;
             }
 
             int ranIndex = Random.Range(0, _allPoints.Count);
             Vector3 playerPos = Managers.GameManagerEx.Player.transform.position;
-            GameObject monsters = Managers.ResourceManager.Instantiate("Objects/FlyMonsters");
+            GameObject monster = Managers.ResourceManager.Instantiate("Objects/FlyMonster");
 
             Vector3 spawnPos = new Vector2(_allPoints[ranIndex].position.x, _allPoints[ranIndex].position.y);
             Vector3 dir = playerPos - spawnPos;
             Vector3 reversDir = spawnPos - playerPos;
-            monsters.transform.position = spawnPos + (reversDir.normalized * 2.5f);
-            foreach(FlyMonster monster in monsters.GetComponentsInChildren<FlyMonster>())
-            {
-                monster.Init(monsterIndex, dir.normalized);
-            }
+            monster.transform.position = spawnPos + (reversDir.normalized * 2.5f);
+            monster.GetComponent<FlyMonster>().Init(monsterIndex, dir.normalized);
 
-            _flySpawnTime = 0.0f;
+            spawnCount += 1;
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }

@@ -174,37 +174,37 @@ public class Player : MonoBehaviour
         }
     }
 
-   //private void OnTriggerStay2D(Collider2D collision)
-   //{
-   //    if(collision.CompareTag("Enemy")) // 충돌한 대상이 Enemy인가?
-   //    {
-   //        if (Hp > 0)
-   //        {
-   //            _sprite.color = Color.red;
-   //            _hitEffect.Play();
-   //
-   //            if (collision.gameObject.GetComponent<Monster>() != null)
-   //            {
-   //                Hp -= collision.gameObject.GetComponent<Monster>().Attack * Time.deltaTime;
-   //            }
-   //        }
-   //        else
-   //        {
-   //            if (IsLive == true)
-   //            {
-   //                IsLive = false;
-   //                _rigid.velocity = Vector2.zero;
-   //                _sprite.sortingOrder = 5;
-   //                _anim.SetBool("Dead", true);
-   //                Hp = 0.0f;
-   //
-   //                _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-   //
-   //                StartCoroutine(Dead());
-   //            }
-   //        }
-   //    }
-   //}
+   private void OnTriggerStay2D(Collider2D collision)
+   {
+       if(collision.CompareTag("Enemy") == true)
+       {
+           if (Hp > 0)
+           {
+               _sprite.color = Color.red;
+               _hitEffect.Play();
+   
+               if (collision.gameObject.GetComponent<Monster>() != null)
+               {
+                   Hp -= collision.gameObject.GetComponent<Monster>().Attack * Time.deltaTime;
+               }
+           }
+           else
+           {
+               if (IsLive == true)
+               {
+                   IsLive = false;
+                   _rigid.velocity = Vector2.zero;
+                   _sprite.sortingOrder = 5;
+                   _anim.SetBool("Dead", true);
+                   Hp = 0.0f;
+   
+                   _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+   
+                   StartCoroutine(Dead());
+               }
+           }
+       }
+   }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -235,6 +235,15 @@ public class Player : MonoBehaviour
                     StartCoroutine(Dead());
                 }
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") == true)
+        {
+            _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            _sprite.color = Color.white;
         }
     }
 

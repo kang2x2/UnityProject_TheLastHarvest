@@ -115,10 +115,13 @@ public class Define
         Skeleton,
         DevilStone,
 
-        //Fly
+        End
+    }
+
+    public enum FlyMonsterType
+    {
         Bird,
         Ghost,
-
         End
     }
 

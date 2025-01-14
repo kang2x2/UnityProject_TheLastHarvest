@@ -8,7 +8,6 @@ TagManager:
   - PlayerArea
   - PlayerProjectile
   - Enemy
-  - Survivor_PlayerArea
   - Wall
   layers:
   - Default
