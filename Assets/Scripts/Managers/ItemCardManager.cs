@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,22 +24,16 @@ public class ItemCardManager
     UI_ItemButton _healPackButton;
     public void Init()
     {
-        string[] guids = AssetDatabase.FindAssets("t:ScriptableObject", new[] { "Assets/Resources/SCriptables/Items" });
+        _itemDatas.Clear();
+        _itemButtons.Clear();
 
-        foreach (string guid in guids)
+        Object[] assets = Resources.LoadAll("Scriptables/Items/Loads", typeof(Object));
+
+        foreach (Object asset in assets)
         {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            ScriptableObject scriptableObject = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
-
-            if (scriptableObject == null)
+            if (asset as Data_Item != null)
             {
-                Debug.Log("Fail Found ScriptableObject: " + scriptableObject.name + " at " + path);
-                return;
-            }
-
-            if (scriptableObject as Data_Item != null)
-            {
-                _itemDatas.Add(scriptableObject as Data_Item);
+                _itemDatas.Add(asset as Data_Item);
             }
         }
 

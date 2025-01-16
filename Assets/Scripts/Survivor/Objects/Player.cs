@@ -51,6 +51,16 @@ public class Player : MonoBehaviour
         _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         _healEffect = transform.Find("HealEffect").GetComponent<ParticleSystem>();
         _healEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+        //if (Application.platform == RuntimePlatform.Android ||
+        //    Application.platform == RuntimePlatform.IPhonePlayer)
+        //{
+        //    GetComponent<PlayerInput>().defaultActionMap = "Gamepad";
+        //}
+        //else
+        //{
+        //    GetComponent<PlayerInput>().defaultActionMap = "Keyboard&Mouse";
+        //}
     }
 
     public void CharacterSetting(Data_Character data)
@@ -102,15 +112,6 @@ public class Player : MonoBehaviour
     {
         if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
         {
-            if(_hitEffect.isPlaying == true)
-            {
-                _hitEffect.Pause();
-            }
-            if(_healEffect.isPlaying == true)
-            {
-                _healEffect.Pause();
-            }
-
             _anim.speed = 0.0f;
             return;
         }
@@ -174,42 +175,47 @@ public class Player : MonoBehaviour
         }
     }
 
-   private void OnTriggerStay2D(Collider2D collision)
-   {
-       if(collision.CompareTag("Enemy") == true)
-       {
-           if (Hp > 0)
-           {
-               _sprite.color = Color.red;
-               _hitEffect.Play();
-   
-               if (collision.gameObject.GetComponent<Monster>() != null)
-               {
-                   Hp -= collision.gameObject.GetComponent<Monster>().Attack * Time.deltaTime;
-               }
-           }
-           else
-           {
-               if (IsLive == true)
-               {
-                   IsLive = false;
-                   _rigid.velocity = Vector2.zero;
-                   _sprite.sortingOrder = 5;
-                   _anim.SetBool("Dead", true);
-                   Hp = 0.0f;
-   
-                   _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-   
-                   StartCoroutine(Dead());
-               }
-           }
-       }
-   }
+   //private void OnTriggerStay2D(Collider2D collision)
+   //{
+   //    if(collision.CompareTag("Enemy") == true)
+   //    {
+   //        if (Hp > 0)
+   //        {
+   //            _sprite.color = Color.red;
+   //            _hitEffect.Play();
+   //
+   //            if (collision.gameObject.GetComponent<Monster>() != null)
+   //            {
+   //                Hp -= collision.gameObject.GetComponent<Monster>().Attack * Time.deltaTime;
+   //            }
+   //        }
+   //        else
+   //        {
+   //            if (IsLive == true)
+   //            {
+   //                IsLive = false;
+   //                _rigid.velocity = Vector2.zero;
+   //                _sprite.sortingOrder = 5;
+   //                _anim.SetBool("Dead", true);
+   //                Hp = 0.0f;
+   //
+   //                _hitEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+   //
+   //                StartCoroutine(Dead());
+   //            }
+   //        }
+   //    }
+   //}
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Enemy") == true)
         {
+            if(Managers.GameManagerEx.IsPause == true)
+            {
+                return;
+            }
+
             if (Hp > 0)
             {
                 _sprite.color = Color.red;

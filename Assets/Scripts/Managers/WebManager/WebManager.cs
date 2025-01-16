@@ -18,7 +18,7 @@ public class WebManager
     public List<GameResult> GameResults { get; private set; } = new List<GameResult>();
     public void Init()
     {
-        BaseUrl = "https://localhost:7165/api";
+        BaseUrl = "https://106.250.38.229:7165/api";
         IsLogin = false;
 
         // Managers.CoroutineManager.MyStartCoroutine(CoGetAllRequest("ranking", "GET"));
@@ -31,6 +31,8 @@ public class WebManager
         string sendUrl = $"{BaseUrl}/ranking/connectcheck";
         var uwr = new UnityWebRequest(sendUrl, "GET");
         uwr.downloadHandler = new DownloadHandlerBuffer();
+
+        uwr.timeout = 3;
 
         yield return uwr.SendWebRequest();
 

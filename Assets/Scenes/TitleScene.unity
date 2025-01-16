@@ -327,30 +327,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scene_Title
       objectReference: {fileID: 0}
-    - target: {fileID: 5561054719017560392, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6358202012386184199, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7639369940661372359, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8437684306717842208, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799315088457661102, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 9088458386219595746, guid: d68d09d642f2a124ab2e5b7cf2e06359, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -195,6 +195,7 @@ public class FlyMonster : Monster
         if(collision.CompareTag("PlayerArea"))
         {
             IsLive = false;
+            Dead();
         }
     }
 

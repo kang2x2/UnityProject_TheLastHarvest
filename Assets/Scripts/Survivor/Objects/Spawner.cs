@@ -11,8 +11,8 @@ public class Spawner : MonoBehaviour
     bool _isOdd = false;
     float _nmSpawnAccTime = 0.0f;
 
-    float _flySpawnTime = 60.0f;
-    float _flySpawnAccTime = 0.0f;
+    // float _flySpawnTime = 8.0f;
+    // float _flySpawnAccTime = 0.0f;
 
     private void Awake()
     {
@@ -75,16 +75,16 @@ public class Spawner : MonoBehaviour
 
         NormalSpawn();
 
-        if(Managers.GameManagerEx.ProgressTime >= 300.0f)
-        {
-            _flySpawnAccTime += Time.deltaTime;
-            if(_flySpawnAccTime >= _flySpawnTime)
-            {
-                _flySpawnAccTime = 0.0f;
-                IEnumerator coSpawn = FlySpawn();
-                StartCoroutine(coSpawn);
-            }
-        }
+        //if(Managers.GameManagerEx.ProgressTime >= 240.0f)
+        //{
+        //    _flySpawnAccTime += Time.deltaTime;
+        //    if(_flySpawnAccTime >= _flySpawnTime)
+        //    {
+        //        _flySpawnAccTime = 0.0f;
+        //        IEnumerator coSpawn = FlySpawn();
+        //        StartCoroutine(coSpawn);
+        //    }
+        //}
     }
 
     void NormalSpawn()

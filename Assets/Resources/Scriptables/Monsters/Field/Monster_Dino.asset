@@ -17,5 +17,5 @@ MonoBehaviour:
   Animator: {fileID: 22100000, guid: 80cdc95a1bd6af64da497a7b2afaef3d, type: 2}
   hp: 200
   maxHp: 200
-  attack: 8
+  attack: 6
   speed: 0.8

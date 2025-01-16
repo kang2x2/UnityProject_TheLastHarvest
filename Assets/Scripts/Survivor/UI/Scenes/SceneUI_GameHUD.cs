@@ -87,11 +87,15 @@ public class SceneUI_GameHUD : UI_Scene
 
         UI_Get<GameObject>((int)GameObjects.BossPanel).gameObject.SetActive(false);
 
-        if (Application.platform == RuntimePlatform.Android ||
-            Application.platform == RuntimePlatform.IPhonePlayer)
-        {
-            Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
-        }
+       if (Application.platform == RuntimePlatform.Android ||
+           Application.platform == RuntimePlatform.IPhonePlayer)
+       {
+         Managers.UIManager.SetJoyStick(UI_Get<GameObject>((int)GameObjects.Stick).GetComponent<RectTransform>());
+       }
+       else
+       {
+           UI_Get<GameObject>((int)GameObjects.Stick).transform.parent.gameObject.SetActive(false);
+       }
     }
 
     private void Update()

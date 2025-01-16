@@ -23,8 +23,8 @@ public class UIManager
 
     public void SetJoyStick(RectTransform joystick)
     {
-        _joystick.gameObject.SetActive(true);
         _joystick = joystick;
+        _joystick.gameObject.SetActive(true);
         _joystick.localScale = Vector3.one;
     }
 

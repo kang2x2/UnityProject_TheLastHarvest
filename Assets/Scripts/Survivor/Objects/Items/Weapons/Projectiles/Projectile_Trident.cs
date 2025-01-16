@@ -11,6 +11,9 @@ public class Projectile_Trident : Projectile
     int _bounce;
     float _speed;
 
+    float _curLifeTime = 0.0f;
+    float _maxLifeTime = 15.0f;
+
     public void Init(int bounce, float attack, float knockBackPower, Vector3 dir, Transform parent)
     {
         _rigid = GetComponent<Rigidbody2D>();
@@ -25,6 +28,9 @@ public class Projectile_Trident : Projectile
         _speed = 10.0f;
 
         _rigid.velocity = dir * _speed;
+
+        _curLifeTime = 0.0f;
+        _maxLifeTime = 15.0f;
     }
 
     private void Update()
@@ -38,6 +44,14 @@ public class Projectile_Trident : Projectile
         if (_rigid.velocity.magnitude < _speed)
         {
             _rigid.velocity = _dir * _speed;
+        }
+
+        _curLifeTime += Time.deltaTime;
+        if(_curLifeTime > _maxLifeTime)
+        {
+            _curLifeTime = 0.0f;
+            _parent.GetComponent<Weapon_Trident>().IsSpawn = true;
+            Managers.ResourceManager.Destroy(gameObject, 1.0f);
         }
     }
 

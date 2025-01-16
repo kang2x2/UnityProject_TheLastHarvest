@@ -21,15 +21,15 @@ public class Scene_Game : Scene_Base
         float progressRatio = 1.0f / taskCount;
         int successTaskCount = 0;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 400);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 500);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 400);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 500);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 400);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 500);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
@@ -37,7 +37,7 @@ public class Scene_Game : Scene_Base
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Projectile_Bullet"), 50);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Projectile_Bullet"), 100);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 

@@ -143,6 +143,8 @@ public class NormalMonster : Monster
             _sprite.sortingOrder = 1;
             _anim.SetBool("Dead", true);
         }
+
+        PositionReSet();
     }
 
     void Dead()
@@ -213,6 +215,24 @@ public class NormalMonster : Monster
         }
     }
 
+    void PositionReSet()
+    {
+        if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
+        {
+            if((Managers.GameManagerEx.Player.GetComponent<Player>().transform.position - transform.position).magnitude > 15.0f)
+            {
+                float randomAngle = UnityEngine.Random.Range(0.0f, 360.0f);
+                float randomRadian = randomAngle * Mathf.Deg2Rad;
+
+                Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
+                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetX))).x;
+                float monsterPosY = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetY))).y;
+
+                transform.position = new Vector2(monsterPosX, monsterPosY);
+            }
+        }
+    }
+
     #region Collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -223,25 +243,25 @@ public class NormalMonster : Monster
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("PlayerArea") && IsLive == true)
-        {
-            if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
-            {
-                float randomAngle = UnityEngine.Random.Range(0.0f, 360.0f);
-                float randomRadian = randomAngle * Mathf.Deg2Rad;
-
-                Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
-                float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetX))).x;
-                float monsterPosY = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetY))).y;
-                // float monsterPosX = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).x;
-                // float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
-
-                transform.position = new Vector2(monsterPosX, monsterPosY);
-            }
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("PlayerArea") && IsLive == true)
+    //    {
+    //        if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == true)
+    //        {
+    //            float randomAngle = UnityEngine.Random.Range(0.0f, 360.0f);
+    //            float randomRadian = randomAngle * Mathf.Deg2Rad;
+    //
+    //            Vector3 ranDir = new Vector2(Mathf.Cos(randomRadian), Mathf.Sin(randomRadian));
+    //            float monsterPosX = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetX))).x;
+    //            float monsterPosY = (_target.transform.position + (ranDir.normalized * (_rePositionOffSetY))).y;
+    //            // float monsterPosX = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).x;
+    //            // float monsterPosY = (_target.transform.position + (ranDir.normalized * _rePositionOffSet)).y;
+    //
+    //            transform.position = new Vector2(monsterPosX, monsterPosY);
+    //        }
+    //    }
+    //}
 
     #endregion
 }

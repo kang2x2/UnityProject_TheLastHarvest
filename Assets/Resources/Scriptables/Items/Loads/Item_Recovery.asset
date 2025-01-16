@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a634591520ec58f43ac8c4b4a70860ab, type: 3}
+  m_Name: Item_Recovery
+  m_EditorClassIdentifier: 
+  itemName: 12
+  abilityType: 7
+  name: "\uD68C\uBCF5\uB825 \uC99D\uAC00"
+  itemDesc: "\uCD08\uB2F9 Hp\uB97C \uD68C\uBCF5\uD558\uB294 \uC591\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  abilityDesc: "\uD68C\uBCF5\uB7C9 0.2% \uC99D\uAC00"
+  icon: {fileID: -930580424, guid: f964d891e59348147b7eff3c391dc7fc, type: 3}
+  maxLevel: 6
+  stat: {fileID: 11400000, guid: deca5fff2d2ff984ca44de3d35874a8e, type: 2}
