@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -45,6 +44,32 @@ public class UI_Base : MonoBehaviour
                 break;
         }
     }
+    // name 탐색을 위해 T는 Object 타입이어야 함
+    private UnityEngine.Object UI_FindChild<T>(string name) where T : UnityEngine.Object
+    {
+        if (typeof(T) == typeof(GameObject))
+        {
+            foreach (Transform t in GetComponentsInChildren<Transform>())
+            {
+                if (t.name == name)
+                {
+                    return t.gameObject;
+                }
+            }
+        }
+        else
+        {
+            foreach (T component in GetComponentsInChildren<T>())
+            {
+                if (component.name == name)
+                {
+                    return component;
+                }
+            }
+        }
+
+        return null;
+    }
 
     protected T UI_Get<T>(int index) where T : UnityEngine.Object
     {
@@ -68,31 +93,5 @@ public class UI_Base : MonoBehaviour
         }
 
         return objects.Cast<T>().ToArray();
-    }
-    // name 탐색을 위해 T는 Object 타입이어야 함
-    private UnityEngine.Object UI_FindChild<T>(string name) where T : UnityEngine.Object
-    {
-        if(typeof(T) == typeof(GameObject))
-        {
-            foreach (Transform t in GetComponentsInChildren<Transform>())
-            {
-                if (t.name == name)
-                {
-                    return t.gameObject;
-                }
-            }
-        }
-        else
-        {
-            foreach (T component in GetComponentsInChildren<T>())
-            {
-                if (component.name == name)
-                {
-                    return component;
-                }
-            }
-        }
-
-        return null;
     }
 }

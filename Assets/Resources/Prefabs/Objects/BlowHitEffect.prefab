@@ -4899,6 +4899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3668617599662391088}
   - component: {fileID: 2157244610058885041}
+  - component: {fileID: 342264608346963914}
   m_Layer: 0
   m_Name: BlowHitEffect
   m_TagString: Untagged
@@ -4933,6 +4934,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85df972cf9c1f5c47b13bc1d6c9a3e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &342264608346963914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470539539780264004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7663643140414979665

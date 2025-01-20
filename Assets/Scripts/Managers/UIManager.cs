@@ -9,7 +9,6 @@ public class UIManager
     {
         None,
         Scale,
-        Page,
         End
     }
 
@@ -95,9 +94,6 @@ public class UIManager
                 IEnumerator coShowScale = CurPopUp.coShowScale(showAction);
                 Managers.CoroutineManager.MyStartCoroutine(coShowScale);
                 break;
-            case UIAnimationType.Page:
-
-                break;
         }
     }
 
@@ -136,9 +132,6 @@ public class UIManager
             case UIAnimationType.Scale:
                 IEnumerator coCloseScale = CurPopUp.coCloseScale(closeAction);
                 Managers.CoroutineManager.MyStartCoroutine(coCloseScale);
-                break;
-            case UIAnimationType.Page:
-
                 break;
         }
     }

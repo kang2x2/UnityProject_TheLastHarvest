@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2558810365056792077}
   - component: {fileID: 8903043459879798635}
   - component: {fileID: 646048480864897766}
-  - component: {fileID: -6146657447459355201}
   - component: {fileID: 1090662255918526302}
+  - component: {fileID: 5229423328531042526}
   m_Layer: 6
   m_Name: WorldUI_HpBar
   m_TagString: Untagged
@@ -104,18 +104,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &-6146657447459355201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978115365212843834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1090662255918526302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +114,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b4bff250d220894498ea37d5692c7f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5229423328531042526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978115365212843834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3410177911717140700

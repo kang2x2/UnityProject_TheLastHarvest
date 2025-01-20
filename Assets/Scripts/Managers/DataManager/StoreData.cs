@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
@@ -116,6 +114,5 @@ public class StoreData
         Data.passiveItems[(int)Define.UserStatType.Critical] =
             new PassiveItem("Sprites/UserStatUI", "UserStatUI_16", "치명타 확률이 0.25% 증가합니다.",
             (int)Define.UserStatType.Recovery, 0, 0.25f, 10);
-
     }
 }

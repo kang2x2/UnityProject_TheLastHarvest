@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile_Scythe : Projectile
@@ -111,7 +110,7 @@ public class Projectile_Scythe : Projectile
             }
         }
 
-        action?.Invoke();
+        action.Invoke();
     }
 
     IEnumerator WeaponAttack(Action action)
@@ -124,9 +123,10 @@ public class Projectile_Scythe : Projectile
 
         // 초기 시작 위치 계산.
         Vector2 dirToPlayer = player.position - transform.position;
-        float curPosValue = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
+        float curRevolValue = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg; // 두 점(y, x) 사이의 각도
+        float destRevolValue = 90.0f;
 
-        float destPosValue = 90.0f;
+        Debug.Log(curRevolValue);
 
         // 각도 
         float curAngle = transform.eulerAngles.z;
@@ -135,6 +135,10 @@ public class Projectile_Scythe : Projectile
         // 경과 시간
         float accTime = 0.0f;
         float attackTime = 0.15f;
+
+        // OffSet
+        float reVolOffSetX = 1.5f;
+        float reVolOffSetY = 2.0f;
 
         // 실시간 위치
         float curPosX;
@@ -151,26 +155,28 @@ public class Projectile_Scythe : Projectile
             }
 
             float t = accTime / attackTime;
-            curPosValue = Mathf.Lerp(curPosValue, destPosValue, t);
+            curRevolValue = Mathf.Lerp(curRevolValue, destRevolValue, t);
             curAngle = Mathf.Lerp(curAngle, destAngle, t);
 
             if (isRight == true) // Right
             {
-                curPosX = player.position.x + (_offset.y * Mathf.Cos(curPosValue * (Mathf.PI / 180.0f)));
-                curPosY = player.position.y - (_offset.y * Mathf.Sin(curPosValue * (Mathf.PI / 180.0f)));
+                curPosX = player.position.x + (reVolOffSetX * Mathf.Cos(curRevolValue * Mathf.Deg2Rad));
             }
             else // Left
             {
-                curPosX = player.position.x - (_offset.y * Mathf.Cos(curPosValue * (Mathf.PI / 180.0f)));
-                curPosY = player.position.y - (_offset.y * Mathf.Sin(curPosValue * (Mathf.PI / 180.0f)));
+                curPosX = player.position.x - (reVolOffSetX * Mathf.Cos(curRevolValue * Mathf.Deg2Rad));
             }
+            curPosY = player.position.y - (reVolOffSetY * Mathf.Sin(curRevolValue * Mathf.Deg2Rad));
+
+            Debug.Log("Cos : " + (Mathf.Cos(curRevolValue * Mathf.Deg2Rad)));
+            Debug.Log("Sin : " + (Mathf.Sin(curRevolValue * Mathf.Deg2Rad)));
 
             transform.position = new Vector2(curPosX, curPosY);
             transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y, curAngle);
 
             accTime += Time.deltaTime;
 
-            if (curPosValue < destPosValue)
+            if (curRevolValue < destRevolValue)
             {
                 yield return null;
             }
@@ -182,7 +188,7 @@ public class Projectile_Scythe : Projectile
 
         _collider.enabled = false;
         _trail.emitting = false;
-        action?.Invoke();
+        action.Invoke();
     }
 
     IEnumerator ReturnWeapon()

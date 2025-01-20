@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
@@ -46,10 +43,7 @@ public class Monster : MonoBehaviour
         if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
         {
             _anim.speed = 0.0f;
-            //if (Managers.GameManagerEx.Player.GetComponent<Player>().IsLive == false)
-            //{
-                _rigid.velocity = Vector2.zero;
-            //}
+            _rigid.velocity = Vector2.zero;
             return false;
         }
 

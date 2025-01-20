@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon_Shotgun : Weapon
@@ -39,7 +38,6 @@ public class Weapon_Shotgun : Weapon
         base.LevelUp(type);
     }
 
-    // 몬스터 탐색은 Physics를 사용하기에 FixedUpdate에서
     void FixedUpdate()
     {
         if (Managers.GameManagerEx.IsPause == true || Managers.SceneManagerEx.IsLoading == true)
@@ -119,7 +117,7 @@ public class Weapon_Shotgun : Weapon
 
         // 인스펙터 창의 Rotation은 보통 -180에서 180을 표현하지만, eulerAngles는 0에서 360을 표현한다. 
         // 인스펙터 상의 Rotation z가 -62라면, eulerAngles는.z는 308이 된다.
-        // 샷건의 윈체스터 효과를 구현하고 싶다면, 각도가 180보다 큰지 작은지를 판단하면 될 것 같다.
+        // 샷건의 한 바퀴 회전하는 장전 효과를 구현하고 싶다면, 각도가 180보다 큰지 작은지를 판단하면 될 것 같다.
         // 180보다 작다면 360 - 현재 각도, 180보다 크다면 360 + (360 - 현재 각도)
 
         float accAngle = 0.0f;

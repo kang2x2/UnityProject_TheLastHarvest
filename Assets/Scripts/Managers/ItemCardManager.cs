@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class ItemCardManager
@@ -145,7 +143,7 @@ public class ItemCardManager
                 // Weapon의 경우엔 획득하지도 않은 무기의 스탯 카드를 선택하면 안되기에 검사가 필요하다.
                 if (button.Item != null && button.Item.ItemType == Define.ItemType.Weapon)
                 {
-                    // 최초 획득한 Weapon인가?
+                    // 아직 획득하지 않은 Weapon인가?
                     if (button.ItemData.abilityType == Define.AbilityType.Init)
                     {
                         if (player.HasItem[(int)button.ItemData.itemName] == false)

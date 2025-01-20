@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8510146522542825932}
   - component: {fileID: 6273489886923850323}
   - component: {fileID: -7906071364221893165}
+  - component: {fileID: 7329744550041021677}
   m_Layer: 0
   m_Name: BigBulletHitEffect
   m_TagString: Untagged
@@ -44,7 +45,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 0.05
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 3
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4900,5 +4901,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85df972cf9c1f5c47b13bc1d6c9a3e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7329744550041021677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8749306170477725939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

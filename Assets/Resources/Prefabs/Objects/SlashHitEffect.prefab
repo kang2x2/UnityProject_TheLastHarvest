@@ -43,7 +43,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 0.05
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 3
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4899,6 +4899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807214551486627537}
   - component: {fileID: 1871305138021453316}
+  - component: {fileID: -6109606320936765964}
   m_Layer: 0
   m_Name: SlashHitEffect
   m_TagString: Untagged
@@ -4933,6 +4934,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85df972cf9c1f5c47b13bc1d6c9a3e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6109606320936765964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899939563472529410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44fdc928972ad14089f01de07ee8608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8692367085458089825
@@ -4978,7 +4991,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 0.05
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 3
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

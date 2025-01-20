@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
@@ -71,8 +70,6 @@ public class CharacterData
             }
         }
 
-        // if (Managers.GameManagerEx.ProgressTime >= 0.0f &&
-        //     Data.unLocks[(int)Define.CharacterType.Character3] == false)
         if (Managers.GameManagerEx.MapType == Define.MapType.Field &&
             Managers.GameManagerEx.IsClear == true &&
             Data.unLocks[(int)Define.CharacterType.Character3] == false)
@@ -88,8 +85,6 @@ public class CharacterData
             }
         }
 
-        // if (Managers.GameManagerEx.ProgressTime >= 0.0f &&
-        //     Data.unLocks[(int)Define.CharacterType.Character4] == false)
         if (Managers.GameManagerEx.MapType == Define.MapType.Cave &&
             Managers.GameManagerEx.IsClear == true &&
             Data.unLocks[(int)Define.CharacterType.Character4] == false)
