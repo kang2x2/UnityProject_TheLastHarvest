@@ -11,7 +11,7 @@ public class Projectile_Trident : Projectile
     int _bounce;
     float _speed;
 
-    float _curLifeTime = 0.0f;
+    float _curLifeTime;
     float _maxLifeTime = 60.0f;
 
     public void Init(int bounce, float attack, float knockBackPower, Vector3 dir, Transform parent)
@@ -30,7 +30,6 @@ public class Projectile_Trident : Projectile
         _rigid.velocity = dir * _speed;
 
         _curLifeTime = 0.0f;
-        _maxLifeTime = 15.0f;
     }
 
     private void Update()
@@ -49,7 +48,6 @@ public class Projectile_Trident : Projectile
         _curLifeTime += Time.deltaTime;
         if(_curLifeTime > _maxLifeTime)
         {
-            _curLifeTime = 0.0f;
             _parent.GetComponent<Weapon_Trident>().IsSpawn = true;
             Managers.ResourceManager.Destroy(gameObject, 1.0f);
         }
