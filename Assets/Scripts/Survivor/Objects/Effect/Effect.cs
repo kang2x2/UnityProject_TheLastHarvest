@@ -38,7 +38,7 @@ public class Effect : MonoBehaviour
         bool isDestroy = true;
         foreach(ParticleSystem effect in _effects)
         {
-            if(effect != null)
+            if(effect != null && effect.isPlaying == true)
             {
                 isDestroy = false;
                 break;

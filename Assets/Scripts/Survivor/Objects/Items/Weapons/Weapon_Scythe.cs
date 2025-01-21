@@ -40,7 +40,7 @@ public class Weapon_Scythe : Weapon
                 scythe.transform.rotation = Quaternion.identity;
 
                 float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
-                scythe.GetComponent<Projectile_Scythe>().Init(DamageCalculator(),
+                scythe.GetComponent<Projectile_Scythe>().Init((float)_stats[(int)Define.AbilityType.Attack],
                     (int)_stats[(int)Define.AbilityType.Amount], _itemData.stat.knockbackPower, this);
 
                 _accTime = 0.0f;

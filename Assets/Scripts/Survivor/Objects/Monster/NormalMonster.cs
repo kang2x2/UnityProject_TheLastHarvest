@@ -155,12 +155,12 @@ public class NormalMonster : Monster
     void DropItem()
     {
         float ranIndex = UnityEngine.Random.Range(0.0f, 100.0f);
-        if (ranIndex <= 0.1f)
+        if (ranIndex <= 0.25f)
         {
             GameObject box = Managers.ResourceManager.Instantiate("Objects/BoxObject");
             box.transform.position = transform.position;
         }
-        else if (ranIndex <= 0.5f)
+        else if (ranIndex <= 0.75f)
         {
             GameObject healPack = Managers.ResourceManager.Instantiate("Objects/HealPackObject");
             healPack.transform.position = transform.position;

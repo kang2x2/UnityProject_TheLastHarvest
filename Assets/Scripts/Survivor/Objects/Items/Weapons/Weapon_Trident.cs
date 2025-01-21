@@ -98,6 +98,6 @@ public class Weapon_Trident : Weapon
 
         float attackRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
         trident.GetComponent<Projectile_Trident>().Init((int)_stats[(int)Define.AbilityType.IntUtil],
-            DamageCalculator(), _itemData.stat.knockbackPower, dir, transform);
+            (float)_stats[(int)Define.AbilityType.Attack], _itemData.stat.knockbackPower, dir, transform);
     }
 }

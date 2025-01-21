@@ -15,6 +15,7 @@ public class Projectile_Bullet : Projectile
     // ªË¡¶
     float _destroyTime;
     float _accTime;
+    float _destroyDist;
 
     public void Init(Vector3 dir, float attack, float fen, float knockBackPower)
     {
@@ -78,7 +79,7 @@ public class Projectile_Bullet : Projectile
     {
         if (_isDead == false)
         {
-            if (collision.CompareTag("PlayerArea"))
+            if (collision.CompareTag("Wall"))
             {
                 _trail.emitting = false;
                 _isDead = true;

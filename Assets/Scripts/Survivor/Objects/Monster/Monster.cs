@@ -53,19 +53,22 @@ public class Monster : MonoBehaviour
 
     protected void MonsterHit(Projectile projectile)
     {
-        float ranFloat = Random.Range(0.0f, 101.0f);
-        float damage = 0.0f;
-        if(ranFloat > Managers.GameManagerEx.Player.GetComponent<Player>().CriticalRatio)
-        {
-            damage = projectile.Attack;
+        float playerAtkRatio = Managers.GameManagerEx.Player.GetComponent<Player>().AttackRatio;
+        float weaponAtkRatio = Random.Range(0.9f, 1.1f);
 
+        float weaponDamage = weaponAtkRatio * projectile.Attack;
+        float damage = playerAtkRatio * weaponDamage;
+
+        float criticalRatio = Random.Range(0.0f, 101.0f);
+        if(criticalRatio > Managers.GameManagerEx.Player.GetComponent<Player>().CriticalRatio)
+        {
             WorldUI_DamageText damageText = Managers.ResourceManager.
                 Instantiate("UI/Worlds/WorldUI_DamageText").GetComponent<WorldUI_DamageText>();
             damageText.Init(transform.position, damage, Define.DamageType.Normal);
         }
         else
         {
-            damage = projectile.Attack * 1.3f;
+            damage *= 1.3f;
 
             WorldUI_DamageText damageText = Managers.ResourceManager.
                 Instantiate("UI/Worlds/WorldUI_DamageText").GetComponent<WorldUI_DamageText>();

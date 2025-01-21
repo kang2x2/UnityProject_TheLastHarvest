@@ -17,19 +17,19 @@ public class Scene_Game : Scene_Base
 
     public override IEnumerator Loading(Action<float> onProgress)
     {
-        int taskCount = 10;
+        int taskCount = 9;
         float progressRatio = 1.0f / taskCount;
         int successTaskCount = 0;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 500);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_DamageText"), 50);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 500);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("UI/Worlds/WorldUI_HpBar"), 1000);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 500);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Monster"), 1000);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
@@ -37,7 +37,7 @@ public class Scene_Game : Scene_Base
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Projectile_Bullet"), 100);
+        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/Projectile_Bullet"), 50);
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
@@ -57,9 +57,9 @@ public class Scene_Game : Scene_Base
         onProgress?.Invoke(progressRatio * ++successTaskCount);
         yield return null;
 
-        Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/BlowHitEffect"), 100);
-        onProgress?.Invoke(progressRatio * ++successTaskCount);
-        yield return null;
+        // Managers.PoolManager.CreatePool(Managers.ResourceManager.Load<GameObject>("Objects/BlowHitEffect"), 100);
+        // onProgress?.Invoke(progressRatio * ++successTaskCount);
+        // yield return null;
 
         Managers.GameManagerEx.Init();
         // 시네머신 카메라 팔로워 세팅

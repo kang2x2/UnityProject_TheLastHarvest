@@ -12,7 +12,7 @@ public class Projectile_Trident : Projectile
     float _speed;
 
     float _curLifeTime = 0.0f;
-    float _maxLifeTime = 45.0f;
+    float _maxLifeTime = 60.0f;
 
     public void Init(int bounce, float attack, float knockBackPower, Vector3 dir, Transform parent)
     {

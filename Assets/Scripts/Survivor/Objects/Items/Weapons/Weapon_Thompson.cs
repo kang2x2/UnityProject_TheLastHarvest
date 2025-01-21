@@ -145,7 +145,7 @@ public class Weapon_Thompson : Weapon
             fireBullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
             fireBullet.GetComponent<Projectile_Bullet>().
-                Init(dir, DamageCalculator(), (float)_stats[(int)Define.AbilityType.Fen],
+                Init(dir, (float)_stats[(int)Define.AbilityType.Attack], (float)_stats[(int)Define.AbilityType.Fen],
                 _itemData.stat.knockbackPower);
 
             Managers.SoundManager.PlaySFX("weaponSounds/Thompson");

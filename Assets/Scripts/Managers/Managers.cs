@@ -18,6 +18,7 @@ public class Managers : MonoBehaviour
     private static ResourceManager s_resoruceManager = new ResourceManager();
     private static SoundManager s_soundManager = new SoundManager();
     private static UIManager s_uiManager = new UIManager();
+    private static WindowScreenManager s_screenManager = new WindowScreenManager();
     private CoroutineManager m_coroutineManager;
     // Propertiy
     public static DataManager DataManager { get { Init(); return s_dataManager; } }
@@ -30,6 +31,7 @@ public class Managers : MonoBehaviour
     public static ResourceManager ResourceManager { get { Init(); return s_resoruceManager; } }
     public static SoundManager SoundManager { get { Init(); return s_soundManager; } }
     public static UIManager UIManager { get { Init(); return s_uiManager; } }
+    public static WindowScreenManager SreenManager { get { Init(); return s_screenManager; } }
     public static CoroutineManager CoroutineManager { get { return Instance.m_coroutineManager; } }
     void Start()
     {
@@ -40,6 +42,11 @@ public class Managers : MonoBehaviour
     {
         if (s_instance == null)
         {
+            if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+            {
+                s_screenManager.SetWindowSize();
+            }
+
             Application.targetFrameRate = 60;
 
             GameObject go = GameObject.Find("@Managers");
@@ -75,12 +82,9 @@ public class Managers : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.OSXPlayer)
         {
-            // 전체화면 전환 후 비율 조정을 강제
-            if (Screen.fullScreen == true)
+            if(Screen.fullScreen == false)
             {
-                int setWidth = 1080;
-                int setHeight = 1280;
-                Screen.SetResolution(setWidth, setHeight, true);
+                s_screenManager.SetWindowSize();
             }
         }
 

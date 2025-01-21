@@ -22,29 +22,29 @@ public class WallSet : MonoBehaviour
         GameObject wall = new GameObject { name = "WallLeft", tag = "Wall" };
         wall.transform.parent = transform;
         wall.AddComponent<BoxCollider2D>().isTrigger = true;
-        wall.transform.localPosition = new Vector2(-(width / 2.0f), 0);
-        wall.GetComponent<BoxCollider2D>().size = new Vector2(0.2f, height);
+        wall.transform.localPosition = new Vector2(-(width / 1.9f), 0);
+        wall.GetComponent<BoxCollider2D>().size = new Vector2(0.01f, height);
 
         // Right Wall
         wall = new GameObject { name = "WallRight", tag = "Wall" };
         wall.transform.parent = transform;
         wall.AddComponent<BoxCollider2D>().isTrigger = true; ;
-        wall.transform.localPosition = new Vector2(width / 2.0f, 0);
-        wall.GetComponent<BoxCollider2D>().size = new Vector2(0.2f, height);
+        wall.transform.localPosition = new Vector2(width / 1.9f, 0);
+        wall.GetComponent<BoxCollider2D>().size = new Vector2(0.01f, height);
 
         // Top Wall
         wall = new GameObject { name = "WallTop", tag = "Wall" };
         wall.transform.parent = transform;
         wall.AddComponent<BoxCollider2D>().isTrigger = true; ;
-        wall.transform.localPosition = new Vector2(0, height / 2.0f);
-        wall.GetComponent<BoxCollider2D>().size = new Vector2(width, 0.2f);
+        wall.transform.localPosition = new Vector2(0, height / 1.9f);
+        wall.GetComponent<BoxCollider2D>().size = new Vector2(width, 0.01f);
 
         // Bottom Wall
         wall = new GameObject { name = "WallBottom", tag = "Wall" };
         wall.transform.parent = transform;
         wall.AddComponent<BoxCollider2D>().isTrigger = true; ;
-        wall.transform.localPosition = new Vector2(0, -(height / 2.0f));
-        wall.GetComponent<BoxCollider2D>().size = new Vector2(width, 0.2f);
+        wall.transform.localPosition = new Vector2(0, -(height / 1.9f));
+        wall.GetComponent<BoxCollider2D>().size = new Vector2(width, 0.01f);
     }
 
 }

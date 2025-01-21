@@ -126,7 +126,7 @@ public class Projectile_Scythe : Projectile
         float curRevolValue = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg; // 두 점(y, x) 사이의 각도
         float destRevolValue = 90.0f;
 
-        Debug.Log(curRevolValue);
+        // Debug.Log(curRevolValue);
 
         // 각도 
         float curAngle = transform.eulerAngles.z;
@@ -168,8 +168,8 @@ public class Projectile_Scythe : Projectile
             }
             curPosY = player.position.y - (reVolOffSetY * Mathf.Sin(curRevolValue * Mathf.Deg2Rad));
 
-            Debug.Log("Cos : " + (Mathf.Cos(curRevolValue * Mathf.Deg2Rad)));
-            Debug.Log("Sin : " + (Mathf.Sin(curRevolValue * Mathf.Deg2Rad)));
+            // Debug.Log("Cos : " + (Mathf.Cos(curRevolValue * Mathf.Deg2Rad)));
+            // Debug.Log("Sin : " + (Mathf.Sin(curRevolValue * Mathf.Deg2Rad)));
 
             transform.position = new Vector2(curPosX, curPosY);
             transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y, curAngle);
